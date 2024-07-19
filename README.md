@@ -5,7 +5,7 @@ Welcome to **ReconRunner** - a powerful, enhanced version of the popular tools l
 ## **TODO**
 - fix so the subs type get a clean output file instaed of messy json
 - fix so wildcard can be used to place the word FUZZ for ffuf to make it more customizable
-- add more help in each type
+- add help for all types
 
 ## Features
 
