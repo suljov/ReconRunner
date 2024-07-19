@@ -2,6 +2,9 @@
 
 Welcome to **Gobuster Deluxe** - a powerful, enhanced version of the popular Gobuster tool, designed to streamline and improve your directory and file brute-forcing experience. This script automates multiple wordlist usage, offers flexible protocol options, and ensures clean and organized output, all while keeping the user in control with intuitive command-line flags.
 
+## TODO
+1. Add the feature to enum vhosts/subdomains
+
 ## Features
 
 - **Protocol Flexibility**: Easily switch between HTTP and HTTPS protocols.
