@@ -40,3 +40,17 @@ Examples:
 ```
 
 # Examples
+
+### Basic Usage
+```
+gobuster-deluxe example.com
+```
+### Using HTTPS
+```
+gobuster-deluxe example.com --https
+```
+
+
+
+
+
