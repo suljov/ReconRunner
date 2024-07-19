@@ -1,6 +1,6 @@
-# Gobuster Deluxe
+# ReconRunner
 
-Welcome to **Gobuster Deluxe** - a powerful, enhanced version of the popular Gobuster tool, designed to streamline and improve your directory and file brute-forcing experience. This script automates multiple wordlist usage, offers flexible protocol options, and ensures clean and organized output, all while keeping the user in control with intuitive command-line flags.
+Welcome to **ReconRunner** - a powerful, enhanced version of the popular tools like Gobsuter, ffuf etc, designed to streamline and improve your directory and file brute-forcing experience. This script automates multiple wordlist usage, offers flexible protocol options, and ensures clean and organized output, all while keeping the user in control with intuitive command-line flags.
 
 ## **TODO**
 - Add the feature to enum vhosts/subdomains
@@ -18,10 +18,10 @@ Welcome to **Gobuster Deluxe** - a powerful, enhanced version of the popular Gob
 # **Install**
 
 ```
-git clone https://github.com/suljov/Gobuster-deluxe
-cd Gobuster-deluxe
-chmod +x Gobuster-deluxe.sh
-sudo cp Gobuster-deluxe.sh /usr/local/bin/gobuster-deluxe 
+git clone https://github.com/suljov/ReconRunner
+cd ReconRunner
+chmod +x ReconRunner.sh
+sudo cp ReconRunner.sh /usr/local/bin/ReconRunner 
 ```
 
 # **Usage**
