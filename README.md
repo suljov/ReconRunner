@@ -7,7 +7,8 @@ Welcome to **Gobuster Deluxe** - a powerful, enhanced version of the popular Gob
 - **Protocol Flexibility**: Easily switch between HTTP and HTTPS protocols.
 - **Custom Wordlists**: Start your brute-forcing with your custom wordlist before falling back on default ones.
 - **Clean and Organized Output**: Results are automatically cleaned and saved in a user-friendly format.
-- **Interactive Control**: Cancel the script anytime with CTRL + C without losing your progress. The script is designed to handle this interruption gracefully, ensuring that any results collected up to that point are saved properly, and any temporary resources are cleaned up.
+- **Interactive Control**: Cancel the script anytime with CTRL + C without losing your progress.
+  - The script is designed to handle this interruption gracefully, ensuring that any results collected up to that point are saved properly, and any temporary resources are cleaned up.
 - **Robust and User-Friendly**: Includes detailed help and usage instructions.
 
 
