@@ -28,13 +28,16 @@ sudo cp ReconRunner.sh /usr/local/bin/ReconRunner
 # **Usage**
 
 ```
-$ ./reconrunner.sh --help     
+$ ./reconrunner.sh --help
 Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [extra_tool_options]
 
 Help:
   --help           Prints this message
   dirs --help      Prints all options for dirs
   subs --help      Prints all options for subs
+
+reconrunner dirs --help
+reconrunner subs --help
 
 Available types:
   dirs    Directory/file enumeration (tool: gobuster)
