@@ -28,20 +28,32 @@ sudo cp ReconRunner.sh /usr/local/bin/ReconRunner
 # **Usage**
 
 ```
-$ gobuster-deluxe --help
-Usage: gobuster-deluxe <ip> [--https] [--cw <custom_wordlist>] [extra_gobuster_options]
+$ ./reconrunner.sh --help     
+Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [extra_tool_options]
+
+Help:
+  --help           Prints this message
+  dirs --help      Prints all options for dirs
+  subs --help      Prints all options for subs
+
+Available types:
+  dirs    Directory/file enumeration (tool: gobuster)
+  subs    Subdomain enumeration (tool: ffuf)
 
 Options:
+  <enum_type>              The type of enumeration (e.g., dirs, subs).
   <ip>                     The target IP address or domain.
   --https                  (Optional) Use HTTPS protocol instead of HTTP.
   --cw <custom_wordlist>   (Optional) Use a custom wordlist before the default wordlists.
-  [extra_gobuster_options] (Optional) Additional options for the gobuster command.
+  [extra_tool_options]     (Optional) Additional options for the enumeration tool.
 
 Examples:
-  gobuster-deluxe 192.168.1.1
-  gobuster-deluxe example.com --https
-  gobuster-deluxe 192.168.1.1 --cw /path/to/custom_wordlist.txt
-  gobuster-deluxe example.com --https --cw /path/to/custom_wordlist.txt --delay=500ms --hide-length -x ph,txt,zip
+  reconrunner dirs 192.168.1.1
+  reconrunner dirs example.com --https
+  reconrunner dirs 192.168.1.1 --cw /path/to/custom_wordlist.txt --delay=500ms
+
+  reconrunner subs example.com
+  reconrunner subs example.com --cw /path/to/custom_wordlist.txt
 ```
 
 # **Examples**
