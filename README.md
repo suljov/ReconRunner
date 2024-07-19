@@ -23,20 +23,20 @@ sudo cp Gobuster-deluxe.sh /usr/local/bin/gobuster-deluxe
 # Usage
 
 ```
-$ gobuster-deluxe --help                   
+$ gobuster-deluxe --help
 Usage: gobuster-deluxe <ip> [--https] [--cw <custom_wordlist>] [extra_gobuster_options]
 
 Options:
-  <ip>                         The target IP address or domain.
-  --https                      (Optional) Use HTTPS protocol instead of HTTP.
-  --cw <custom_wordlist>       (Optional) Use a custom wordlist before the default wordlists.
-  [extra_gobuster_options]     (Optional) Additional options for the gobuster command.
+  <ip>                     The target IP address or domain.
+  --https                  (Optional) Use HTTPS protocol instead of HTTP.
+  --cw <custom_wordlist>   (Optional) Use a custom wordlist before the default wordlists.
+  [extra_gobuster_options] (Optional) Additional options for the gobuster command.
 
 Examples:
   gobuster-deluxe 192.168.1.1
   gobuster-deluxe example.com --https
   gobuster-deluxe 192.168.1.1 --cw /path/to/custom_wordlist.txt
-  gobuster-deluxe example.com --https --cw /path/to/custom_wordlist.txt --delay=500ms
+  gobuster-deluxe example.com --https --cw /path/to/custom_wordlist.txt --delay=500ms --hide-length -x ph,txt,zip
 ```
 
 # Examples
