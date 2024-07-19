@@ -58,7 +58,7 @@ gobuster-deluxe example.com --cw /path/to/custom_wordlist.txt
 ```
 gobuster-deluxe example.com --https --cw /path/to/custom_wordlist.txt --delay=500ms --hide-length -x ph,txt,zip
 ```
-# The ability to edit
+# The ability to customize
 This tool is customizable in the script for easily add or remove wordlists. 
 by simply edit the file by typing:
 ```
