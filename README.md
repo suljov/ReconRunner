@@ -74,7 +74,9 @@ by simply edit the file by typing:
 ```
 sudo gedit /usr/local/bin/gobuster-deluxe
 ```
-and find the this part on line `67`:
+and find the this part on line `67` and on `96`:
+
+Example:
 ```
 # List of wordlists
 WORDLISTS=(
