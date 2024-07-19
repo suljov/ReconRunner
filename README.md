@@ -57,8 +57,38 @@ gobuster-deluxe example.com --cw /path/to/custom_wordlist.txt
 ```
 gobuster-deluxe example.com --https --cw /path/to/custom_wordlist.txt --delay=500ms --hide-length -x ph,txt,zip
 ```
+# The ability to edit
+This tool is customizable in the script for easily add or remove wordlists. 
+by simply edit the file by typing:
+```
+sudo gedit /usr/local/bin/gobuster-deluxe
+```
+and find the this part on line `67`:
+```
+# List of wordlists
+WORDLISTS=(
+    "/usr/share/wordlists/seclists/Discovery/Web-Content/quickhits.txt"
+    "/usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt"
+    # Add more wordlists here as needed
+)
+```
+you can simply add how many you want if you have a custom wordlists you always use etc:
+```
+# List of wordlists
+WORDLISTS=(
+    "/usr/share/wordlist/myonly-owrdlist.txt"
+)
+```
+its up to use what wordlist it uses. 
 
 
+# Cleaning Up
+To ensure that partial results are not lost, the tool saves and cleans the output on-the-fly. Even if you cancel the script using CTRL + C, the results gathered up to that point will be cleaned and saved.
+
+
+
+# Acknowledgments
+Gobuster: The original tool by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart) which this script builds upon.
 
 
 
