@@ -9,6 +9,9 @@ display_help() {
     echo "  dirs --help      Prints all options for dirs"
     echo "  subs --help      Prints all options for subs" 
     echo
+    echo "reconrunner dirs --help"
+    echo "reconrunner subs --help"
+    echo
     echo "Available types:"
     echo "  dirs    Directory/file enumeration (tool: gobuster)"
     echo "  subs    Subdomain enumeration (tool: ffuf)"
@@ -231,3 +234,4 @@ esac
 
 # Final cleanup
 cleanup
+
