@@ -2,7 +2,7 @@
 
 Welcome to **Gobuster Deluxe** - a powerful, enhanced version of the popular Gobuster tool, designed to streamline and improve your directory and file brute-forcing experience. This script automates multiple wordlist usage, offers flexible protocol options, and ensures clean and organized output, all while keeping the user in control with intuitive command-line flags.
 
-## TODO
+## **TODO**
 - Add the feature to enum vhosts/subdomains
 
 ## Features
@@ -15,7 +15,7 @@ Welcome to **Gobuster Deluxe** - a powerful, enhanced version of the popular Gob
 - **Robust and User-Friendly**: Includes detailed help and usage instructions.
 
 
-# Install
+# **Install**
 
 ```
 git clone https://github.com/suljov/Gobuster-deluxe
@@ -24,7 +24,7 @@ chmod +x Gobuster-deluxe.sh
 sudo cp Gobuster-deluxe.sh /usr/local/bin/gobuster-deluxe 
 ```
 
-# Usage
+# **Usage**
 
 ```
 $ gobuster-deluxe --help
@@ -43,7 +43,7 @@ Examples:
   gobuster-deluxe example.com --https --cw /path/to/custom_wordlist.txt --delay=500ms --hide-length -x ph,txt,zip
 ```
 
-# Examples
+# **Examples**
 
 ## Directory enumeration
 
@@ -93,12 +93,12 @@ WORDLISTS=(
 its up to use what wordlist it uses. 
 
 
-# Cleaning Up
+# **Cleaning Up**
 To ensure that partial results are not lost, the tool saves and cleans the output on-the-fly. Even if you cancel the script using CTRL + C, the results gathered up to that point will be cleaned and saved.
 
 
 
-# Acknowledgments
+# **Acknowledgments**
 Gobuster: The original tool by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart) which this script builds upon.
 
 
