@@ -41,14 +41,23 @@ Examples:
 
 # Examples
 
-### Basic Usage
+#### Basic Usage
 ```
 gobuster-deluxe example.com
 ```
-### Using HTTPS
+#### Using HTTPS
 ```
 gobuster-deluxe example.com --https
 ```
+#### With Custom Wordlist
+```
+gobuster-deluxe example.com --cw /path/to/custom_wordlist.txt
+```
+#### With Extra Gobuster Options
+```
+gobuster-deluxe example.com --https --cw /path/to/custom_wordlist.txt --delay=500ms --hide-length -x ph,txt,zip
+```
+
 
 
 
