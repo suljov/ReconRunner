@@ -85,6 +85,8 @@ gobuster-deluxe example.com --https --cw /path/to/custom_wordlist.txt --delay=50
 **Coming soon** 
 
 # The ability to customize
+
+#### Wordlists
 This tool is customizable in the script for easily add or remove wordlists. 
 by simply edit the file by typing:
 ```
@@ -110,6 +112,13 @@ WORDLISTS=(
 ```
 its up to use what wordlist it uses. 
 
+#### Wildcards
+
+placeholder
+
+```
+placeholder
+```
 
 # **Cleaning Up**
 To ensure that partial results are not lost, the tool saves and cleans the output on-the-fly. Even if you cancel the script using CTRL + C, the results gathered up to that point will be cleaned and saved.
