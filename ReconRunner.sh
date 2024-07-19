@@ -4,6 +4,11 @@
 display_help() {
     echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [extra_tool_options]"
     echo
+    echo "Help:"
+    echo "  --help           Prints this message"
+    echo "  dirs --help      Prints all options for dirs"
+    echo "  subs --help      Prints all options for subs" 
+    echo
     echo "Available types:"
     echo "  dirs    Directory/file enumeration (tool: gobuster)"
     echo "  subs    Subdomain enumeration (tool: ffuf)"
@@ -18,10 +23,24 @@ display_help() {
     echo "Examples:"
     echo "  reconrunner dirs 192.168.1.1"
     echo "  reconrunner dirs example.com --https"
-    echo "  reconrunner dirs 192.168.1.1 --cw /path/to/custom_wordlist.txt"
-    echo "  reconrunner dirs example.com --https --cw /path/to/custom_wordlist.txt --delay=500ms"
+    echo "  reconrunner dirs 192.168.1.1 --cw /path/to/custom_wordlist.txt --delay=500ms"
+    echo
     echo "  reconrunner subs example.com"
     echo "  reconrunner subs example.com --cw /path/to/custom_wordlist.txt"
+    exit 0
+}
+
+# Function to display gobuster help
+display_gobuster_help() {
+    echo "Displaying gobuster help..."
+    gobuster dir --help
+    exit 0
+}
+
+# Function to display ffuf help
+display_ffuf_help() {
+    echo "Displaying ffuf help..."
+    ffuf --help
     exit 0
 }
 
@@ -62,7 +81,23 @@ cleanup() {
 # Trap CTRL+C (SIGINT) signal and call the cleanup function
 trap cleanup SIGINT
 
-# Check if the help option is provided
+# Check if the help option is provided for a specific tool
+if [ "$#" -gt 1 ] && [ "$2" == "--help" ]; then
+    case "$1" in
+        dirs)
+            display_gobuster_help
+            ;;
+        subs)
+            display_ffuf_help
+            ;;
+        *)
+            echo "Error: Unknown enumeration type '${1}'."
+            display_help
+            ;;
+    esac
+fi
+
+# Check if the help option is provided for the script
 if [ "$#" -gt 0 ] && [ "$1" == "--help" ]; then
     display_help
 fi
