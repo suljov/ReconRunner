@@ -15,8 +15,8 @@ sudo cp Gobuster-deluxe.sh /usr/local/bin/gobuster-deluxe
 # Usage
 
 ```
-$ gobuster-deluxe --help   
-Usage: /usr/local/bin/gobuster-deluxe <ip> [--https] [--cw <custom_wordlist>] [extra_gobuster_options]
+$ gobuster-deluxe --help                   
+Usage: gobuster-deluxe <ip> [--https] [--cw <custom_wordlist>] [extra_gobuster_options]
 
 Options:
   <ip>                         The target IP address or domain.
@@ -25,8 +25,8 @@ Options:
   [extra_gobuster_options]     (Optional) Additional options for the gobuster command.
 
 Examples:
-  /usr/local/bin/gobuster-deluxe 192.168.1.1
-  /usr/local/bin/gobuster-deluxe example.com --https
-  /usr/local/bin/gobuster-deluxe 192.168.1.1 --cw /path/to/custom_wordlist.txt
-  /usr/local/bin/gobuster-deluxe example.com --https --cw /path/to/custom_wordlist.txt --delay=500ms
+  gobuster-deluxe 192.168.1.1
+  gobuster-deluxe example.com --https
+  gobuster-deluxe 192.168.1.1 --cw /path/to/custom_wordlist.txt
+  gobuster-deluxe example.com --https --cw /path/to/custom_wordlist.txt --delay=500ms
 ```
