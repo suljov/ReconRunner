@@ -45,6 +45,8 @@ Examples:
 
 # Examples
 
+## Directory enumeration
+
 #### Basic Usage
 ```
 gobuster-deluxe example.com
@@ -61,6 +63,11 @@ gobuster-deluxe example.com --cw /path/to/custom_wordlist.txt
 ```
 gobuster-deluxe example.com --https --cw /path/to/custom_wordlist.txt --delay=500ms --hide-length -x ph,txt,zip
 ```
+
+## Subdomain enumeration
+
+**Coming soon** 
+
 # The ability to customize
 This tool is customizable in the script for easily add or remove wordlists. 
 by simply edit the file by typing:
