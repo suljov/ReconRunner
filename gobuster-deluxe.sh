@@ -2,7 +2,7 @@
 
 # Function to display help
 display_help() {
-    echo "Usage: $0 <ip> [--https] [--cw <custom_wordlist>] [extra_gobuster_options]"
+    echo "Usage: gobuster-deluxe <ip> [--https] [--cw <custom_wordlist>] [extra_gobuster_options]"
     echo
     echo "Options:"
     echo "  <ip>                         The target IP address or domain."
@@ -11,10 +11,10 @@ display_help() {
     echo "  [extra_gobuster_options]     (Optional) Additional options for the gobuster command."
     echo
     echo "Examples:"
-    echo "  $0 192.168.1.1"
-    echo "  $0 example.com --https"
-    echo "  $0 192.168.1.1 --cw /path/to/custom_wordlist.txt"
-    echo "  $0 example.com --https --cw /path/to/custom_wordlist.txt --delay=500ms"
+    echo "  gobuster-deluxe 192.168.1.1"
+    echo "  gobuster-deluxe example.com --https"
+    echo "  gobuster-deluxe 192.168.1.1 --cw /path/to/custom_wordlist.txt"
+    echo "  gobuster-deluxe example.com --https --cw /path/to/custom_wordlist.txt --delay=500ms"
     exit 0
 }
 
@@ -40,7 +40,7 @@ fi
 
 # Check if the correct number of arguments is provided
 if [ "$#" -lt 1 ]; then
-    echo "Usage: $0 <ip> [--https] [--cw <custom_wordlist>] [extra_gobuster_options]"
+    echo "Usage: gobuster-deluxe <ip> [--https] [--cw <custom_wordlist>] [extra_gobuster_options]"
     exit 1
 fi
 
@@ -110,4 +110,3 @@ done
 awk '{print $1}' "$OUTPUT_FILE" > "$OUTPUT_DIR/cleaned_results.txt"
 
 echo "Results saved to: $OUTPUT_DIR/cleaned_results.txt"
-
