@@ -1,6 +1,14 @@
-# Gobuster-deluxe
+# Gobuster Deluxe
 
+Welcome to **Gobuster Deluxe** - a powerful, enhanced version of the popular Gobuster tool, designed to streamline and improve your directory and file brute-forcing experience. This script automates multiple wordlist usage, offers flexible protocol options, and ensures clean and organized output, all while keeping the user in control with intuitive command-line flags.
 
+## Features
+
+- **Protocol Flexibility**: Easily switch between HTTP and HTTPS protocols.
+- **Custom Wordlists**: Start your brute-forcing with your custom wordlist before falling back on default ones.
+- **Clean and Organized Output**: Results are automatically cleaned and saved in a user-friendly format.
+- **Interactive Control**: Cancel the script anytime with CTRL + C without losing your progress.
+- **Robust and User-Friendly**: Includes detailed help and usage instructions.
 
 
 # Install
@@ -30,3 +38,5 @@ Examples:
   gobuster-deluxe 192.168.1.1 --cw /path/to/custom_wordlist.txt
   gobuster-deluxe example.com --https --cw /path/to/custom_wordlist.txt --delay=500ms
 ```
+
+# Examples
