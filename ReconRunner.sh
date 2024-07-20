@@ -2,34 +2,38 @@
 
 # Function to display help
 display_help() {
-    echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [extra_tool_options]"
+    echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--wildcard <wildcard_domain>] [--extra <extra_options>]"
     echo
     echo "Help:"
-    echo "  --help           Prints this message"
-    echo "  dirs --help      Prints all options for dirs"
-    echo "  subs --help      Prints all options for subs" 
+    echo "  --help                       Prints this message"
+    echo "  dirs --help                  Prints all options for dirs"
+    echo "  subs --help                  Prints all options for subs"
     echo
-    echo "reconrunner dirs --help"
-    echo "reconrunner subs --help"
+    echo "  reconrunner dirs --help"
+    echo "  reconrunner subs --help"
+    echo
     echo
     echo "Available types:"
     echo "  dirs    Directory/file enumeration (tool: gobuster)"
     echo "  subs    Subdomain enumeration (tool: ffuf)"
     echo
     echo "Options:"
-    echo "  <enum_type>              The type of enumeration (e.g., dirs, subs)."
-    echo "  <ip>                     The target IP address or domain."
-    echo "  --https                  (Optional) Use HTTPS protocol instead of HTTP."
-    echo "  --cw <custom_wordlist>   (Optional) Use a custom wordlist before the default wordlists."
-    echo "  [extra_tool_options]     (Optional) Additional options for the enumeration tool."
+    echo "  <enum_type>                  The type of enumeration (e.g., dirs, subs)."
+    echo "  <ip>                         The target IP address or domain."
+    echo "  --https                      (Optional) Use HTTPS protocol instead of HTTP."
+    echo "  --cw <custom_wordlist>       (Optional) Use a custom wordlist before the default wordlists."
+    echo "  --wildcard <wildcard_domain> (Optional) Use wildcard in the Host header for subdomain enumeration."
+    echo "  --extra <extra_options>      (Optional) Additional options for the enumeration tool."
+    echo
     echo
     echo "Examples:"
     echo "  reconrunner dirs 192.168.1.1"
     echo "  reconrunner dirs example.com --https"
-    echo "  reconrunner dirs 192.168.1.1 --cw /path/to/custom_wordlist.txt --delay=500ms"
+    echo "  reconrunner dirs 192.168.1.1 --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'"
     echo
     echo "  reconrunner subs example.com"
-    echo "  reconrunner subs example.com --cw /path/to/custom_wordlist.txt"
+    echo "  reconrunner subs example.com --cw /path/to/custom_wordlist.txt --wildcard preprod-*.trick.htb --extra '--timeout=30 --rate=100'"
+    echo
     exit 0
 }
 
@@ -45,30 +49,6 @@ display_ffuf_help() {
     echo "Displaying ffuf help..."
     ffuf --help
     exit 0
-}
-
-# Function to check if jq is installed
-check_jq() {
-    if ! command -v jq &> /dev/null; then
-        echo "Error: jq is not installed."
-        echo "jq is required for parsing JSON output."
-        echo "Do you want to install jq? (y/n)"
-        read -r response
-        case "$response" in
-            [Yy][Ee][Ss]|[Yy])
-                echo "Installing jq..."
-                sudo apt update && sudo apt install -y jq
-                if [ $? -ne 0 ]; then
-                    echo "Error: Failed to install jq. Exiting."
-                    exit 1
-                fi
-                ;;
-            *)
-                echo "jq is required for this script. Exiting."
-                exit 1
-                ;;
-        esac
-    fi
 }
 
 # Function to clean up on exit
@@ -107,7 +87,38 @@ fi
 
 # Check if the correct number of arguments is provided
 if [ "$#" -lt 2 ]; then
-    echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [extra_tool_options]"
+        echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--wildcard <wildcard_domain>] [--extra <extra_options>]"
+    echo
+    echo "Help:"
+    echo "  --help                       Prints this message"
+    echo "  dirs --help                  Prints all options for dirs"
+    echo "  subs --help                  Prints all options for subs"
+    echo
+    echo "  reconrunner dirs --help"
+    echo "  reconrunner subs --help"
+    echo
+    echo
+    echo "Available types:"
+    echo "  dirs    Directory/file enumeration (tool: gobuster)"
+    echo "  subs    Subdomain enumeration (tool: ffuf)"
+    echo
+    echo "Options:"
+    echo "  <enum_type>                  The type of enumeration (e.g., dirs, subs)."
+    echo "  <ip>                         The target IP address or domain."
+    echo "  --https                      (Optional) Use HTTPS protocol instead of HTTP."
+    echo "  --cw <custom_wordlist>       (Optional) Use a custom wordlist before the default wordlists."
+    echo "  --wildcard <wildcard_domain> (Optional) Use wildcard in the Host header for subdomain enumeration."
+    echo "  --extra <extra_options>      (Optional) Additional options for the enumeration tool."
+    echo
+    echo
+    echo "Examples:"
+    echo "  reconrunner dirs 192.168.1.1"
+    echo "  reconrunner dirs example.com --https"
+    echo "  reconrunner dirs 192.168.1.1 --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'"
+    echo
+    echo "  reconrunner subs example.com"
+    echo "  reconrunner subs example.com --cw /path/to/custom_wordlist.txt --wildcard preprod-*.trick.htb --extra '--timeout=30 --rate=100'"
+    echo
     exit 1
 fi
 
@@ -116,6 +127,24 @@ ENUM_TYPE="$1"
 IP="$2"
 shift 2
 PROTOCOL="http"
+USE_WILDCARD=false
+WILDCARD_DOMAIN=""
+EXTRA_OPTIONS=""
+
+# Function to process extra options
+process_extra_options() {
+    while [ "$#" -gt 0 ]; do
+        case "$1" in
+            --https | --cw | --wildcard | --extra)
+                break
+                ;;
+            *)
+                EXTRA_OPTIONS+="$1 "
+                shift
+                ;;
+        esac
+    done
+}
 
 # Check for --https flag
 if [ "$#" -gt 0 ] && [ "$1" == "--https" ]; then
@@ -123,6 +152,19 @@ if [ "$#" -gt 0 ] && [ "$1" == "--https" ]; then
     shift
 fi
 URL="${PROTOCOL}://${IP}/"
+
+# Check for --wildcard flag
+if [ "$#" -gt 0 ] && [ "$1" == "--wildcard" ]; then
+    USE_WILDCARD=true
+    WILDCARD_DOMAIN="$2"
+    shift 2
+fi
+
+# Check for --extra flag and capture all following options
+if [ "$#" -gt 0 ] && [ "$1" == "--extra" ]; then
+    shift
+    process_extra_options "$@"
+fi
 
 # Check if the host is reachable
 if ! curl -L -s --head "$URL" | head -n 1 | grep "HTTP/[12][.][0-9] [23].."; then
@@ -162,9 +204,6 @@ if [ "$#" -gt 0 ] && [ "$1" == "--cw" ]; then
     shift 2
 fi
 
-# Capture extra tool options if provided
-EXTRA_OPTIONS="$*"
-
 # List of wordlists for directory enumeration
 DIR_WORDLISTS=(
     "/usr/share/wordlists/seclists/Discovery/Web-Content/quickhits.txt"
@@ -200,28 +239,25 @@ run_reconrunner_dirs() {
 # Function to run ffuf for subdomain enumeration and save output as JSON
 run_reconrunner_subs() {
     local wordlist="$1"
-    ffuf -c -w "$wordlist" -u "${PROTOCOL}://$IP/" -H "HOST: FUZZ.${IP}" -o "${OUTPUT_FILE}" -of json $EXTRA_OPTIONS
-    # Extract subdomain names from the JSON file and save to final output file
-    jq -r '.results[].host | select(. | contains("FUZZ"))' "$OUTPUT_FILE" | sed 's/FUZZ\.//g' | sort -u > "${OUTPUT_FILE%.json}.txt"
-    echo "FFUF results saved to ${OUTPUT_FILE%.json}.txt"
+    if $USE_WILDCARD; then
+        # Replace wildcard domain in the header with 'FUZZ' at the correct location
+        ffuf -c -w "$wordlist" -u "${PROTOCOL}://${IP}/" -H "Host: ${WILDCARD_DOMAIN//\*/FUZZ}" -o "${OUTPUT_FILE}" -of json $EXTRA_OPTIONS
+        echo "FFUF results with wildcard saved to ${OUTPUT_FILE}"
+    else
+        # Use regular Host header for subdomain enumeration with FUZZ at the end
+        ffuf -c -w "$wordlist" -u "${PROTOCOL}://${IP}/" -H "Host: FUZZ.${IP}" -o "${OUTPUT_FILE}" -of json $EXTRA_OPTIONS
+        echo "FFUF results saved to ${OUTPUT_FILE}"
+    fi
 }
 
-# Inform the user how to cancel
-echo
-echo "Running ReconRunner..."
-echo "To cancel, press CTRL + C"
-echo
-
-# Run the appropriate enumeration based on the enum type
+# Run the appropriate function based on the enumeration type
 case "$ENUM_TYPE" in
     dirs)
-        # Run gobuster for each wordlist
         for wordlist in "${DIR_WORDLISTS[@]}"; do
             run_reconrunner_dirs "$wordlist"
         done
         ;;
     subs)
-        # Run ffuf for each wordlist
         for wordlist in "${SUBS_WORDLISTS[@]}"; do
             run_reconrunner_subs "$wordlist"
         done
@@ -234,4 +270,3 @@ esac
 
 # Final cleanup
 cleanup
-
