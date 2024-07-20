@@ -113,7 +113,7 @@ The wildcard will be replaced with the word `FUZZ`
 This tool is customizable in the script for easily add or remove wordlists. 
 by simply edit the file by typing:
 ```
-sudo gedit /usr/local/bin/gobuster-deluxe
+sudo gedit /usr/local/bin/reconrunner
 ```
 and find the this part on line `67` and on `96`:
 
@@ -149,7 +149,8 @@ To ensure that partial results are not lost, the tool saves and cleans the outpu
 
 
 # **Acknowledgments**
-Gobuster: The original tool by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart) which this script builds upon.
+**Gobuster**: The original tool by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart) which this script uses.
+**ffuf**: The original tool by @ffuf which this script uses.
 
 
 
