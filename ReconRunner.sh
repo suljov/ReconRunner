@@ -27,9 +27,9 @@ display_help() {
     echo
     echo
     echo "Examples:"
-    echo "  reconrunner dirs 192.168.1.1"
+    echo "  reconrunner dirs example.com"
     echo "  reconrunner dirs example.com --https"
-    echo "  reconrunner dirs 192.168.1.1 --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'"
+    echo "  reconrunner dirs example.com --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'"
     echo
     echo "  reconrunner subs example.com"
     echo "  reconrunner subs example.com --cw /path/to/custom_wordlist.txt --wildcard test-*.example.com --extra '--timeout=30 --rate=100'"
@@ -112,9 +112,9 @@ if [ "$#" -lt 2 ]; then
     echo
     echo
     echo "Examples:"
-    echo "  reconrunner dirs 192.168.1.1"
+    echo "  reconrunner dirs example.com"
     echo "  reconrunner dirs example.com --https"
-    echo "  reconrunner dirs 192.168.1.1 --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'"
+    echo "  reconrunner dirs example.com --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'"
     echo
     echo "  reconrunner subs example.com"
     echo "  reconrunner subs example.com --cw /path/to/custom_wordlist.txt --wildcard test-*.example.com --extra '--timeout=30 --rate=100'"
