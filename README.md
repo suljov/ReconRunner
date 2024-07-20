@@ -22,7 +22,9 @@ A powerful, enhanced version of the popular tools like Gobsuter, ffuf etc, desig
 git clone https://github.com/suljov/ReconRunner
 cd ReconRunner
 chmod +x ReconRunner.sh
-sudo cp ReconRunner.sh /usr/local/bin/reconrunner 
+sudo cp ReconRunner.sh /usr/local/bin/reconrunner
+cd ..
+rm -r reconrunner
 ```
 
 # **Usage**
