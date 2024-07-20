@@ -138,14 +138,14 @@ its up to use what wordlist it uses.
 
 When using wildcards in your domain names, ReconRunner replaces them with FUZZ in the headers. For example, if your wildcard domain is preprod-*.trick.htb, it will be replaced as follows:
 
-- **With Wildcard**: Host: FUZZ.preprod-*.trick.htb
-- **Without Wildcard**: Host: FUZZ.trick.htb
+- **With Wildcard** example: frontdesk-*.example.com -> frontdesk-FUZZ.example.com
+- **Without Wildcard** example: FUZZ.example.com
 
 This ensures that the script tests for subdomains effectively according to your specified wildcard pattern.
 
 Example Command:
 ```
-ffuf -c -w wordlist.txt -u http://example.com/ -H "Host: FUZZ.preprod-*.trick.htb" -o output.json -of json
+reconrunner subs frontdesk-prod.example.com --wildcard frontdesk-*.example.com
 ```
 
 # **Cleaning Up**
