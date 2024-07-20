@@ -76,16 +76,36 @@ reconrunner dirs example.com --https
 ```
 #### With Custom Wordlist
 ```
-gobuster-deluxe example.com --cw /path/to/custom_wordlist.txt
+reconrunner example.com --cw /path/to/custom_wordlist.txt
 ```
-#### With Extra Gobuster Options
+#### With Extra Options
 ```
 reconrunner dirs 192.168.1.1 --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'
 ```
 
 ## Subdomain enumeration
 
-**Coming soon** 
+#### Basic Usage
+```
+reconrunner subs example.com
+```
+#### Using HTTPS
+```
+reconrunner subs example.com --https
+```
+#### With Custom Wordlist
+```
+reconrunner subs example.com --cw /path/to/custom_wordlist.txt
+```
+#### With Extra Options
+```
+reconrunner subs example.com --cw /path/to/custom_wordlist.txt --extra '-fl 100'
+```
+#### With wildcard
+```
+reconrunner subs example.com --wildcard example*.com
+```
+The wildcard will be replaced with the word `FUZZ`
 
 # **The ability to customize**
 
