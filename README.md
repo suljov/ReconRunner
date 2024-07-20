@@ -61,7 +61,7 @@ Examples:
   reconrunner dirs 192.168.1.1 --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'
 
   reconrunner subs example.com
-  reconrunner subs example.com --cw /path/to/custom_wordlist.txt --wildcard preprod-*.trick.htb --extra '--timeout=30 --rate=100'
+  reconrunner subs example.com --cw /path/to/custom_wordlist.txt --wildcard test-*.example.com --extra '--timeout=30 --rate=100'
 ```
 
 # **Examples**
