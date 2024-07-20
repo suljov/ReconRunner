@@ -56,9 +56,9 @@ Options:
 
 
 Examples:
-  reconrunner dirs 192.168.1.1
+  reconrunner dirs example.com
   reconrunner dirs example.com --https
-  reconrunner dirs 192.168.1.1 --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'
+  reconrunner dirs example.com --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'
 
   reconrunner subs example.com
   reconrunner subs example.com --cw /path/to/custom_wordlist.txt --wildcard test-*.example.com --extra '--timeout=30 --rate=100'
@@ -78,11 +78,11 @@ reconrunner dirs example.com --https
 ```
 #### With Custom Wordlist
 ```
-reconrunner example.com --cw /path/to/custom_wordlist.txt
+reconrunner dirs example.com --cw /path/to/custom_wordlist.txt
 ```
 #### With Extra Options
 ```
-reconrunner dirs 192.168.1.1 --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'
+reconrunner dirs example.com --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'
 ```
 
 ## Subdomain enumeration
