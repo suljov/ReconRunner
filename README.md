@@ -22,7 +22,7 @@ Welcome to **ReconRunner** - a powerful, enhanced version of the popular tools l
 git clone https://github.com/suljov/ReconRunner
 cd ReconRunner
 chmod +x ReconRunner.sh
-sudo cp ReconRunner.sh /usr/local/bin/ReconRunner 
+sudo cp ReconRunner.sh /usr/local/bin/reconrunner 
 ```
 
 # **Usage**
@@ -68,11 +68,11 @@ Examples:
 
 #### Basic Usage
 ```
-gobuster-deluxe example.com
+reconrunner dirs example.com
 ```
 #### Using HTTPS
 ```
-gobuster-deluxe example.com --https
+reconrunner dirs example.com --https
 ```
 #### With Custom Wordlist
 ```
@@ -80,7 +80,7 @@ gobuster-deluxe example.com --cw /path/to/custom_wordlist.txt
 ```
 #### With Extra Gobuster Options
 ```
-gobuster-deluxe example.com --https --cw /path/to/custom_wordlist.txt --delay=500ms --hide-length -x ph,txt,zip
+reconrunner dirs 192.168.1.1 --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'
 ```
 
 ## Subdomain enumeration
