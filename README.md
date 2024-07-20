@@ -1,6 +1,6 @@
 # ReconRunner
 
-A powerful, enhanced version of the popular tools like Gobsuter and ffuf, designed to streamline and improve your experience with directory and file brute-forcing and scan for subdomains. This script automates multiple wordlist usage, offers flexible protocol options, and ensures clean and organized output, all while keeping the user in control with intuitive command-line flags.
+A powerful, enhanced version of the popular tools like Gobsuter and ffuf, designed to streamline and improve your experience with directory and file brute-forcing and scan for subdomains. This tool automates multiple wordlist usage, offers flexible protocol options, and ensures clean and organized output, all while keeping the user in control with intuitive command-line flags.
 
 ## **TODO**
 - fix so the subs type get a clean output file instead of messy json
@@ -11,8 +11,8 @@ A powerful, enhanced version of the popular tools like Gobsuter and ffuf, design
 - Protocol Flexibility: Seamlessly switch between HTTP and HTTPS protocols.
 - Custom Wordlists: Start your enumeration with a custom wordlist before default ones, ensuring a tailored approach.
 - Wildcard Support: Easily incorporate wildcard domains for subdomain enumeration.
-- Interactive Control: Cancel the script anytime with CTRL + C without losing progress. The script is designed to handle interruptions gracefully, saving collected results and cleaning up temporary resources.
-- Detailed Help and Usage Instructions: Comprehensive help options for both the script and underlying tools, guiding you through all available options.
+- Interactive Control: Cancel the tool anytime with CTRL + C without losing progress. The tool is designed to handle interruptions gracefully, saving collected results and cleaning up temporary resources.
+- Detailed Help and Usage Instructions: Comprehensive help options for both the tool and the underlying tools, guiding you through all available options.
 - Clean and Organized Output: Results are saved in a structured format, with options for customization and easy parsing.
 
 
@@ -112,7 +112,7 @@ The wildcard will be replaced with the word `FUZZ`
 # **The ability to customize**
 
 ## Wordlists
-This tool is customizable in the script for easily add or remove wordlists. 
+This tool is customizable for easily add or remove wordlists. 
 by simply edit the file by typing:
 ```
 sudo gedit /usr/local/bin/reconrunner
@@ -144,7 +144,7 @@ When using wildcards in your domain names, ReconRunner replaces them with FUZZ i
 - **With Wildcard** example: frontdesk-*.example.com -> frontdesk-FUZZ.example.com
 - **Without Wildcard** per default: FUZZ.frontdesk-prod.example.com
 
-This ensures that the script tests for subdomains effectively according to your specified wildcard pattern.
+This ensures that the tool tests for subdomains effectively according to your specified wildcard pattern.
 
 Example Command:
 ```
@@ -152,13 +152,13 @@ reconrunner subs frontdesk-prod.example.com --wildcard frontdesk-*.example.com
 ```
 
 # **Cleaning Up**
-To ensure that partial results are not lost, the tool saves and cleans the output on-the-fly. Even if you cancel the script using CTRL + C, the results gathered up to that point will be cleaned and saved.
+To ensure that partial results are not lost, the tool saves and cleans the output on-the-fly. Even if you cancel the tool using CTRL + C, the results gathered up to that point will be cleaned and saved.
 
 
 
 # **Acknowledgments**
-**Gobuster**: The original tool by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart) which this script uses.
-**ffuf**: The original tool by @ffuf which this script uses.
+**Gobuster**: The original tool by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart) which this tool uses.
+**ffuf**: The original tool by @ffuf which this tool uses.
 
 
 
