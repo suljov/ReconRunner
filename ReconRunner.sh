@@ -32,7 +32,7 @@ display_help() {
     echo "  reconrunner dirs 192.168.1.1 --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'"
     echo
     echo "  reconrunner subs example.com"
-    echo "  reconrunner subs example.com --cw /path/to/custom_wordlist.txt --wildcard preprod-*.trick.htb --extra '--timeout=30 --rate=100'"
+    echo "  reconrunner subs example.com --cw /path/to/custom_wordlist.txt --wildcard test-*.example.com --extra '--timeout=30 --rate=100'"
     echo
     exit 0
 }
@@ -117,7 +117,7 @@ if [ "$#" -lt 2 ]; then
     echo "  reconrunner dirs 192.168.1.1 --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'"
     echo
     echo "  reconrunner subs example.com"
-    echo "  reconrunner subs example.com --cw /path/to/custom_wordlist.txt --wildcard preprod-*.trick.htb --extra '--timeout=30 --rate=100'"
+    echo "  reconrunner subs example.com --cw /path/to/custom_wordlist.txt --wildcard test-*.example.com --extra '--timeout=30 --rate=100'"
     echo
     exit 1
 fi
