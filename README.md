@@ -8,12 +8,12 @@ A powerful, enhanced version of the popular tools like Gobsuter and ffuf, design
 
 ## Features
 
-- Protocol Flexibility: Seamlessly switch between HTTP and HTTPS protocols.
-- Custom Wordlists: Start your enumeration with a custom wordlist before default ones, ensuring a tailored approach.
-- Wildcard Support: Easily incorporate wildcard domains for subdomain enumeration.
-- Interactive Control: Cancel the tool anytime with CTRL + C without losing progress. The tool is designed to handle interruptions gracefully, saving collected results and cleaning up temporary resources.
-- Detailed Help and Usage Instructions: Comprehensive help options for both the tool and the underlying tools, guiding you through all available options.
-- Clean and Organized Output: Results are saved in a structured format, with options for customization and easy parsing.
+* Protocol Flexibility: Seamlessly switch between HTTP and HTTPS protocols.
+* Custom Wordlists: Start your enumeration with a custom wordlist before default ones, ensuring a tailored approach.
+* Wildcard Support: Easily incorporate wildcard domains for subdomain enumeration.
+* Interactive Control: Cancel the tool anytime with CTRL + C without losing progress. The tool is designed to handle interruptions gracefully, saving collected results and cleaning up temporary resources.
+* Detailed Help and Usage Instructions: Comprehensive help options for both the tool and the underlying tools, guiding you through all available options.
+* Clean and Organized Output: Results are saved in a structured format, with options for customization and easy parsing.
 
 
 # **Install**
