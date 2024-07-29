@@ -3,8 +3,8 @@
 A powerful, enhanced version of the popular tools like Gobsuter and ffuf, designed to streamline and improve your experience with directory and file brute-forcing and scan for subdomains. This tool automates multiple wordlist usage, offers flexible protocol options, and ensures clean and organized output, all while keeping the user in control with intuitive command-line flags.
 
 ## **TODO**
-- fix so the subs type get a clean output file instead of messy json
-- come up with more idéas for features
+* fix so the subs type get a clean output file instead of messy json
+* come up with more idéas for features
 
 ## Features
 
@@ -157,10 +157,10 @@ To ensure that partial results are not lost, the tool saves and cleans the outpu
 
 
 # **Acknowledgments**
-- **Gobuster**: The original tool by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart) which this tool uses.
+* **Gobuster**: The original tool by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart) which this tool uses.
 -- https://github.com/OJ/gobuster
-- **ffuf**: The original tool by @ffuf which this tool uses.
-** https://github.com/ffuf/ffuf
+* **ffuf**: The original tool by @ffuf which this tool uses.
+  * https://github.com/ffuf/ffuf
 
 
 
