@@ -157,8 +157,8 @@ To ensure that partial results are not lost, the tool saves and cleans the outpu
 
 
 # **Acknowledgments**
-**Gobuster**: The original tool by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart) which this tool uses.
-**ffuf**: The original tool by @ffuf which this tool uses.
+- **Gobuster**: The original tool by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart) which this tool uses.
+- **ffuf**: The original tool by @ffuf which this tool uses.
 
 
 
