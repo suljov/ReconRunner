@@ -5,6 +5,7 @@ A powerful, enhanced version of the popular tools like Gobsuter and ffuf, design
 ## **TODO**
 * fix so the subs type get a clean output file instead of messy json
 * come up with more idéas for features
+  * add feature for sql innjection testing
 
 ## Features
 
