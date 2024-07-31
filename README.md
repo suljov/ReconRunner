@@ -3,6 +3,7 @@
 A powerful, enhanced version of the popular tools like Gobsuter and ffuf, designed to streamline and improve your experience with directory and file brute-forcing and scan for subdomains. This tool automates multiple wordlist usage, offers flexible protocol options, and ensures clean and organized output, all while keeping the user in control with intuitive command-line flags.
 
 ## **TODO/idéas**
+* make a install script for easier install??
 * fix so the subs type get a clean output file instead of messy json
 * come up with more idéas for features
   * add feature for sql innjection testing (sqlmap)
