@@ -27,7 +27,7 @@ cd ReconRunner
 chmod +x ReconRunner.sh
 sudo cp ReconRunner.sh /usr/local/bin/reconrunner
 cd ..
-rm -r ReconRunner
+sudo rm -r ReconRunner
 ```
 
 # **Usage**
