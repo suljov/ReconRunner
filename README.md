@@ -8,7 +8,7 @@ A powerful, enhanced version of the popular tools like Gobsuter and ffuf, design
   * add feature for sql innjection testing (sqlmap)
   * add feature for simple fuzzing (web)
   * add a way to have pre-made list of wordlissts (one list of wordlists for LFI and one for SQLi etc)
-      * or change the structure for the lists of wordlists for each feature so they are in lists in a config file???? 
+      * or change the structure for the lists of wordlists for each feature so they are in lists in a config file???? json file with multiple keys and values with wordlists etc??
   * add feature to scan hosts (nmap and/or rustscan)
 
 ## Features
