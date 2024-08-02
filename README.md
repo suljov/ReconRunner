@@ -1,6 +1,6 @@
 # ReconRunner
 
-A powerful, enhanced version of the popular tools like Gobsuter and ffuf, designed to streamline and improve your experience with directory and file brute-forcing and scan for subdomains. This tool automates multiple wordlist usage, offers flexible protocol options, and ensures clean and organized output, all while keeping the user in control with intuitive command-line flags.
+A powerful, enhanced version of the popular tools like Gobuster and ffuf, designed to streamline and improve your experience with directory and file brute-forcing and scan for subdomains. This tool automates multiple wordlist usage, offers flexible protocol options, and ensures clean and organized output, all while keeping the user in control with intuitive command-line flags.
 
 ## **TODO/idéas**
 * make a install script for easier install??
