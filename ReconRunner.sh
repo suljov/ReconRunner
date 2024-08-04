@@ -1,7 +1,8 @@
 #!/bin/bash
 
 CONFIG_FILE="$HOME/.reconrunner/wordlists-config.json"
-
+LOG_FILE="reconrunner.log"
+BASE_OUTPUT_DIR="reconrunner_output"
 
 # Function to display help
 display_help() {
@@ -11,10 +12,6 @@ display_help() {
     echo "  --help                       Prints this message"
     echo "  dirs --help                  Prints all options for dirs"
     echo "  subs --help                  Prints all options for subs"
-    echo
-    echo "  reconrunner dirs --help"
-    echo "  reconrunner subs --help"
-    echo
     echo
     echo "Available types:"
     echo "  dirs    Directory/file enumeration (tool: gobuster)"
@@ -61,13 +58,19 @@ display_ffuf_help() {
     exit 0
 }
 
+# Function to log messages
+log_message() {
+    echo "$1" >> "$LOG_FILE"
+}
+
 # Function to clean up on exit
 cleanup() {
+    echo ""
     echo "Cleaning up..."
     if [ -f "$TEMP_FILE" ]; then
         rm -f "$TEMP_FILE"
     fi
-    echo "Results saved to: $OUTPUT_FILE"
+    echo "Results saved in: $OUTPUT_DIR" # Ensure OUTPUT_DIR is logged
     exit 1
 }
 
@@ -99,6 +102,12 @@ fi
 load_wordlists() {
     local type="$1"
     jq -r --arg type "$type" '.[$type][]' "$CONFIG_FILE"
+}
+
+# Function to load wordlists from a custom list
+load_custom_wordlists() {
+    local list_name="$1"
+    jq -r --arg list "$list_name" '.[$list] | .[]' "$CONFIG_FILE"
 }
 
 # Function to add a wordlist to a specific list
@@ -143,7 +152,7 @@ if [ "$#" -gt 0 ] && [ "$1" == "config" ]; then
     case "$1" in
         --add-wordlist)
             if [ "$#" -gt 3 ] && [ "$3" == "--to" ]; then
-                add_wordlist "${4,,}" "$2" # convert to lowercase
+                add_wordlist "${4,,}" # convert to lowercase
             else
                 echo "Usage: reconrunner config --add-wordlist <path to wordlist> --to <type>"
             fi
@@ -151,7 +160,7 @@ if [ "$#" -gt 0 ] && [ "$1" == "config" ]; then
             ;;
         --remove-wordlist)
             if [ "$#" -gt 3 ] && [ "$3" == "--from" ]; then
-                remove_wordlist "${4,,}" "$2" # convert to lowercase
+                remove_wordlist "${4,,}" # convert to lowercase
             else
                 echo "Usage: reconrunner config --remove-wordlist <path to wordlist> --from <type>"
             fi
@@ -197,6 +206,7 @@ PROTOCOL="http"
 USE_WILDCARD=false
 WILDCARD_DOMAIN=""
 EXTRA_OPTIONS=""
+CUSTOM_LIST=""
 
 # Function to process extra options
 process_extra_options() {
@@ -227,114 +237,100 @@ if [ "$#" -gt 0 ] && [ "$1" == "--wildcard" ]; then
         WILDCARD_DOMAIN="$2"
         shift 2
     else
-        echo "Usage: reconrunner <enum_type> <ip> [--wildcard <wildcard_domain>]"
+        echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--cl <custom_list>] [--wildcard <wildcard_domain>] [--extra <extra_options>]"
         exit 1
     fi
 fi
 
-# Check for --extra flag
-if [ "$#" -gt 0 ] && [ "$1" == "--extra" ]; then
-    shift
-    process_extra_options "$@"
-fi
-
-# Ensure the host is reachable
-if ! curl -s --head "${URL}" | head -n 1 | grep "HTTP/[12][.][0-9] [23].."; then
-    echo "Error: The host ${URL} is not reachable."
-    exit 1
-fi
-
-# Set up output directories after checking reachability
-BASE_OUTPUT_DIR="reconrunner_output"
-OUTPUT_DIR="${BASE_OUTPUT_DIR}/${ENUM_TYPE}"
-mkdir -p "$OUTPUT_DIR"
-
-# Function to generate a unique output file name
-generate_output_file_name() {
-    local base_name="$1"
-    local type="$2"
-    local extension="$3"
-    local counter=1
-    local output_file="${OUTPUT_DIR}/${base_name}-${type}-${counter}.${extension}"
-    while [ -f "$output_file" ]; do
-        ((counter++))
-        output_file="${OUTPUT_DIR}/${base_name}-${type}-${counter}.${extension}"
-    done
-    echo "$output_file"
-}
-
-if [ "$ENUM_TYPE" == "subs" ]; then
-    OUTPUT_FILE=$(generate_output_file_name "$IP" "$ENUM_TYPE" "json")
-else
-    OUTPUT_FILE=$(generate_output_file_name "$IP" "$ENUM_TYPE" "txt")
-fi
-
 # Check for --cw flag
-CUSTOM_WORDLIST=""
 if [ "$#" -gt 0 ] && [ "$1" == "--cw" ]; then
     if [ "$#" -gt 1 ]; then
-        CUSTOM_WORDLIST="$2"
+        CUSTOM_LIST="$2"
         shift 2
     else
-        echo "Usage: reconrunner <enum_type> <ip> [--cw <custom_wordlist>]"
+        echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--cl <custom_list>] [--wildcard <wildcard_domain>] [--extra <extra_options>]"
         exit 1
     fi
 fi
 
 # Check for --cl flag
-CUSTOM_LIST=""
 if [ "$#" -gt 0 ] && [ "$1" == "--cl" ]; then
     if [ "$#" -gt 1 ]; then
-        CUSTOM_LIST="${2,,}" # convert to lowercase
+        CUSTOM_LIST="$2"
         shift 2
     else
-        echo "Usage: reconrunner <enum_type> <ip> [--cl <custom_list>]"
+        echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--cl <custom_list>] [--wildcard <wildcard_domain>] [--extra <extra_options>]"
         exit 1
     fi
 fi
 
-# Load wordlists based on enumeration type or custom list
-if [ -n "$CUSTOM_WORDLIST" ]; then
-    WORDLISTS=("$CUSTOM_WORDLIST")
-elif [ -n "$CUSTOM_LIST" ]; then
-    WORDLISTS=($(load_wordlists "$CUSTOM_LIST"))
+# Process any extra options
+process_extra_options "$@"
+
+# Function to find the next available index for output files
+find_next_index() {
+    local base_name="$1"
+    local type="$2"
+    local highest_index=0
+    local pattern="${base_name}-${type}-*.txt"
+
+    for file in ${BASE_OUTPUT_DIR}/${type}/${pattern}; do
+        if [[ -f "$file" ]]; then
+            index=$(echo "$file" | grep -oP '(?<=-)[0-9]+(?=\.)' | sort -n | tail -n 1)
+            if [[ $index -gt $highest_index ]]; then
+                highest_index=$index
+            fi
+        fi
+    done
+
+    echo $((highest_index + 1))
+}
+
+# Function to generate a unique output file name
+generate_output_file_name() {
+    local base_name="$1"
+    local type="$2"
+    local index="$3"
+    local extension="$4"
+    echo "${BASE_OUTPUT_DIR}/${type}/${base_name}-${type}-${index}.${extension}"
+}
+
+# Create the output directory
+OUTPUT_DIR="${BASE_OUTPUT_DIR}/${ENUM_TYPE}"
+mkdir -p "$OUTPUT_DIR" || { echo "Error: Cannot create directory '$OUTPUT_DIR'"; exit 1; }
+
+# Determine wordlists to use
+if [ -n "$CUSTOM_LIST" ]; then
+    wordlists=$(load_custom_wordlists "$CUSTOM_LIST")
 else
-    WORDLISTS=($(load_wordlists "$ENUM_TYPE"))
+    wordlists=$(load_wordlists "$ENUM_TYPE")
 fi
 
-# Function to run gobuster with a given wordlist for directory enumeration
-run_reconrunner_dirs() {
-    local wordlist="$1"
-    gobuster dir -u "$URL" -w "$wordlist" -o "$OUTPUT_FILE" --no-color -q $EXTRA_OPTIONS
-    # Remove ANSI escape codes and other unwanted characters
-    sed -i 's/\x1b\[[0-9;]*m//g' "$OUTPUT_FILE"
-    echo "Gobuster results saved to $OUTPUT_FILE"
-}
-
-# Function to run ffuf for subdomain enumeration and save output as JSON
-run_reconrunner_subs() {
-    local wordlist="$1"
-    if $USE_WILDCARD; then
-        # Replace wildcard domain in the header with 'FUZZ' at the correct location
-        ffuf -c -w "$wordlist" -u "${PROTOCOL}://${IP}/" -H "Host: ${WILDCARD_DOMAIN//\*/FUZZ}" -o "${OUTPUT_FILE}" -of json $EXTRA_OPTIONS
-        echo "FFUF results with wildcard saved to ${OUTPUT_FILE}"
-    else
-        # Use regular Host header for subdomain enumeration with FUZZ at the end
-        ffuf -c -w "$wordlist" -u "${PROTOCOL}://${IP}/" -H "Host: FUZZ.${IP}" -o "${OUTPUT_FILE}" -of json $EXTRA_OPTIONS
-        echo "FFUF results saved to ${OUTPUT_FILE}"
-    fi
-}
-
 # Run the appropriate function based on the enumeration type
+index=$(find_next_index "$IP" "$ENUM_TYPE")
+
 case "$ENUM_TYPE" in
     dirs)
-        for wordlist in "${WORDLISTS[@]}"; do
-            run_reconrunner_dirs "$wordlist"
+        for wordlist in $wordlists; do
+            output_file=$(generate_output_file_name "$IP" "dirs" "$index" "txt")
+            log_message "Running gobuster with wordlist: $wordlist"
+            gobuster dir -u "$URL" -w "$wordlist" -o "$output_file" --no-color -q $EXTRA_OPTIONS
+            # Remove ANSI escape codes and other unwanted characters
+            sed -i 's/\x1b\[[0-9;]*m//g' "$output_file"
+            ((index++))
         done
         ;;
     subs)
-        for wordlist in "${WORDLISTS[@]}"; do
-            run_reconrunner_subs "$wordlist"
+        for wordlist in $wordlists; do
+            output_file=$(generate_output_file_name "$IP" "subs" "$index" "json")
+            if $USE_WILDCARD; then
+                # Replace wildcard domain in the header with 'FUZZ' at the correct location
+                ffuf -c -w "$wordlist" -u "${PROTOCOL}://${IP}/" -H "Host: ${WILDCARD_DOMAIN//\*/FUZZ}" -o "$output_file" -of json $EXTRA_OPTIONS
+            else
+                # Use regular Host header for subdomain enumeration with FUZZ at the end
+                ffuf -c -w "$wordlist" -u "${PROTOCOL}://${IP}/" -H "Host: FUZZ.${IP}" -o "$output_file" -of json $EXTRA_OPTIONS
+            fi
+            ((index++))
         done
         ;;
     *)
