@@ -40,7 +40,7 @@ sudo rm -r ReconRunner
 # **Usage**
 
 ```
-$ reconrunner --help
+$ ./ReconRunner.sh 
 Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--wildcard <wildcard_domain>] [--extra <extra_options>]
 
 Help:
@@ -60,10 +60,16 @@ Options:
   <enum_type>                  The type of enumeration (e.g., dirs, subs).
   <ip>                         The target IP address or domain.
   --https                      (Optional) Use HTTPS protocol instead of HTTP.
-  --cw <custom_wordlist>       (Optional) Use a custom wordlist before the default wordlists.
+  --cw <custom_wordlist>       (Optional) Use a custom wordlist instead of the default wordlists.
   --wildcard <wildcard_domain> (Optional) Use wildcard in the Host header for subdomain enumeration.
   --extra <extra_options>      (Optional) Additional options for the enumeration tool.
 
+Configuration commands:
+  reconrunner config --add-wordlist <path to wordlist> --to <type>
+  reconrunner config --remove-wordlist <path to wordlist> --from <type>
+  reconrunner config --create-list <name>
+  reconrunner config --remove-list <name>
+  reconrunner config --list-info
 
 Examples:
   reconrunner dirs example.com
