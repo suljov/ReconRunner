@@ -1,5 +1,23 @@
 #!/bin/bash
 
+CONFIG_DIR="$HOME/.reconrunner"
+CONFIG_FILE="$CONFIG_DIR/wordlists-config.json"
+
+# Default wordlists configuration in JSON format
+DEFAULT_CONFIG='{
+    "LFI": [],
+    "subs": ["/usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-110000.txt", "/usr/share/wordlists/seclists/Discovery/DNS/combined_subdomains.txt"],
+    "dirs": ["/usr/share/wordlists/seclists/Discovery/Web-Content/quickhits.txt", "/usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt"],
+    "SQL": [],
+    "OSinjection": []
+}'
+
+# Create config directory and file if they don't exist
+mkdir -p "$CONFIG_DIR"
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo "$DEFAULT_CONFIG" > "$CONFIG_FILE"
+fi
+
 # Function to display help
 display_help() {
     echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--wildcard <wildcard_domain>] [--extra <extra_options>]"
@@ -21,10 +39,16 @@ display_help() {
     echo "  <enum_type>                  The type of enumeration (e.g., dirs, subs)."
     echo "  <ip>                         The target IP address or domain."
     echo "  --https                      (Optional) Use HTTPS protocol instead of HTTP."
-    echo "  --cw <custom_wordlist>       (Optional) Use a custom wordlist before the default wordlists."
+    echo "  --cw <custom_wordlist>       (Optional) Use a custom wordlist instead of the default wordlists."
     echo "  --wildcard <wildcard_domain> (Optional) Use wildcard in the Host header for subdomain enumeration."
     echo "  --extra <extra_options>      (Optional) Additional options for the enumeration tool."
     echo
+    echo "Configuration commands:"
+    echo "  reconrunner config --add-wordlist <path to wordlist> --to <type>"
+    echo "  reconrunner config --remove-wordlist <path to wordlist> --from <type>"
+    echo "  reconrunner config --create-list <name>"
+    echo "  reconrunner config --remove-list <name>"
+    echo "  reconrunner config --list-info"
     echo
     echo "Examples:"
     echo "  reconrunner dirs example.com"
@@ -85,41 +109,98 @@ if [ "$#" -gt 0 ] && [ "$1" == "--help" ]; then
     display_help
 fi
 
+# Function to load wordlists from the config file
+load_wordlists() {
+    local type="$1"
+    jq -r --arg type "$type" '.[$type][]' "$CONFIG_FILE"
+}
+
+# Function to add a wordlist to a specific list
+add_wordlist() {
+    local type="$1"
+    local wordlist="$2"
+    jq --arg type "$type" --arg wordlist "$wordlist" '(.[$type]) += [$wordlist]' "$CONFIG_FILE" > "$CONFIG_FILE.tmp" && mv "$CONFIG_FILE.tmp" "$CONFIG_FILE"
+    echo "Wordlist '$wordlist' added to '$type'."
+}
+
+# Function to remove a wordlist from a specific list
+remove_wordlist() {
+    local type="$1"
+    local wordlist="$2"
+    jq --arg type "$type" --arg wordlist "$wordlist" '(.[$type]) |= map(select(. != $wordlist))' "$CONFIG_FILE" > "$CONFIG_FILE.tmp" && mv "$CONFIG_FILE.tmp" "$CONFIG_FILE"
+    echo "Wordlist '$wordlist' removed from '$type'."
+}
+
+# Function to create a new list
+create_list() {
+    local name="$1"
+    jq --arg name "$name" '.[$name] = []' "$CONFIG_FILE" > "$CONFIG_FILE.tmp" && mv "$CONFIG_FILE.tmp" "$CONFIG_FILE"
+    echo "List '$name' created."
+}
+
+# Function to remove a list
+remove_list() {
+    local name="$1"
+    jq --arg name "$name" 'del(.[$name])' "$CONFIG_FILE" > "$CONFIG_FILE.tmp" && mv "$CONFIG_FILE.tmp" "$CONFIG_FILE"
+    echo "List '$name' removed."
+}
+
+# Function to list all wordlists
+list_info() {
+    echo "Wordlists Configuration:"
+    jq -r 'to_entries[] | "\(.key):\n\t\(.value | join("\n\t"))"' "$CONFIG_FILE"
+}
+
+# Configuration command handling
+if [ "$#" -gt 0 ] && [ "$1" == "config" ]; then
+    shift
+    case "$1" in
+        --add-wordlist)
+            if [ "$#" -gt 3 ] && [ "$3" == "--to" ]; then
+                add_wordlist "$4" "$2"
+            else
+                echo "Usage: reconrunner config --add-wordlist <path to wordlist> --to <type>"
+            fi
+            exit 0
+            ;;
+        --remove-wordlist)
+            if [ "$#" -gt 3 ] && [ "$3" == "--from" ]; then
+                remove_wordlist "$4" "$2"
+            else
+                echo "Usage: reconrunner config --remove-wordlist <path to wordlist> --from <type>"
+            fi
+            exit 0
+            ;;
+        --create-list)
+            if [ "$#" -gt 1 ]; then
+                create_list "$2"
+            else
+                echo "Usage: reconrunner config --create-list <name>"
+            fi
+            exit 0
+            ;;
+        --remove-list)
+            if [ "$#" -gt 1 ]; then
+                remove_list "$2"
+            else
+                echo "Usage: reconrunner config --remove-list <name>"
+            fi
+            exit 0
+            ;;
+        --list-info)
+            list_info
+            exit 0
+            ;;
+        *)
+            echo "Unknown config command."
+            display_help
+            ;;
+    esac
+fi
+
 # Check if the correct number of arguments is provided
 if [ "$#" -lt 2 ]; then
-        echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--wildcard <wildcard_domain>] [--extra <extra_options>]"
-    echo
-    echo "Help:"
-    echo "  --help                       Prints this message"
-    echo "  dirs --help                  Prints all options for dirs"
-    echo "  subs --help                  Prints all options for subs"
-    echo
-    echo "  reconrunner dirs --help"
-    echo "  reconrunner subs --help"
-    echo
-    echo
-    echo "Available types:"
-    echo "  dirs    Directory/file enumeration (tool: gobuster)"
-    echo "  subs    Subdomain enumeration (tool: ffuf)"
-    echo
-    echo "Options:"
-    echo "  <enum_type>                  The type of enumeration (e.g., dirs, subs)."
-    echo "  <ip>                         The target IP address or domain."
-    echo "  --https                      (Optional) Use HTTPS protocol instead of HTTP."
-    echo "  --cw <custom_wordlist>       (Optional) Use a custom wordlist before the default wordlists."
-    echo "  --wildcard <wildcard_domain> (Optional) Use wildcard in the Host header for subdomain enumeration."
-    echo "  --extra <extra_options>      (Optional) Additional options for the enumeration tool."
-    echo
-    echo
-    echo "Examples:"
-    echo "  reconrunner dirs example.com"
-    echo "  reconrunner dirs example.com --https"
-    echo "  reconrunner dirs example.com --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'"
-    echo
-    echo "  reconrunner subs example.com"
-    echo "  reconrunner subs example.com --cw /path/to/custom_wordlist.txt --wildcard test-*.example.com --extra '--timeout=30 --rate=100'"
-    echo
-    exit 1
+    display_help
 fi
 
 # Enumeration type and base URL
@@ -164,10 +245,11 @@ fi
 if [ "$#" -gt 0 ] && [ "$1" == "--extra" ]; then
     shift
     process_extra_options "$@"
+    set --
 fi
 
 # Check if the host is reachable
-if ! curl -L -s --head "$URL" | head -n 1 | grep "HTTP/[12][.][0-9] [23].."; then
+if ! curl -s --head "${URL}" | head -n 1 | grep "HTTP/[12][.][0-9] [23].."; then
     echo "Error: The host ${URL} is not reachable."
     exit 1
 fi
@@ -204,27 +286,11 @@ if [ "$#" -gt 0 ] && [ "$1" == "--cw" ]; then
     shift 2
 fi
 
-# List of wordlists for directory enumeration
-DIR_WORDLISTS=(
-    "/usr/share/wordlists/seclists/Discovery/Web-Content/quickhits.txt"
-    "/usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt"
-    # Add more wordlists here as needed
-)
-
-# List of wordlists for subdomain enumeration
-SUBS_WORDLISTS=(
-    "/usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-110000.txt"
-    "/usr/share/wordlists/seclists/Discovery/DNS/combined_subdomains.txt"
-    # Add more wordlists here as needed
-)
-
-# Prepend the custom wordlist if provided
+# Load wordlists based on enumeration type
 if [ -n "$CUSTOM_WORDLIST" ]; then
-    if [ "$ENUM_TYPE" == "dirs" ]; then
-        DIR_WORDLISTS=("$CUSTOM_WORDLIST" "${DIR_WORDLISTS[@]}")
-    elif [ "$ENUM_TYPE" == "subs" ]; then
-        SUBS_WORDLISTS=("$CUSTOM_WORDLIST" "${SUBS_WORDLISTS[@]}")
-    fi
+    WORDLISTS=("$CUSTOM_WORDLIST")
+else
+    WORDLISTS=($(load_wordlists "$ENUM_TYPE"))
 fi
 
 # Function to run gobuster with a given wordlist for directory enumeration
@@ -253,12 +319,12 @@ run_reconrunner_subs() {
 # Run the appropriate function based on the enumeration type
 case "$ENUM_TYPE" in
     dirs)
-        for wordlist in "${DIR_WORDLISTS[@]}"; do
+        for wordlist in "${WORDLISTS[@]}"; do
             run_reconrunner_dirs "$wordlist"
         done
         ;;
     subs)
-        for wordlist in "${SUBS_WORDLISTS[@]}"; do
+        for wordlist in "${WORDLISTS[@]}"; do
             run_reconrunner_subs "$wordlist"
         done
         ;;
