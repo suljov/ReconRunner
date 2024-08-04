@@ -1,22 +1,7 @@
 #!/bin/bash
 
-CONFIG_DIR="$HOME/.reconrunner"
-CONFIG_FILE="$CONFIG_DIR/wordlists-config.json"
+CONFIG_FILE="$HOME/.reconrunner/wordlists-config.json"
 
-# Default wordlists configuration in JSON format
-DEFAULT_CONFIG='{
-    "LFI": [],
-    "subs": ["/usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-110000.txt", "/usr/share/wordlists/seclists/Discovery/DNS/combined_subdomains.txt"],
-    "dirs": ["/usr/share/wordlists/seclists/Discovery/Web-Content/quickhits.txt", "/usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt"],
-    "SQL": [],
-    "OSinjection": []
-}'
-
-# Create config directory and file if they don't exist
-mkdir -p "$CONFIG_DIR"
-if [ ! -f "$CONFIG_FILE" ]; then
-    echo "$DEFAULT_CONFIG" > "$CONFIG_FILE"
-fi
 
 # Function to display help
 display_help() {
