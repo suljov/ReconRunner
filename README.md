@@ -121,6 +121,10 @@ reconrunner subs example.com --cw /path/to/custom_wordlist.txt --extra '-fl 100'
 reconrunner subs example.com --wildcard example*.com
 ```
 The wildcard will be replaced with the word `FUZZ`
+#### with another or custom list (lists that are in the config file)
+```
+reconrunner subs example.com --cw <name of list>
+```
 
 # **The ability to customize**
 
