@@ -34,11 +34,11 @@ ReconRunner is a tool designed to streamline and make directory and file brute-f
 ```
 git clone https://github.com/suljov/ReconRunner
 cd ReconRunner
-chmod +x install.sh && bash install.sh
+chmod +x install.sh && ./install.sh
 ```
 
 # **Usage**
-
+To install ReconRunner, clone the repository and run the installation script:
 ```
 $ ./ReconRunner.sh                   
 Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--cl <custom_list>] [--wildcard <wildcard_domain>] [--extra <extra_options>]
@@ -128,57 +128,27 @@ The wildcard will be replaced with the word `FUZZ`
 
 # **The ability to customize**
 
-## Wordlists
-This tool is customizable for easily add or remove wordlists. 
-by simply edit the file by typing:
-```
-sudo gedit /usr/local/bin/reconrunner
-```
-and find the this part on line `67` and on `96`:
+## Customizing Wordlists
+The tool supports custom wordlists via a configuration file. To customize or add new wordlists:
 
-Example:
-```
-# List of wordlists
-WORDLISTS=(
-    "/usr/share/wordlists/seclists/Discovery/Web-Content/quickhits.txt"
-    "/usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt"
-    # Add more wordlists here as needed
-)
-```
-you can simply add how many you want if you have a custom wordlists you always use etc:
-```
-# List of wordlists
-WORDLISTS=(
-    "/usr/share/wordlist/myonly-owrdlist.txt"
-)
-```
-its up to use what wordlist it uses. 
+1. Edit Configuration File:
+Edit the JSON file located at $HOME/.reconrunner/wordlists-config.json. You can add or remove wordlists, create custom lists, and specify wordlists for different types of enumeration.
 
-## Wildcards
-
-When using wildcards in your domain names, ReconRunner replaces them with FUZZ in the headers. For example, if your domain is example.com (subdomain = frontdesk-prod.example.com), and uses a wildcard frontdesk-*.example.com it will be replaced as follows:
-
-* **With Wildcard** example: frontdesk-*.example.com -> frontdesk-FUZZ.example.com
-* **Without Wildcard** per default: FUZZ.frontdesk-prod.example.com
-
-This ensures that the tool tests for subdomains effectively according to your specified wildcard pattern.
-
-Example Command:
-```
-reconrunner subs frontdesk-prod.example.com --wildcard frontdesk-*.example.com
-```
+2. Commands for Configuration:
+* Add Wordlist: reconrunner config --add-wordlist <path to wordlist> --to <type>
+* Remove Wordlist: reconrunner config --remove-wordlist <path to wordlist> --from <type>
+* Create List: reconrunner config --create-list <name>
+* Remove List: reconrunner config --remove-list <name>
+* List Info: reconrunner config --list-info
+        
 
 # **Cleaning Up**
-To ensure that partial results are not lost, the tool saves and cleans the output on-the-fly. Even if you cancel the tool using CTRL + C, the results gathered up to that point will be cleaned and saved.
-
+ReconRunner ensures that partial results are saved and cleaned up on-the-fly. If you cancel the tool using CTRL + C, it will save results up to that point and clean temporary files.
 
 
 # **Acknowledgments**
-* **Gobuster**: The original tool by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart) which this tool uses.
-  * https://github.com/OJ/gobuster
-* **ffuf**: The original tool by @ffuf which this tool uses.
-  * https://github.com/ffuf/ffuf
-
+* **Gobuster**: A tool by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart). [GitHub Repository](https://github.com/OJ/gobuster)
+* **ffuf**: A tool by @ffuf. [GitHub Repository](https://github.com/ffuf/ffuf)
 
 
 
