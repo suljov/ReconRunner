@@ -20,7 +20,7 @@ fi
 
 # Function to display help
 display_help() {
-    echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--wildcard <wildcard_domain>] [--extra <extra_options>]"
+    echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--cl <custom_list>] [--wildcard <wildcard_domain>] [--extra <extra_options>]"
     echo
     echo "Help:"
     echo "  --help                       Prints this message"
@@ -40,6 +40,7 @@ display_help() {
     echo "  <ip>                         The target IP address or domain."
     echo "  --https                      (Optional) Use HTTPS protocol instead of HTTP."
     echo "  --cw <custom_wordlist>       (Optional) Use a custom wordlist instead of the default wordlists."
+    echo "  --cl <custom_list>           (Optional) Use a custom list of wordlists from the config file."
     echo "  --wildcard <wildcard_domain> (Optional) Use wildcard in the Host header for subdomain enumeration."
     echo "  --extra <extra_options>      (Optional) Additional options for the enumeration tool."
     echo
@@ -157,7 +158,7 @@ if [ "$#" -gt 0 ] && [ "$1" == "config" ]; then
     case "$1" in
         --add-wordlist)
             if [ "$#" -gt 3 ] && [ "$3" == "--to" ]; then
-                add_wordlist "$4" "$2"
+                add_wordlist "${4,,}" "$2" # convert to lowercase
             else
                 echo "Usage: reconrunner config --add-wordlist <path to wordlist> --to <type>"
             fi
@@ -165,7 +166,7 @@ if [ "$#" -gt 0 ] && [ "$1" == "config" ]; then
             ;;
         --remove-wordlist)
             if [ "$#" -gt 3 ] && [ "$3" == "--from" ]; then
-                remove_wordlist "$4" "$2"
+                remove_wordlist "${4,,}" "$2" # convert to lowercase
             else
                 echo "Usage: reconrunner config --remove-wordlist <path to wordlist> --from <type>"
             fi
@@ -173,7 +174,7 @@ if [ "$#" -gt 0 ] && [ "$1" == "config" ]; then
             ;;
         --create-list)
             if [ "$#" -gt 1 ]; then
-                create_list "$2"
+                create_list "${2,,}" # convert to lowercase
             else
                 echo "Usage: reconrunner config --create-list <name>"
             fi
@@ -181,7 +182,7 @@ if [ "$#" -gt 0 ] && [ "$1" == "config" ]; then
             ;;
         --remove-list)
             if [ "$#" -gt 1 ]; then
-                remove_list "$2"
+                remove_list "${2,,}" # convert to lowercase
             else
                 echo "Usage: reconrunner config --remove-list <name>"
             fi
@@ -216,7 +217,7 @@ EXTRA_OPTIONS=""
 process_extra_options() {
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            --https | --cw | --wildcard | --extra)
+            --https | --cw | --cl | --wildcard | --extra)
                 break
                 ;;
             *)
@@ -236,19 +237,23 @@ URL="${PROTOCOL}://${IP}/"
 
 # Check for --wildcard flag
 if [ "$#" -gt 0 ] && [ "$1" == "--wildcard" ]; then
-    USE_WILDCARD=true
-    WILDCARD_DOMAIN="$2"
-    shift 2
+    if [ "$#" -gt 1 ]; then
+        USE_WILDCARD=true
+        WILDCARD_DOMAIN="$2"
+        shift 2
+    else
+        echo "Usage: reconrunner <enum_type> <ip> [--wildcard <wildcard_domain>]"
+        exit 1
+    fi
 fi
 
-# Check for --extra flag and capture all following options
+# Check for --extra flag
 if [ "$#" -gt 0 ] && [ "$1" == "--extra" ]; then
     shift
     process_extra_options "$@"
-    set --
 fi
 
-# Check if the host is reachable
+# Ensure the host is reachable
 if ! curl -s --head "${URL}" | head -n 1 | grep "HTTP/[12][.][0-9] [23].."; then
     echo "Error: The host ${URL} is not reachable."
     exit 1
@@ -282,13 +287,32 @@ fi
 # Check for --cw flag
 CUSTOM_WORDLIST=""
 if [ "$#" -gt 0 ] && [ "$1" == "--cw" ]; then
-    CUSTOM_WORDLIST="$2"
-    shift 2
+    if [ "$#" -gt 1 ]; then
+        CUSTOM_WORDLIST="$2"
+        shift 2
+    else
+        echo "Usage: reconrunner <enum_type> <ip> [--cw <custom_wordlist>]"
+        exit 1
+    fi
 fi
 
-# Load wordlists based on enumeration type
+# Check for --cl flag
+CUSTOM_LIST=""
+if [ "$#" -gt 0 ] && [ "$1" == "--cl" ]; then
+    if [ "$#" -gt 1 ]; then
+        CUSTOM_LIST="${2,,}" # convert to lowercase
+        shift 2
+    else
+        echo "Usage: reconrunner <enum_type> <ip> [--cl <custom_list>]"
+        exit 1
+    fi
+fi
+
+# Load wordlists based on enumeration type or custom list
 if [ -n "$CUSTOM_WORDLIST" ]; then
     WORDLISTS=("$CUSTOM_WORDLIST")
+elif [ -n "$CUSTOM_LIST" ]; then
+    WORDLISTS=($(load_wordlists "$CUSTOM_LIST"))
 else
     WORDLISTS=($(load_wordlists "$ENUM_TYPE"))
 fi
