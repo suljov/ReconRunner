@@ -6,6 +6,7 @@ A powerful, enhanced version of the popular tools like Gobuster and ffuf, design
 * make a install script for easier install??
 * fix the output saving problem on dirs and subs
     * fix so the subs type get a clean output file instead of messy json
+    * fix so dirs output get saved (seems to be an append problem here)
 * come up with more idéas for features
   * add feature for sql innjection testing (sqlmap)
   * add feature for simple fuzzing (web)
