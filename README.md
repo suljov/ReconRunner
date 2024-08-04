@@ -132,9 +132,11 @@ The wildcard will be replaced with the word `FUZZ`
 The tool supports custom wordlists via a configuration file. To customize or add new wordlists:
 
 1. Edit Configuration File:
+
 Edit the JSON file located at $HOME/.reconrunner/wordlists-config.json. You can add or remove wordlists, create custom lists, and specify wordlists for different types of enumeration.
 
 2. Commands for Configuration:
+
 * Add Wordlist: reconrunner config --add-wordlist <path to wordlist> --to <type>
 * Remove Wordlist: reconrunner config --remove-wordlist <path to wordlist> --from <type>
 * Create List: reconrunner config --create-list <name>
