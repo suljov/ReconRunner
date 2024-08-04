@@ -3,9 +3,12 @@
 CONFIG_FILE="$HOME/.reconrunner/wordlists-config.json"
 BASE_OUTPUT_DIR="reconrunner_output"
 
+# Flag to indicate if the script should clean up
+SHOULD_CLEANUP=false
+
 # Function to display help
 display_help() {
-    echo "Usage: reconrunner <type> <ip> [--https] [--cw <custom_wordlist>] [--cl <custom_list>] [--wildcard <wildcard_domain>] [--extra <extra_options>]"
+    echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--cl <custom_list>] [--wildcard <wildcard_domain>] [--extra <extra_options>]"
     echo
     echo "Help:"
     echo "  --help                       Prints this message"
@@ -17,6 +20,8 @@ display_help() {
     echo "  subs    Subdomain enumeration (tool: ffuf)"
     echo
     echo "Options:"
+    echo "  <enum_type>                  The type of enumeration (e.g., dirs, subs)."
+    echo "  <ip>                         The target IP address or domain."
     echo "  --https                      (Optional) Use HTTPS protocol instead of HTTP."
     echo "  --cw <custom_wordlist>       (Optional) Use a custom wordlist instead of the default wordlists."
     echo "  --cl <custom_list>           (Optional) Use a custom list of wordlists from the config file."
@@ -57,12 +62,14 @@ display_ffuf_help() {
 
 # Function to clean up on exit
 cleanup() {
-    echo ""
-    echo "Cleaning up..."
-    if [ -f "$TEMP_FILE" ]; then
-        rm -f "$TEMP_FILE"
+    if [ "$SHOULD_CLEANUP" = true ]; then
+        echo ""
+        echo "Cleaning up..."
+        if [ -f "$TEMP_FILE" ]; then
+            rm -f "$TEMP_FILE"
+        fi
+        echo "Results saved in: $OUTPUT_DIR"
     fi
-    echo "Results saved in: $OUTPUT_DIR"
     exit 1
 }
 
@@ -225,8 +232,8 @@ URL="${PROTOCOL}://${IP}/"
 # Check for --wildcard flag
 if [ "$#" -gt 0 ] && [ "$1" == "--wildcard" ]; then
     if [ "$#" -gt 1 ]; then
-        USE_WILDCARD=true
         WILDCARD_DOMAIN="$2"
+        USE_WILDCARD=true
         shift 2
     else
         echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--cl <custom_list>] [--wildcard <wildcard_domain>] [--extra <extra_options>]"
@@ -259,30 +266,12 @@ fi
 # Process extra options
 process_extra_options "$@"
 
-# Ensure the output directory exists
-mkdir -p "$BASE_OUTPUT_DIR"
-OUTPUT_DIR="$BASE_OUTPUT_DIR/$ENUM_TYPE"
-mkdir -p "$OUTPUT_DIR"
-
-# Function to generate output file name
-generate_output_file_name() {
-    local ip="$1"
-    local type="$2"
-    local index="$3"
-    local extension="$4"
-    echo "$OUTPUT_DIR/${ip}_${type}_${index}.${extension}"
-}
-
-# Function to find the next index for output files
-find_next_index() {
-    local ip="$1"
-    local type="$2"
-    local extension="$3"
-    local index=1
-    while [ -e "$(generate_output_file_name "$ip" "$type" "$index" "$extension")" ]; do
-        index=$((index + 1))
-    done
-    echo "$index"
+# Ensure the output directory exists if the host is reachable
+check_host_reachable() {
+    if ! curl -s --head "${URL}" | head -n 1 | grep "HTTP/[12][.][0-9] [23].."; then
+        echo "Error: The host ${URL} is not reachable."
+        exit 1
+    fi
 }
 
 # Determine the wordlists to use
@@ -301,9 +290,20 @@ determine_wordlists() {
     # Check if wordlists are empty
     if [ -z "$wordlists" ]; then
         echo "Error: No wordlists found for type '${ENUM_TYPE}'."
-        cleanup
+        exit 1
     fi
 }
+
+# Ensure the host is reachable
+check_host_reachable
+
+# Set flag to clean up since we are proceeding
+SHOULD_CLEANUP=true
+
+# Ensure the output directory exists
+mkdir -p "$BASE_OUTPUT_DIR"
+OUTPUT_DIR="$BASE_OUTPUT_DIR/$ENUM_TYPE"
+mkdir -p "$OUTPUT_DIR"
 
 # Determine wordlists to use
 determine_wordlists
@@ -315,6 +315,10 @@ case "$ENUM_TYPE" in
         for wordlist in $wordlists; do
             output_file=$(generate_output_file_name "$IP" "dirs" "$index" "txt")
             gobuster dir -u "$URL" -w "$wordlist" -o "$output_file" --no-color -q $EXTRA_OPTIONS
+            if [ $? -ne 0 ]; then
+                echo "Error: error on running gobuster: unable to connect to $URL"
+                cleanup
+            fi
             sed -i 's/\x1b\[[0-9;]*m//g' "$output_file"
             ((index++))
         done
@@ -327,6 +331,10 @@ case "$ENUM_TYPE" in
                 ffuf -c -w "$wordlist" -u "${PROTOCOL}://${IP}/" -H "Host: ${WILDCARD_DOMAIN//\*/FUZZ}" -o "$output_file" -of json $EXTRA_OPTIONS
             else
                 ffuf -c -w "$wordlist" -u "${PROTOCOL}://${IP}/" -H "Host: FUZZ.${IP}" -o "$output_file" -of json $EXTRA_OPTIONS
+            fi
+            if [ $? -ne 0 ]; then
+                echo "Error: error on running ffuf: unable to connect to $URL"
+                cleanup
             fi
             ((index++))
         done
