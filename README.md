@@ -40,17 +40,13 @@ chmod +x install.sh && ./install.sh
 # **Usage**
 To install ReconRunner, clone the repository and run the installation script:
 ```
-$ ./ReconRunner.sh                   
+$ reconrunner --help         
 Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--cl <custom_list>] [--wildcard <wildcard_domain>] [--extra <extra_options>]
 
 Help:
   --help                       Prints this message
   dirs --help                  Prints all options for dirs
   subs --help                  Prints all options for subs
-
-  reconrunner dirs --help
-  reconrunner subs --help
-
 
 Available types:
   dirs    Directory/file enumeration (tool: gobuster)
