@@ -1,9 +1,9 @@
 # ReconRunner
 
-A powerful, enhanced version of the popular tools like Gobuster and ffuf, designed to streamline and improve your experience with directory and file brute-forcing and scan for subdomains. This tool automates multiple wordlist usage, offers flexible protocol options, and ensures clean and organized output, all while keeping the user in control with intuitive command-line flags.
+ReconRunner is a tool designed to streamline and make directory and file brute-forcing, as well as subdomain enumeration easier. Leveraging popular tools like Gobuster and ffuf, ReconRunner provides a more flexible and powerful experience with improved handling of wordlists, protocols, and outputs.
 
 ## **TODO/idéas**
-* make a install script for easier install??
+* ~~make a install script for easier install??~~
 * fix the output saving problem on dirs and subs
     * fix so the subs type get a clean output file instead of messy json
     * fix so dirs output get saved (seems to be an append problem here)
@@ -18,12 +18,13 @@ A powerful, enhanced version of the popular tools like Gobuster and ffuf, design
 
 ## Features
 
-* Protocol Flexibility: Seamlessly switch between HTTP and HTTPS protocols.
-* Custom Wordlists: Start your enumeration with a custom wordlist before default ones, ensuring a tailored approach.
-* Wildcard Support: Easily incorporate wildcard domains for subdomain enumeration.
-* Interactive Control: Cancel the tool anytime with CTRL + C without losing progress. The tool is designed to handle interruptions gracefully, saving collected results and cleaning up temporary resources.
-* Detailed Help and Usage Instructions: Comprehensive help options for both the tool and the underlying tools, guiding you through all available options.
-* Clean and Organized Output: Results are saved in a structured format, with options for customization and easy parsing.
+* **Protocol Flexibility:** Seamlessly switch between HTTP and HTTPS protocols.
+* **Custom Wordlists:** Start with a custom wordlist before default ones, for a more tailored approach.
+* **Custom List of Wordlists:** Use a specific list of wordlists from a configuration file.
+* **Wildcard Support:** Easily incorporate wildcard domains for subdomain enumeration.
+* **Interactive Control:** Cancel the tool anytime with CTRL + C, ensuring that results are saved and temporary resources are cleaned.
+* **Detailed Help and Usage Instructions:** Comprehensive help options for both the tool and underlying tools.
+* **Clean and Organized Output:** Results are saved in a structured format with customization options.
 
 
 # **Install**
