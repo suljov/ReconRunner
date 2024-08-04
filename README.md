@@ -21,6 +21,8 @@ ReconRunner is a tool designed to streamline and make directory and file brute-f
 * **Protocol Flexibility:** Seamlessly switch between HTTP and HTTPS protocols.
 * **Custom Wordlists:** Start with a custom wordlist before default ones, for a more tailored approach.
 * **Custom List of Wordlists:** Use a specific list of wordlists from a configuration file.
+    * Or create your own custom list of wordlists for your specific needs.
+    * Add or remove wordlist from a list to make ut suite you more. 
 * **Wildcard Support:** Easily incorporate wildcard domains for subdomain enumeration.
 * **Interactive Control:** Cancel the tool anytime with CTRL + C, ensuring that results are saved and temporary resources are cleaned.
 * **Detailed Help and Usage Instructions:** Comprehensive help options for both the tool and underlying tools.
