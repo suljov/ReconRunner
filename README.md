@@ -31,10 +31,7 @@ A powerful, enhanced version of the popular tools like Gobuster and ffuf, design
 ```
 git clone https://github.com/suljov/ReconRunner
 cd ReconRunner
-chmod +x ReconRunner.sh
-sudo cp ReconRunner.sh /usr/local/bin/reconrunner
-cd ..
-sudo rm -r ReconRunner
+chmod +x install.sh && bash install.sh
 ```
 
 # **Usage**
