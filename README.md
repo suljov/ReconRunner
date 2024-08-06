@@ -3,17 +3,12 @@
 ReconRunner is a tool designed to streamline and make directory and file brute-forcing, as well as subdomain enumeration easier. Leveraging popular tools like Gobuster and ffuf, ReconRunner provides a more flexible and powerful experience with improved handling of wordlists, protocols, and outputs.
 
 ## **TODO/idéas**
-* ~~make a install script for easier install??~~
 * fix the output saving problem on dirs and subs
     * fix so the subs type get a clean output file instead of messy json
-    * ~~fix so dirs output get saved (seems to be an append problem here)~~
 * come up with more idéas for features
   * add feature for sql innjection testing (sqlmap)
   * add feature for simple fuzzing (web)
-  * ~~add a way to have pre-made list of wordlissts (one list of wordlists for LFI and one for SQLi etc)~~
-      * ~~or change the structure for the lists of wordlists for each feature so they are in lists in a config file???? json file with multiple keys and values with wordlists etc??~~
-          * ~~then we can make a feature so its easier to make your own custom list of wordlists and make the tool use that list of wordlists????~~
-              * ~~then add a feature so the tool can add/create custom lists of wordlists AND being able to add wordlists to an existing list of wordlists??~~
+
 
 ## Features
 
