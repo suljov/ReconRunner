@@ -1,6 +1,6 @@
 # ReconRunner
 
-ReconRunner is a tool designed to streamline and make directory and file brute-forcing, as well as subdomain enumeration easier. Leveraging popular tools like Gobuster and ffuf, ReconRunner provides a more flexible and powerful experience with improved handling of wordlists, protocols, and outputs.
+ReconRunner is a tool designed to streamline and simplify directory and file brute-forcing, subdomain enumeration and sql injections. By leveraging popular tools like Gobuster, ffuf and sqlmap   , ReconRunner offers a more flexible and powerful experience with enhanced handling of wordlists, protocols, and outputs.
 
 ## **TODO/idéas**
 * fix the output saving problem on dirs and subs
@@ -12,14 +12,14 @@ ReconRunner is a tool designed to streamline and make directory and file brute-f
 ## Features
 
 * **Protocol Flexibility:** Seamlessly switch between HTTP and HTTPS protocols.
-* **Custom Wordlists:** Start with a custom wordlist before default ones, for a more tailored approach.
-* **Custom List of Wordlists:** Use a specific list of wordlists from a configuration file.
-    * Or create your own custom list of wordlists for your specific needs.
-    * Add or remove wordlist from a list to make ut suite you more. 
-* **Wildcard Support:** Easily incorporate wildcard domains for subdomain enumeration.
-* **Interactive Control:** Cancel the tool anytime with CTRL + C, ensuring that results are saved and temporary resources are cleaned.
+* **Custom Wordlists:** Prioritize custom wordlists before default ones for a more tailored approach.
+* **Custom List of Wordlists:** Utilize a specific list of wordlists from a configuration file.
+  * Create, add, or remove custom lists of wordlists to meet your needs.
+* **Wildcard Support:** Incorporate wildcard domains easily for subdomain enumeration.
+* **Interactive Control:** Cancel the tool anytime with CTRL + C, ensuring results are saved and temporary resources are cleaned.
 * **Detailed Help and Usage Instructions:** Comprehensive help options for both the tool and underlying tools.
 * **Clean and Organized Output:** Results are saved in a structured format with customization options.
+
 
 
 # **Install**
@@ -108,6 +108,15 @@ reconrunner subs example.com --cw /path/to/custom_wordlist.txt
 #### With Extra Options
 ```
 reconrunner subs example.com --cw /path/to/custom_wordlist.txt --extra '-fl 100'
+```
+## SQL injection
+## With an URL
+```
+reconrunner sql -u "http://example.com/vulnerable.php?id=1"
+```
+## With file
+```
+reconrunner sql -r /path/to/file.txt
 ```
 #### With wildcard
 ```
