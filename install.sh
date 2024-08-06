@@ -13,5 +13,6 @@ echo '{
     "sql": [],
     "osinjection": [],
     "ssti": [],
-    "xss": []
+    "xss": [],
+    "api": []
 }' > $HOME/.reconrunner/wordlists-config.json
