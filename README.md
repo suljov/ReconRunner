@@ -109,15 +109,6 @@ reconrunner subs example.com --cw /path/to/custom_wordlist.txt
 ```
 reconrunner subs example.com --cw /path/to/custom_wordlist.txt --extra '-fl 100'
 ```
-## SQL injection
-### With an URL
-```
-reconrunner sql -u "http://example.com/vulnerable.php?id=1"
-```
-### With file
-```
-reconrunner sql -r /path/to/file.txt
-```
 #### With wildcard
 ```
 reconrunner subs example.com --wildcard example*.com
@@ -127,6 +118,16 @@ The wildcard will be replaced with the word `FUZZ`
 ```
 reconrunner subs example.com --cw <name of list>
 ```
+## SQL injection
+### With an URL
+```
+reconrunner sql -u "http://example.com/vulnerable.php?id=1"
+```
+### With file
+```
+reconrunner sql -r /path/to/file.txt
+```
+
 
 # **The ability to customize**
 
