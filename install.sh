@@ -1,10 +1,18 @@
 #!/bin/bash
 
-sudo apt install jq
+# Install jq
+sudo apt install -y jq
+
+# Make ReconRunner.sh executable and copy it to /usr/local/bin
 chmod +x ReconRunner.sh
 sudo cp ReconRunner.sh /usr/local/bin/reconrunner
 
-mkdir $HOME/.reconrunner
+# Check if the directory exists; if not, create it
+if [ ! -d "$HOME/.reconrunner" ]; then
+  mkdir "$HOME/.reconrunner"
+fi
+
+# Create the JSON configuration file in the directory
 echo '{
   "lfi": [],
   "subs": [
@@ -29,4 +37,4 @@ echo '{
   "ssti": [],
   "xss": []
 }
-' | jq | > $HOME/.reconrunner/wordlists-config.json
+' > "$HOME/.reconrunner/wordlists-config.json"
