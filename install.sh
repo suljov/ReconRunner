@@ -9,10 +9,10 @@ echo '{
     "lfi": [],
     "subs": ["/usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-110000.txt", "/usr/share/wordlists/seclists/Discovery/DNS/combined_subdomains.txt"],
     "dirs": ["/usr/share/wordlists/seclists/Discovery/Web-Content/quickhits.txt", "/usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt"],
-    "dns": ["/usr/share/wordlists/seclists/Discovery/DNS/n0kovo_subdomains.txt","/usr/share/wordlists/seclists/Discovery/DNS/combined_subdomains.txt"]
+    "dns": ["/usr/share/wordlists/seclists/Discovery/DNS/n0kovo_subdomains.txt","/usr/share/wordlists/seclists/Discovery/DNS/combined_subdomains.txt", "/usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-110000.txt"]
     "sql": [],
     "osinjection": [],
     "ssti": [],
     "xss": [],
     "api": []
-}' > $HOME/.reconrunner/wordlists-config.json
+}' | jq | > $HOME/.reconrunner/wordlists-config.json
