@@ -3,9 +3,10 @@
 CONFIG_FILE="$HOME/.reconrunner/wordlists-config.json"
 BASE_OUTPUT_DIR="reconrunner_output"
 SKIP_SAVE=false
-
-# Flag to indicate if the script should clean up
 SHOULD_CLEANUP=false
+PROTOCOL="http"
+USE_WILDCARD=false
+WILDCARD_DOMAIN=""
 
 # Function to display help
 display_help() {
@@ -33,7 +34,6 @@ display_help() {
     echo "  --wildcard <wildcard_domain> (Optional) Use wildcard in the Host header for subdomain enumeration."
     echo "  --extra <extra_options>      (Optional) Additional options for the enumeration tool."
     echo "  --skip-save                  (Optional) Skip saving results to files."
-    echo "  -f <file>                (Optional) Specify a request file for sql instead of -u."
     echo
     echo "Configuration commands:"
     echo "  reconrunner config --add-wordlist <path to wordlist> --to <type>"
@@ -52,39 +52,38 @@ display_help() {
     echo
     echo "  reconrunner sql -u http://example.com/vulnerable.php?id=1"
     echo "  reconrunner sql -f /path/to/request_file.txt"
-    echo
     exit 0
 }
 
-# Function to display gobuster help
-display_gobuster_help() {
-    echo "Displaying gobuster help..."
-    gobuster dir --help
-    exit 0
-}
-
-# Function to display ffuf help
-display_ffuf_help() {
-    echo "Displaying ffuf help..."
-    ffuf --help
-    exit 0
-}
-
-# Function to display sqlmap help
-display_sqlmap_help() {
-    echo "Displaying sqlmap help..."
-    sqlmap --help
+# Function to display tool help
+display_tool_help() {
+    local tool="$1"
+    case "$tool" in
+        gobuster)
+            echo "Displaying gobuster help..."
+            gobuster dir --help
+            ;;
+        ffuf)
+            echo "Displaying ffuf help..."
+            ffuf --help
+            ;;
+        sqlmap)
+            echo "Displaying sqlmap help..."
+            sqlmap --help
+            ;;
+        *)
+            echo "Error: Unknown tool '${tool}'."
+            display_help
+            ;;
+    esac
     exit 0
 }
 
 # Function to clean up on exit
 cleanup() {
     if [ "$SHOULD_CLEANUP" = true ]; then
-        echo ""
         echo "Cleaning up..."
-        if [ -f "$TEMP_FILE" ]; then
-            rm -f "$TEMP_FILE"
-        fi
+        [ -f "$TEMP_FILE" ] && rm -f "$TEMP_FILE"
         if [ "$SKIP_SAVE" = false ] && [ "$ENUM_TYPE" != "sql" ]; then
             echo "Results saved in: $OUTPUT_DIR"
         fi
@@ -99,13 +98,13 @@ trap cleanup SIGINT
 if [ "$#" -gt 1 ] && [ "$2" == "--help" ]; then
     case "$1" in
         dirs)
-            display_gobuster_help
+            display_tool_help "gobuster"
             ;;
         subs)
-            display_ffuf_help
+            display_tool_help "ffuf"
             ;;
         sql)
-            display_sqlmap_help
+            display_tool_help "sqlmap"
             ;;
         *)
             echo "Error: Unknown enumeration type '${1}'."
@@ -173,7 +172,7 @@ if [ "$#" -gt 0 ] && [ "$1" == "config" ]; then
     case "$1" in
         --add-wordlist)
             if [ "$#" -gt 3 ] && [ "$3" == "--to" ]; then
-                add_wordlist "${4,,}" # convert to lowercase
+                add_wordlist "${4,,}" "$2" # convert to lowercase
             else
                 echo "Usage: reconrunner config --add-wordlist <path to wordlist> --to <type>"
             fi
@@ -181,7 +180,7 @@ if [ "$#" -gt 0 ] && [ "$1" == "config" ]; then
             ;;
         --remove-wordlist)
             if [ "$#" -gt 3 ] && [ "$3" == "--from" ]; then
-                remove_wordlist "${4,,}" # convert to lowercase
+                remove_wordlist "${4,,}" "$2" # convert to lowercase
             else
                 echo "Usage: reconrunner config --remove-wordlist <path to wordlist> --from <type>"
             fi
@@ -223,7 +222,7 @@ fi
 ENUM_TYPE="$1"
 shift
 
-# Handle URL or file input
+# Handle URL or file input for SQL
 if [ "$ENUM_TYPE" == "sql" ]; then
     if [ "$1" == "-u" ]; then
         URL="$2"
@@ -256,27 +255,53 @@ if [ "$ENUM_TYPE" == "sql" ]; then
         esac
     done
     FORMATTING=""
-    if [ "$SOURCE_TYPE" == "url" ]; then
-        URL="${URL}/"
-        if [ -n "$FORMAT" ]; then
-            FORMATTING="--output-format=$FORMAT"
-        fi
-    elif [ "$SOURCE_TYPE" == "file" ]; then
-        REQUEST_FILE="${REQUEST_FILE}"
-        if [ -n "$FORMAT" ]; then
-            FORMATTING="--output-format=$FORMAT"
-        fi
-    fi
+    [ "$SOURCE_TYPE" == "url" ] && URL="${URL}/"
+    [ -n "$FORMAT" ] && FORMATTING="--output-format=$FORMAT"
 else
     IP="$1"
-    URL="http://${IP}/"
+    URL="${PROTOCOL}://${IP}/"
     shift
     FORMAT=""
     SOURCE_TYPE="url"
 fi
 
 # Process remaining extra options
-process_extra_options "$@"
+EXTRA_OPTIONS=""
+while [ "$#" -gt 0 ]; do
+    case "$1" in
+        --extra)
+            if [ "$#" -gt 1 ]; then
+                EXTRA_OPTIONS="$2"
+                shift 2
+            else
+                echo "Usage: reconrunner [--extra <extra_options>]"
+                exit 1
+            fi
+            ;;
+        --wildcard)
+            if [ "$#" -gt 1 ]; then
+                USE_WILDCARD=true
+                WILDCARD_DOMAIN="$2"
+                shift 2
+            else
+                echo "Usage: reconrunner --wildcard <wildcard_domain>"
+                exit 1
+            fi
+            ;;
+        --skip-save)
+            SKIP_SAVE=true
+            shift
+            ;;
+        --https)
+            PROTOCOL="https"
+            shift
+            ;;
+        *)
+            echo "Unknown option $1"
+            exit 1
+            ;;
+    esac
+done
 
 # Ensure the host is reachable
 check_host_reachable() {
@@ -313,11 +338,8 @@ determine_wordlists() {
         wordlists=$(load_custom_wordlists "$CUSTOM_LIST")
     else
         # Default to 'dns' wordlists if the type is 'subs'
-        if [ "$ENUM_TYPE" == "subs" ]; then
-            wordlists=$(load_wordlists "dns")
-        else
-            wordlists=$(load_wordlists "$ENUM_TYPE")
-        fi
+        wordlists=$(load_wordlists "$ENUM_TYPE")
+        [ "$ENUM_TYPE" == "subs" ] && wordlists=$(load_wordlists "dns")
     fi
 
     # Check if wordlists are empty
@@ -328,9 +350,7 @@ determine_wordlists() {
 }
 
 # Ensure the host is reachable
-if [ "$ENUM_TYPE" != "sql" ]; then
-    check_host_reachable
-fi
+[ "$ENUM_TYPE" != "sql" ] && check_host_reachable
 
 # Set flag to clean up since we are proceeding
 SHOULD_CLEANUP=true
@@ -352,19 +372,14 @@ case "$ENUM_TYPE" in
         for wordlist in $wordlists; do
             output_file=""
             if [ "$SKIP_SAVE" = true ]; then
-                echo "Running gobuster with wordlist '$wordlist' and skipping save..."
+                echo ""
             else
                 output_file=$(generate_output_file_name "$IP" "dirs" "$index" "txt")
-                echo "Saving results to: $output_file"
+                echo ""
             fi
             gobuster dir -u "$URL" -w "$wordlist" -o "$output_file" --no-color -q $EXTRA_OPTIONS
-            if [ $? -ne 0 ]; then
-                echo "Error: error on running gobuster: unable to connect to $URL"
-                cleanup
-            fi
-            if [ "$SKIP_SAVE" = false ]; then
-                sed -i 's/\x1b\[[0-9;]*m//g' "$output_file"
-            fi
+            [ $? -ne 0 ] && echo "Error: error on running gobuster: unable to connect to $URL" && cleanup
+            [ "$SKIP_SAVE" = false ] && sed -i 's/\x1b\[[0-9;]*m//g' "$output_file"
             ((index++))
         done
         ;;
@@ -373,20 +388,17 @@ case "$ENUM_TYPE" in
         for wordlist in $wordlists; do
             output_file=""
             if [ "$SKIP_SAVE" = true ]; then
-                echo "Running ffuf with wordlist '$wordlist' and skipping save..."
+                echo ""
             else
                 output_file=$(generate_output_file_name "$IP" "subs" "$index" "json")
-                echo "Saving results to: $output_file"
+                echo ""
             fi
             if $USE_WILDCARD; then
                 ffuf -c -w "$wordlist" -u "${PROTOCOL}://${IP}/" -H "Host: ${WILDCARD_DOMAIN//\*/FUZZ}" -o "$output_file" -of json $EXTRA_OPTIONS
             else
                 ffuf -c -w "$wordlist" -u "${PROTOCOL}://${IP}/" -H "Host: FUZZ.${IP}" -o "$output_file" -of json $EXTRA_OPTIONS
             fi
-            if [ $? -ne 0 ]; then
-                echo "Error: error on running ffuf: unable to connect to $URL"
-                cleanup
-            fi
+            [ $? -ne 0 ] && echo "Error: error on running ffuf: unable to connect to $URL" && cleanup
             ((index++))
         done
         ;;
@@ -396,11 +408,7 @@ case "$ENUM_TYPE" in
         elif [ "$SOURCE_TYPE" == "file" ]; then
             sqlmap -r "$REQUEST_FILE" $FORMATTING $EXTRA_OPTIONS
         fi
-        if [ $? -ne 0 ]; then
-            echo "Error: error on running sqlmap: unable to connect to $URL"
-            cleanup
-        fi
-        ((index++))
+        [ $? -ne 0 ] && echo "Error: error on running sqlmap: unable to connect to $URL" && cleanup
         ;;
     *)
         echo "Error: Unknown enumeration type '${ENUM_TYPE}'."
