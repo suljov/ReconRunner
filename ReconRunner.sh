@@ -9,26 +9,31 @@ SHOULD_CLEANUP=false
 
 # Function to display help
 display_help() {
-    echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--cl <custom_list>] [--wildcard <wildcard_domain>] [--extra <extra_options>] [--skip-save]"
+    echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--cl <custom_list>] [--wildcard <wildcard_domain>] [--extra <extra_options>] [--skip-save] [-f <file>]"
     echo
     echo "Help:"
     echo "  --help                       Prints this message"
     echo "  dirs --help                  Prints all options for dirs"
     echo "  subs --help                  Prints all options for subs"
+    echo "  sql --help                   Prints all options for sql"
     echo
     echo "Available types:"
     echo "  dirs    Directory/file enumeration (tool: gobuster)"
     echo "  subs    Subdomain enumeration (tool: ffuf)"
+    echo "  sql     SQL Injection detection (tool: sqlmap)"
     echo
     echo "Options:"
-    echo "  <enum_type>                  The type of enumeration (e.g., dirs, subs)."
-    echo "  <ip>                         The target IP address or domain."
+    echo "  <enum_type>                  The type of enumeration (e.g., dirs, subs, sql)."
+    echo "  <ip>                         The target IP address or domain (for dirs and subs)."
+    echo "  -u <url>                     The target URL (for sql)."
+    echo "  -f <file>                    The request file (for sql)."
     echo "  --https                      (Optional) Use HTTPS protocol instead of HTTP."
     echo "  --cw <custom_wordlist>       (Optional) Use a custom wordlist instead of the default wordlists."
     echo "  --cl <custom_list>           (Optional) Use a custom list of wordlists from the config file."
     echo "  --wildcard <wildcard_domain> (Optional) Use wildcard in the Host header for subdomain enumeration."
     echo "  --extra <extra_options>      (Optional) Additional options for the enumeration tool."
     echo "  --skip-save                  (Optional) Skip saving results to files."
+    echo "  -f <file>                (Optional) Specify a request file for sql instead of -u."
     echo
     echo "Configuration commands:"
     echo "  reconrunner config --add-wordlist <path to wordlist> --to <type>"
@@ -44,6 +49,9 @@ display_help() {
     echo
     echo "  reconrunner subs example.com"
     echo "  reconrunner subs example.com --cw /path/to/custom_wordlist.txt --wildcard test-*.example.com --extra '--timeout=30 --rate=100'"
+    echo
+    echo "  reconrunner sql -u http://example.com/vulnerable.php?id=1"
+    echo "  reconrunner sql -f /path/to/request_file.txt"
     echo
     exit 0
 }
@@ -62,6 +70,13 @@ display_ffuf_help() {
     exit 0
 }
 
+# Function to display sqlmap help
+display_sqlmap_help() {
+    echo "Displaying sqlmap help..."
+    sqlmap --help
+    exit 0
+}
+
 # Function to clean up on exit
 cleanup() {
     if [ "$SHOULD_CLEANUP" = true ]; then
@@ -70,7 +85,7 @@ cleanup() {
         if [ -f "$TEMP_FILE" ]; then
             rm -f "$TEMP_FILE"
         fi
-        if [ "$SKIP_SAVE" = false ]; then
+        if [ "$SKIP_SAVE" = false ] && [ "$ENUM_TYPE" != "sql" ]; then
             echo "Results saved in: $OUTPUT_DIR"
         fi
     fi
@@ -88,6 +103,9 @@ if [ "$#" -gt 1 ] && [ "$2" == "--help" ]; then
             ;;
         subs)
             display_ffuf_help
+            ;;
+        sql)
+            display_sqlmap_help
             ;;
         *)
             echo "Error: Unknown enumeration type '${1}'."
@@ -155,7 +173,7 @@ if [ "$#" -gt 0 ] && [ "$1" == "config" ]; then
     case "$1" in
         --add-wordlist)
             if [ "$#" -gt 3 ] && [ "$3" == "--to" ]; then
-                add_wordlist "${4,,}" "$2" # convert to lowercase
+                add_wordlist "${4,,}" # convert to lowercase
             else
                 echo "Usage: reconrunner config --add-wordlist <path to wordlist> --to <type>"
             fi
@@ -163,7 +181,7 @@ if [ "$#" -gt 0 ] && [ "$1" == "config" ]; then
             ;;
         --remove-wordlist)
             if [ "$#" -gt 3 ] && [ "$3" == "--from" ]; then
-                remove_wordlist "${4,,}" "$2" # convert to lowercase
+                remove_wordlist "${4,,}" # convert to lowercase
             else
                 echo "Usage: reconrunner config --remove-wordlist <path to wordlist> --from <type>"
             fi
@@ -203,77 +221,61 @@ fi
 
 # Enumeration type and base URL
 ENUM_TYPE="$1"
-IP="$2"
-shift 2
-PROTOCOL="http"
-USE_WILDCARD=false
-WILDCARD_DOMAIN=""
-EXTRA_OPTIONS=""
-CUSTOM_LIST=""
+shift
 
-# Function to process extra options
-process_extra_options() {
+# Handle URL or file input
+if [ "$ENUM_TYPE" == "sql" ]; then
+    if [ "$1" == "-u" ]; then
+        URL="$2"
+        shift 2
+        SOURCE_TYPE="url"
+    elif [ "$1" == "-f" ]; then
+        REQUEST_FILE="$2"
+        shift 2
+        SOURCE_TYPE="file"
+    else
+        echo "Usage: reconrunner sql [-u <url> | -f <file>]"
+        exit 1
+    fi
+    FORMAT=""
     while [ "$#" -gt 0 ]; do
         case "$1" in
-            --https | --cw | --cl | --wildcard | --extra | --skip-save)
-                break
+            --format)
+                if [ "$#" -gt 1 ]; then
+                    FORMAT="$2"
+                    shift 2
+                else
+                    echo "Usage: reconrunner sql [-u <url> | -f <file>] [--format <format>]"
+                    exit 1
+                fi
                 ;;
             *)
-                EXTRA_OPTIONS+="$1 "
-                shift
+                echo "Unknown option $1"
+                exit 1
                 ;;
         esac
     done
-}
-
-# Check for --https flag
-if [ "$#" -gt 0 ] && [ "$1" == "--https" ]; then
-    PROTOCOL="https"
+    FORMATTING=""
+    if [ "$SOURCE_TYPE" == "url" ]; then
+        URL="${URL}/"
+        if [ -n "$FORMAT" ]; then
+            FORMATTING="--output-format=$FORMAT"
+        fi
+    elif [ "$SOURCE_TYPE" == "file" ]; then
+        REQUEST_FILE="${REQUEST_FILE}"
+        if [ -n "$FORMAT" ]; then
+            FORMATTING="--output-format=$FORMAT"
+        fi
+    fi
+else
+    IP="$1"
+    URL="http://${IP}/"
     shift
-fi
-URL="${PROTOCOL}://${IP}/"
-
-# Check for --wildcard flag
-if [ "$#" -gt 0 ] && [ "$1" == "--wildcard" ]; then
-    if [ "$#" -gt 1 ]; then
-        WILDCARD_DOMAIN="$2"
-        USE_WILDCARD=true
-        shift 2
-    else
-        echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--cl <custom_list>] [--wildcard <wildcard_domain>] [--extra <extra_options>] [--skip-save]"
-        exit 1
-    fi
+    FORMAT=""
+    SOURCE_TYPE="url"
 fi
 
-# Check for --cw flag
-if [ "$#" -gt 0 ] && [ "$1" == "--cw" ]; then
-    if [ "$#" -gt 1 ]; then
-        CUSTOM_WORDLIST="$2"
-        shift 2
-    else
-        echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--cl <custom_list>] [--wildcard <wildcard_domain>] [--extra <extra_options>] [--skip-save]"
-        exit 1
-    fi
-fi
-
-# Check for --cl flag
-if [ "$#" -gt 0 ] && [ "$1" == "--cl" ]; then
-    if [ "$#" -gt 1 ]; then
-        CUSTOM_LIST="$2"
-        shift 2
-    else
-        echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--cl <custom_list>] [--wildcard <wildcard_domain>] [--extra <extra_options>] [--skip-save]"
-        exit 1
-    fi
-fi
-
-# Check for --skip-save flag
-if [ "$#" -gt 0 ] && [ "$1" == "--skip-save" ]; then
-    SKIP_SAVE=true
-    shift
-fi
-
-# Process extra options
+# Process remaining extra options
 process_extra_options "$@"
 
 # Ensure the host is reachable
@@ -326,13 +328,15 @@ determine_wordlists() {
 }
 
 # Ensure the host is reachable
-check_host_reachable
+if [ "$ENUM_TYPE" != "sql" ]; then
+    check_host_reachable
+fi
 
 # Set flag to clean up since we are proceeding
 SHOULD_CLEANUP=true
 
 # Ensure the output directory exists if results are to be saved
-if [ "$SKIP_SAVE" = false ]; then
+if [ "$SKIP_SAVE" = false ] && [ "$ENUM_TYPE" != "sql" ]; then
     mkdir -p "$BASE_OUTPUT_DIR"
     OUTPUT_DIR="$BASE_OUTPUT_DIR/$ENUM_TYPE"
     mkdir -p "$OUTPUT_DIR"
@@ -385,6 +389,18 @@ case "$ENUM_TYPE" in
             fi
             ((index++))
         done
+        ;;
+    sql)
+        if [ "$SOURCE_TYPE" == "url" ]; then
+            sqlmap -u "$URL" $FORMATTING $EXTRA_OPTIONS
+        elif [ "$SOURCE_TYPE" == "file" ]; then
+            sqlmap -r "$REQUEST_FILE" $FORMATTING $EXTRA_OPTIONS
+        fi
+        if [ $? -ne 0 ]; then
+            echo "Error: error on running sqlmap: unable to connect to $URL"
+            cleanup
+        fi
+        ((index++))
         ;;
     *)
         echo "Error: Unknown enumeration type '${ENUM_TYPE}'."
