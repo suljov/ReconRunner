@@ -110,11 +110,11 @@ reconrunner subs example.com --cw /path/to/custom_wordlist.txt
 reconrunner subs example.com --cw /path/to/custom_wordlist.txt --extra '-fl 100'
 ```
 ## SQL injection
-## With an URL
+### With an URL
 ```
 reconrunner sql -u "http://example.com/vulnerable.php?id=1"
 ```
-## With file
+### With file
 ```
 reconrunner sql -r /path/to/file.txt
 ```
