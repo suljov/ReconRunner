@@ -1,12 +1,8 @@
 #!/bin/bash
 
-
 sudo apt install jq
-
-
 chmod +x ReconRunner.sh
 sudo cp ReconRunner.sh /usr/local/bin/reconrunner
-
 
 mkdir $HOME/.reconrunner
 echo '{
