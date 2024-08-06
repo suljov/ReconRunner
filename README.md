@@ -6,7 +6,6 @@ ReconRunner is a tool designed to streamline and make directory and file brute-f
 * fix the output saving problem on dirs and subs
     * fix so the subs type get a clean output file instead of messy json
 * come up with more idéas for features
-  * add feature for sql innjection testing (sqlmap)
   * add feature for simple fuzzing (web)
 
 
