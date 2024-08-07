@@ -34,25 +34,30 @@ chmod +x install.sh && ./install.sh
 To install ReconRunner, clone the repository and run the installation script:
 ```
 $ reconrunner --help         
-Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--cl <custom_list>] [--wildcard <wildcard_domain>] [--extra <extra_options>]
+Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--cl <custom_list>] [--wildcard <wildcard_domain>] [--extra <extra_options>] [--skip-save] [-f <file>]
 
 Help:
   --help                       Prints this message
   dirs --help                  Prints all options for dirs
   subs --help                  Prints all options for subs
+  sql --help                   Prints all options for sql
 
 Available types:
   dirs    Directory/file enumeration (tool: gobuster)
   subs    Subdomain enumeration (tool: ffuf)
+  sql     SQL Injection detection (tool: sqlmap)
 
 Options:
-  <enum_type>                  The type of enumeration (e.g., dirs, subs).
-  <ip>                         The target IP address or domain.
+  <enum_type>                  The type of enumeration (e.g., dirs, subs, sql).
+  <ip>                         The target IP address or domain (for dirs and subs).
+  -u <url>                     The target URL (for sql).
+  -f <file>                    The request file (for sql).
   --https                      (Optional) Use HTTPS protocol instead of HTTP.
   --cw <custom_wordlist>       (Optional) Use a custom wordlist instead of the default wordlists.
   --cl <custom_list>           (Optional) Use a custom list of wordlists from the config file.
   --wildcard <wildcard_domain> (Optional) Use wildcard in the Host header for subdomain enumeration.
   --extra <extra_options>      (Optional) Additional options for the enumeration tool.
+  --skip-save                  (Optional) Skip saving results to files.
 
 Configuration commands:
   reconrunner config --add-wordlist <path to wordlist> --to <type>
@@ -68,6 +73,9 @@ Examples:
 
   reconrunner subs example.com
   reconrunner subs example.com --cw /path/to/custom_wordlist.txt --wildcard test-*.example.com --extra '--timeout=30 --rate=100'
+
+  reconrunner sql -u http://example.com/vulnerable.php?id=1
+  reconrunner sql -f /path/to/request_file.txt
 ```
 
 # **Examples**
