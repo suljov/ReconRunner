@@ -148,11 +148,11 @@ Edit the JSON file located at $HOME/.reconrunner/wordlists-config.json. You can 
 
 2. Commands for Configuration:
 
-* Add Wordlist: reconrunner config --add-wordlist <path to wordlist> --to <type>
-* Remove Wordlist: reconrunner config --remove-wordlist <path to wordlist> --from <type>
-* Create List: reconrunner config --create-list <name>
-* Remove List: reconrunner config --remove-list <name>
-* List Info: reconrunner config --list-info
+* **Add Wordlist:** reconrunner config --add-wordlist <path to wordlist> --to <type>
+* **Remove Wordlist:** reconrunner config --remove-wordlist <path to wordlist> --from <type>
+* **Create List:** reconrunner config --create-list <name>
+* **Remove List:** reconrunner config --remove-list <name>
+* **List Info:** reconrunner config --list-info
         
 
 # **Cleaning Up**
