@@ -136,10 +136,9 @@ reconrunner sql -u "http://example.com/vulnerable.php?id=1"
 reconrunner sql -r /path/to/file.txt
 ```
 
-
 # **The ability to customize**
 
-## Customizing Wordlists
+## Customizing list of wordlists
 The tool supports custom wordlists via a configuration file. To customize or add new wordlists:
 
 1. Edit Configuration File:
