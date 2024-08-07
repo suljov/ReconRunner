@@ -38,8 +38,7 @@ echo '{
     "/usr/share/wordlists/wfuzz/vulns/sql_inj.txt",
     "/usr/share/seclists/Fuzzing/SQLi/Generic-SQLi.txt",
     "/usr/share/seclists/Fuzzing/SQLi/Generic-BlindSQLi.fuzzdb.txt",
-    "/usr/share/wordlists/wfuzz/Injections/SQL.txt",
-    "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-LFISuite-pathtotest.txt"
+    "/usr/share/wordlists/wfuzz/Injections/SQL.txt"
   ],
   "osinjection": [],
   "ssti": [],
