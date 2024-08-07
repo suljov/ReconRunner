@@ -20,7 +20,7 @@ echo '{
   "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-LFISuite-pathtotest.txt"
   ],
   "lfi-windows": ["/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-gracefulsecurity-windows.txt"
-  ]
+  ],
   "subs": [
     "/usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-110000.txt",
     "/usr/share/wordlists/seclists/Discovery/DNS/combined_subdomains.txt"
@@ -55,5 +55,4 @@ echo '{
   "/usr/share/wordlists/seclists/Fuzzing/LDAP-openldap-classes.txt",
   "/usr/share/wordlists/seclists/Fuzzing/LDAP.Fuzzing.txt"
   ]
-}
-' > "$HOME/.reconrunner/wordlists-config.json"
+}' > "$HOME/.reconrunner/wordlists-config.json"
