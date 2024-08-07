@@ -14,7 +14,7 @@ fi
 
 # Create the JSON configuration file in the directory
 echo '{
-  "lfi": [],
+  "lfi": ["/usr/share/wordlists/wfuzz/Injections/Traversal.txt"],
   "subs": [
     "/usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-110000.txt",
     "/usr/share/wordlists/seclists/Discovery/DNS/combined_subdomains.txt"
@@ -31,10 +31,12 @@ echo '{
     "/usr/share/seclists/Fuzzing/SQLi/quick-SQLi.txt",
     "/usr/share/wordlists/wfuzz/vulns/sql_inj.txt",
     "/usr/share/seclists/Fuzzing/SQLi/Generic-SQLi.txt",
-    "/usr/share/seclists/Fuzzing/SQLi/Generic-BlindSQLi.fuzzdb.txt"
+    "/usr/share/seclists/Fuzzing/SQLi/Generic-BlindSQLi.fuzzdb.txt",
+    "/usr/share/wordlists/wfuzz/Injections/SQL.txt"
   ],
   "osinjection": [],
   "ssti": [],
-  "xss": []
+  "xss": ["/usr/share/wordlists/wfuzz/Injections/XSS.txt"],
+  "xml": ["/usr/share/wordlists/wfuzz/Injections/XML.txt"]
 }
 ' > "$HOME/.reconrunner/wordlists-config.json"
