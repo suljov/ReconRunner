@@ -5,6 +5,7 @@ ReconRunner is a tool designed to streamline and simplify directory and file bru
 ## **TODO/idéas**
 * fix the output saving problem on dirs and subs
     * fix so the subs type get a clean output file instead of messy json
+      * might need to change to ffuf instead of ffuf????
 * come up with more idéas for features
   * add feature for simple fuzzing (web)
 
