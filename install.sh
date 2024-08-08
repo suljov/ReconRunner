@@ -15,9 +15,9 @@ fi
 # Create the JSON configuration file in the directory
 echo '{
   "lfi-linux": ["/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-etc-files-of-all-linux-packages.txt", 
-  "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-gracefulsecurity-linux.txt",
-  "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-LFISuite-pathtotest-huge.txt",
-  "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-LFISuite-pathtotest.txt"
+    "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-gracefulsecurity-linux.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-LFISuite-pathtotest-huge.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-LFISuite-pathtotest.txt"
   ],
   "lfi-windows": ["/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-gracefulsecurity-windows.txt"
   ],
@@ -39,16 +39,18 @@ echo '{
   ],
   "osinjection": [],
   "ssti": [],
-  "xss": ["/usr/share/wordlists/wfuzz/Injections/XSS.txt"
+  "xss": [
+    "/usr/share/wordlists/wfuzz/Injections/XSS.txt"
   ],
-  "xml": ["/usr/share/wordlists/wfuzz/Injections/XML.txt",
-  "/usr/share/wordlists/seclists/Fuzzing/XML-FUZZ.txt"
+  "xml": [
+    "/usr/share/wordlists/wfuzz/Injections/XML.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/XML-FUZZ.txt"
   ],
   "ldap": [
-  "/usr/share/wordlists/seclists/Fuzzing/LDAP-active-directory-attributes.txt",
-  "/usr/share/wordlists/seclists/Fuzzing/LDAP-active-directory-classes.txt",
-  "/usr/share/wordlists/seclists/Fuzzing/LDAP-openldap-attributes.txt",
-  "/usr/share/wordlists/seclists/Fuzzing/LDAP-openldap-classes.txt",
-  "/usr/share/wordlists/seclists/Fuzzing/LDAP.Fuzzing.txt"
+    "/usr/share/wordlists/seclists/Fuzzing/LDAP-active-directory-attributes.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/LDAP-active-directory-classes.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/LDAP-openldap-attributes.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/LDAP-openldap-classes.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/LDAP.Fuzzing.txt"
   ]
 }' > "$HOME/.reconrunner/wordlists-config.json"
