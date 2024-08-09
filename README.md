@@ -8,6 +8,7 @@ ReconRunner is a tool designed to streamline and simplify directory and file bru
       * might need to change to wfuzz instead of ffuf????
 * come up with more idéas for features
   * add feature for simple fuzzing (web)
+    * add flag to urlencode the payload
 
 
 ## Features
