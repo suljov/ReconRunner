@@ -121,13 +121,24 @@ fi
 # Function to load wordlists from the config file
 load_wordlists() {
     local type="$1"
-    jq -r --arg type "$type" '.[$type][]' "$CONFIG_FILE"
+    wordlists=$(jq -r --arg type "$type" '.[$type][]? // empty' "$CONFIG_FILE")
+    if [ -z "$wordlists" ]; then
+        echo "Error: No wordlists found for type '${type}' in the configuration file."
+        exit 1
+    fi
+    echo "$wordlists"
 }
+
 
 # Function to load wordlists from a custom list
 load_custom_wordlists() {
     local list_name="$1"
-    jq -r --arg list "$list_name" '.[$list] | .[]' "$CONFIG_FILE"
+    custom_list=$(jq -r --arg list "$list_name" '.[$list] // empty' "$CONFIG_FILE")
+    if [ -z "$custom_list" ]; then
+        echo "Error: No custom list found with the name '${list_name}' in the configuration file."
+        exit 1
+    fi
+    jq -r --arg list "$list_name" '.[$list][]? // empty' "$CONFIG_FILE"
 }
 
 # Function to add a wordlist to a specific list
