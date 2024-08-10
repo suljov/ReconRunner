@@ -215,15 +215,22 @@ fi
 
 # Check if the correct number of arguments is provided
 if [ "$#" -lt 2 ]; then
+    echo "Error: Insufficient arguments provided."
     display_help
 fi
 
-# Enumeration type and base URL
+# Define ENUM_TYPE based on the first argument
 ENUM_TYPE="$1"
 shift
 
-# Handle URL or file input for SQL
-if [ "$ENUM_TYPE" == "sql" ]; then
+# Define IP or URL based on the enumeration type
+if [ "$ENUM_TYPE" == "dirs" ] || [ "$ENUM_TYPE" == "subs" ]; then
+    IP="$1"
+    URL="${PROTOCOL}://${IP}/"
+    shift
+    FORMAT=""
+    SOURCE_TYPE="url"
+elif [ "$ENUM_TYPE" == "sql" ]; then
     if [ "$1" == "-u" ]; then
         URL="$2"
         shift 2
@@ -258,15 +265,14 @@ if [ "$ENUM_TYPE" == "sql" ]; then
     [ "$SOURCE_TYPE" == "url" ] && URL="${URL}/"
     [ -n "$FORMAT" ] && FORMATTING="--output-format=$FORMAT"
 else
-    IP="$1"
-    URL="${PROTOCOL}://${IP}/"
-    shift
-    FORMAT=""
-    SOURCE_TYPE="url"
+    echo "Error: Unknown enumeration type '${ENUM_TYPE}'."
+    display_help
 fi
 
 # Process remaining extra options
 EXTRA_OPTIONS=""
+CUSTOM_LIST=""
+CUSTOM_WORDLIST=""
 while [ "$#" -gt 0 ]; do
     case "$1" in
         --extra)
@@ -296,12 +302,49 @@ while [ "$#" -gt 0 ]; do
             PROTOCOL="https"
             shift
             ;;
+        --cl)
+            if [ "$#" -gt 1 ]; then
+                CUSTOM_LIST="$2"
+                shift 2
+            else
+                echo "Usage: reconrunner --cl <custom_list>"
+                exit 1
+            fi
+            ;;
+        --cw)
+            if [ "$#" -gt 1 ]; then
+                CUSTOM_WORDLIST="$2"
+                shift 2
+            else
+                echo "Usage: reconrunner --cw <custom_wordlist>"
+                exit 1
+            fi
+            ;;
         *)
             echo "Unknown option $1"
             exit 1
             ;;
     esac
 done
+
+# Determine the wordlists to use
+determine_wordlists() {
+    if [ -n "$CUSTOM_WORDLIST" ]; then
+        wordlists="$CUSTOM_WORDLIST"
+    elif [ -n "$CUSTOM_LIST" ]; then
+        wordlists=$(load_custom_wordlists "$CUSTOM_LIST")
+    else
+        # Default to 'dns' wordlists if the type is 'subs'
+        wordlists=$(load_wordlists "$ENUM_TYPE")
+        [ "$ENUM_TYPE" == "subs" ] && wordlists=$(load_wordlists "dns")
+    fi
+
+    # Check if wordlists are empty
+    if [ -z "$wordlists" ]; then
+        echo "Error: No wordlists found for type '${ENUM_TYPE}'."
+        exit 1
+    fi
+}
 
 # Ensure the host is reachable
 check_host_reachable() {
@@ -330,23 +373,6 @@ generate_output_file_name() {
     local index="$3"
     local ext="$4"
     echo "${BASE_OUTPUT_DIR}/${enum_type}/${ip}_${index}.${ext}"
-}
-
-# Determine the wordlists to use
-determine_wordlists() {
-    if [ -n "$CUSTOM_LIST" ]; then
-        wordlists=$(load_custom_wordlists "$CUSTOM_LIST")
-    else
-        # Default to 'dns' wordlists if the type is 'subs'
-        wordlists=$(load_wordlists "$ENUM_TYPE")
-        [ "$ENUM_TYPE" == "subs" ] && wordlists=$(load_wordlists "dns")
-    fi
-
-    # Check if wordlists are empty
-    if [ -z "$wordlists" ]; then
-        echo "Error: No wordlists found for type '${ENUM_TYPE}'."
-        exit 1
-    fi
 }
 
 # Ensure the host is reachable
