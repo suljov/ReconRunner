@@ -3,7 +3,6 @@
 ReconRunner is a tool designed to streamline and simplify directory and file brute-forcing, subdomain enumeration and sql injections. By leveraging popular tools like Gobuster, ffuf and sqlmap   , ReconRunner offers a more flexible and powerful experience with enhanced handling of wordlists, protocols, and outputs.
 
 ## **TODO/idéas**
-* fix the flags --cl and --cw (not working right now)
 * fix the output saving problem on dirs and subs
     * fix so the subs type get a clean output file instead of messy json
       * might need to change to wfuzz instead of ffuf????
