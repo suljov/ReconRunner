@@ -154,7 +154,53 @@ Edit the JSON file located at $HOME/.reconrunner/wordlists-config.json. You can 
 * **Create List:** reconrunner config --create-list <name>
 * **Remove List:** reconrunner config --remove-list <name>
 * **List Info:** reconrunner config --list-info
-        
+
+### List configuration (default list with wordlists)
+```
+{
+  "lfi-linux": [
+    "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-etc-files-of-all-linux-packages.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-gracefulsecurity-linux.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-LFISuite-pathtotest-huge.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-LFISuite-pathtotest.txt"
+  ],
+  "lfi-windows": [
+    "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-gracefulsecurity-windows.txt"
+  ],
+  "dirs": [
+    "/usr/share/wordlists/seclists/Discovery/Web-Content/quickhits.txt",
+    "/usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt"
+  ],
+  "dns": [
+    "/usr/share/wordlists/seclists/Discovery/DNS/n0kovo_subdomains.txt",
+    "/usr/share/wordlists/seclists/Discovery/DNS/combined_subdomains.txt",
+    "/usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-110000.txt"
+  ],
+  "sql": [
+    "/usr/share/seclists/Fuzzing/SQLi/quick-SQLi.txt",
+    "/usr/share/wordlists/wfuzz/vulns/sql_inj.txt",
+    "/usr/share/seclists/Fuzzing/SQLi/Generic-SQLi.txt",
+    "/usr/share/seclists/Fuzzing/SQLi/Generic-BlindSQLi.fuzzdb.txt",
+    "/usr/share/wordlists/wfuzz/Injections/SQL.txt"
+  ],
+  "osinjection": [],
+  "ssti": [],
+  "xss": [
+    "/usr/share/wordlists/wfuzz/Injections/XSS.txt"
+  ],
+  "xml": [
+    "/usr/share/wordlists/wfuzz/Injections/XML.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/XML-FUZZ.txt"
+  ],
+  "ldap": [
+    "/usr/share/wordlists/seclists/Fuzzing/LDAP-active-directory-attributes.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/LDAP-active-directory-classes.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/LDAP-openldap-attributes.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/LDAP-openldap-classes.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/LDAP.Fuzzing.txt"
+  ]
+}
+``` 
 
 # **Cleaning Up**
 ReconRunner ensures that partial results are saved and cleaned up on-the-fly. If you cancel the tool using CTRL + C, it will save results up to that point and clean temporary files.
