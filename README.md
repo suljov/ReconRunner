@@ -37,9 +37,9 @@ Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--cl <cu
 
 Help:
   --help                       Prints this message
-  dirs --help                  Prints all options for dirs
-  subs --help                  Prints all options for subs
-  sql --help                   Prints all options for sql
+  dirs --help                  Prints all the extra options for dirs
+  subs --help                  Prints all the extra options for subs
+  sql --help                   Prints all the extra options for sql
 
 Available types:
   dirs    Directory/file enumeration (tool: gobuster)
