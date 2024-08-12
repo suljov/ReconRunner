@@ -427,13 +427,13 @@ case "$ENUM_TYPE" in
             if [ "$SKIP_SAVE" = true ]; then
                 echo ""
             else
-                output_file=$(generate_output_file_name "$IP" "subs" "$index" "json")
+                output_file=$(generate_output_file_name "$IP" "subs" "$index" "txt")
                 echo ""
             fi
             if $USE_WILDCARD; then
-                ffuf -c -w "$wordlist" -u "${PROTOCOL}://${IP}/" -H "Host: ${WILDCARD_DOMAIN//\*/FUZZ}" -o "$output_file" -of json $EXTRA_OPTIONS
+                wfuzz -c -w "$wordlist" -u "${PROTOCOL}://${IP}/" -H "Host: ${WILDCARD_DOMAIN//\*/FUZZ}" -f "$output_file" $EXTRA_OPTIONS
             else
-                ffuf -c -w "$wordlist" -u "${PROTOCOL}://${IP}/" -H "Host: FUZZ.${IP}" -o "$output_file" -of json $EXTRA_OPTIONS
+                wfuzz -c -w "$wordlist" -u "${PROTOCOL}://${IP}/" -H "Host: FUZZ.${IP}" -f "$output_file" $EXTRA_OPTIONS
             fi
             [ $? -ne 0 ] && echo "Error: error on running ffuf: unable to connect to $URL" && cleanup
             ((index++))
