@@ -421,7 +421,7 @@ case "$ENUM_TYPE" in
         done
         ;;
     subs)
-        index=$(find_next_index "$IP" "subs" "json") # Use "json" for subs
+        index=$(find_next_index "$IP" "subs" "txt") # Use "json" for subs
         for wordlist in $wordlists; do
             output_file=""
             if [ "$SKIP_SAVE" = true ]; then
