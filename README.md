@@ -43,7 +43,7 @@ Help:
 
 Available types:
   dirs    Directory/file enumeration (tool: gobuster)
-  subs    Subdomain enumeration (tool: ffuf)
+  subs    Subdomain enumeration (tool: wfuzz)
   sql     SQL Injection detection (tool: sqlmap)
 
 Options:
