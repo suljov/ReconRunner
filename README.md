@@ -152,7 +152,7 @@ Edit the JSON file located at $HOME/.reconrunner/wordlists-config.json. You can 
 * **Remove List:** reconrunner config --remove-list <name>
 * **List Info:** reconrunner config --list-info
 
-### List configuration (default list with wordlists)
+### List configuration (default lists with wordlists)
 ```
 {
   "lfi-linux": [
