@@ -205,7 +205,7 @@ ReconRunner ensures that partial results are saved and cleaned up on-the-fly. If
 
 # **Acknowledgments**
 * **Gobuster**: A tool by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart). [GitHub Repository](https://github.com/OJ/gobuster)
-* **wfuzz**: A tool by @wfuzzf. [GitHub Repository](https://github.com/wfuzz/wfuzz)
+* **wfuzz**: A tool by @xmendez. [GitHub Repository](https://github.com/xmendez/wfuzz)
 
 
 
