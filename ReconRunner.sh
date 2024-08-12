@@ -20,7 +20,7 @@ display_help() {
     echo
     echo "Available types:"
     echo "  dirs    Directory/file enumeration (tool: gobuster)"
-    echo "  subs    Subdomain enumeration (tool: ffuf)"
+    echo "  subs    Subdomain enumeration (tool: wfuzz)"
     echo "  sql     SQL Injection detection (tool: sqlmap)"
     echo
     echo "Options:"
