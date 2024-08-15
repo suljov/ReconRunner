@@ -195,7 +195,8 @@ Edit the JSON file located at $HOME/.reconrunner/wordlists-config.json. You can 
     "/usr/share/wordlists/seclists/Fuzzing/LDAP-openldap-attributes.txt",
     "/usr/share/wordlists/seclists/Fuzzing/LDAP-openldap-classes.txt",
     "/usr/share/wordlists/seclists/Fuzzing/LDAP.Fuzzing.txt"
-  ]
+  ],
+  "api": []
 }
 ``` 
 
