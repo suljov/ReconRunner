@@ -14,12 +14,14 @@ fi
 
 # Create the JSON configuration file in the directory
 echo '{
-  "lfi-linux": ["/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-etc-files-of-all-linux-packages.txt", 
+  "lfi-linux": [
+    "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-etc-files-of-all-linux-packages.txt",
     "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-gracefulsecurity-linux.txt",
     "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-LFISuite-pathtotest-huge.txt",
     "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-LFISuite-pathtotest.txt"
   ],
-  "lfi-windows": ["/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-gracefulsecurity-windows.txt"
+  "lfi-windows": [
+    "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-gracefulsecurity-windows.txt"
   ],
   "dirs": [
     "/usr/share/wordlists/seclists/Discovery/Web-Content/quickhits.txt",
@@ -52,5 +54,6 @@ echo '{
     "/usr/share/wordlists/seclists/Fuzzing/LDAP-openldap-attributes.txt",
     "/usr/share/wordlists/seclists/Fuzzing/LDAP-openldap-classes.txt",
     "/usr/share/wordlists/seclists/Fuzzing/LDAP.Fuzzing.txt"
-  ]
+  ],
+  "api": []
 }' > "$HOME/.reconrunner/wordlists-config.json"
