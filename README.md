@@ -29,7 +29,7 @@
   </a>
 </p>
 
-# About
+## About
 
 ReconRunner is a tool designed to streamline and simplify directory and file brute-forcing, subdomain enumeration and sql injections. By leveraging popular tools like Gobuster, wfuzz and sqlmap, ReconRunner offers a more flexible and powerful experience with enhanced handling of wordlists, protocols, and outputs.
 
@@ -53,7 +53,7 @@ ReconRunner is a tool designed to streamline and simplify directory and file bru
 
 
 
-# **Install**
+## **Install**
 
 ```
 git clone https://github.com/suljov/ReconRunner
@@ -61,7 +61,7 @@ cd ReconRunner
 chmod +x install.sh && ./install.sh
 ```
 
-# **Usage**
+## **Usage**
 To install ReconRunner, clone the repository and run the installation script:
 ```
 $ reconrunner --help         
@@ -109,46 +109,46 @@ Examples:
   reconrunner sql -f /path/to/request_file.txt
 ```
 
-# **🚀 Examples**
+## **🚀 Examples**
 
-## Directory enumeration
+### Directory enumeration
 
-#### Basic Usage
+##### Basic Usage
 ```
 reconrunner dirs example.com
 ```
-#### Using HTTPS
+##### Using HTTPS
 ```
 reconrunner dirs example.com --https
 ```
-#### With Custom Wordlist
+##### With Custom Wordlist
 ```
 reconrunner dirs example.com --cw /path/to/custom_wordlist.txt
 ```
-#### With Extra Options
+##### With Extra Options
 ```
 reconrunner dirs example.com --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'
 ```
 
-## Subdomain enumeration
+### Subdomain enumeration
 
-#### Basic Usage
+##### Basic Usage
 ```
 reconrunner subs example.com
 ```
-#### Using HTTPS
+##### Using HTTPS
 ```
 reconrunner subs example.com --https
 ```
-#### With Custom Wordlist
+##### With Custom Wordlist
 ```
 reconrunner subs example.com --cw /path/to/custom_wordlist.txt
 ```
-#### With Extra Options
+##### With Extra Options
 ```
 reconrunner subs example.com --cw /path/to/custom_wordlist.txt --extra '-fl 100'
 ```
-#### With wildcard
+##### With wildcard
 ```
 reconrunner subs example.com --wildcard example*.com
 ```
@@ -157,19 +157,19 @@ The wildcard will be replaced with the word `FUZZ`
 ```
 reconrunner subs example.com --cw <name of list>
 ```
-## SQL injection
-### With an URL
+### SQL injection
+#### With an URL
 ```
 reconrunner sql -u "http://example.com/vulnerable.php?id=1"
 ```
-### With file
+#### With file
 ```
 reconrunner sql -r /path/to/file.txt
 ```
 
-# **The ability to customize**
+## **The ability to customize**
 
-## Customizing list of wordlists
+### Customizing list of wordlists
 The tool supports custom wordlists via a configuration file. To customize or add new wordlists:
 
 1. Edit Configuration File:
@@ -184,7 +184,7 @@ Edit the JSON file located at $HOME/.reconrunner/wordlists-config.json. You can 
 * **Remove List:** reconrunner config --remove-list <name>
 * **List Info:** reconrunner config --list-info
 
-### List configuration (default lists with wordlists)
+#### List configuration (default lists with wordlists)
 ```
 {
   "lfi-linux": [
@@ -232,11 +232,11 @@ Edit the JSON file located at $HOME/.reconrunner/wordlists-config.json. You can 
 }
 ``` 
 
-# **Cleaning Up**
+## **Cleaning Up**
 ReconRunner ensures that partial results are saved and cleaned up on-the-fly. If you cancel the tool using CTRL + C, it will save results up to that point and clean temporary files.
 
 
-# **Acknowledgments**
+## **Acknowledgments**
 * **Gobuster**: A tool by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart). [GitHub Repository](https://github.com/OJ/gobuster)
 * **wfuzz**: A tool by @xmendez. [GitHub Repository](https://github.com/xmendez/wfuzz)
 * **sqlmap**: A tool by Bernardo Damele A. G. (@bdamele ) & Miroslav Stampar (@stamparm). [GitHub Repository](https://github.com/sqlmapproject/sqlmap)
