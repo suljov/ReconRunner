@@ -77,7 +77,7 @@ Examples:
   reconrunner sql -f /path/to/request_file.txt
 ```
 
-# **Examples**
+# **🚀 Examples**
 
 ## Directory enumeration
 
