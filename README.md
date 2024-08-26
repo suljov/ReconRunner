@@ -8,7 +8,7 @@ ReconRunner is a tool designed to streamline and simplify directory and file bru
     * add flag to urlencode the payload
 
 
-## Features
+## 🌟 Features
 
 * **Protocol Flexibility:** Seamlessly switch between HTTP and HTTPS protocols.
 * **Custom Wordlists:** Prioritize custom wordlists before default ones for a more tailored approach.
