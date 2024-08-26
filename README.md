@@ -10,8 +10,9 @@ ReconRunner is a tool designed to streamline and simplify directory and file bru
 
 <p align="center">
   <a href="#installation">
-    <img src="https://img.shields.io/badge/installation-⚙️-blue?style=for-the-badge&logo=python" alt="Installation">
+    <img src="https://github.com/suljov/ReconRunner?tab=readme-ov-file#install&logo=bash" alt="Installation">
   </a>
+
 
   <a href="#examples">
     <img src="https://img.shields.io/badge/examples-🚀-green?style=for-the-badge" alt="Examples">
