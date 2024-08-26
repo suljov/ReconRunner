@@ -2,6 +2,29 @@
 
 ReconRunner is a tool designed to streamline and simplify directory and file brute-forcing, subdomain enumeration and sql injections. By leveraging popular tools like Gobuster, wfuzz and sqlmap, ReconRunner offers a more flexible and powerful experience with enhanced handling of wordlists, protocols, and outputs.
 
+
+
+<p align="center">
+  <strong>By Angix Black</strong>
+</p>
+
+<p align="center">
+  <a href="#installation">
+    <img src="https://img.shields.io/badge/installation-⚙️-blue?style=for-the-badge&logo=python" alt="Installation">
+  </a>
+
+  <a href="#examples">
+    <img src="https://img.shields.io/badge/examples-🚀-green?style=for-the-badge" alt="Examples">
+  </a>
+ <a href="https://github.com/Angix-Black/Corscan?tab=MIT-1-ov-file" style="text-decoration: none; margin: 0 10px;">
+    <img src="https://img.shields.io/badge/license-📜-red?style=for-the-badge" alt="License" style="vertical-align: middle;">
+  </a>
+    <a href="#usage" style="text-decoration: none; margin: 0 10px;">
+    <img src="https://img.shields.io/badge/using-🛠️-purple?style=for-the-badge" alt="Using" style="vertical-align: middle;">
+  </a>
+  </a>
+</p>
+
 ## **TODO/idéas**
 * come up with more idéas for features
   * add feature for simple fuzzing (web)
