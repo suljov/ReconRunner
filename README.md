@@ -17,7 +17,7 @@ ReconRunner is a tool designed to streamline and simplify directory and file bru
     <img src="https://img.shields.io/badge/installation-⚙️-blue?style=for-the-badge" alt="Installation">
   </a>
 
-  <a href="#examples">
+  <a href="#-examples">
     <img src="https://img.shields.io/badge/examples-🚀-green?style=for-the-badge" alt="Examples">
   </a>
  <a href="https://github.com/Angix-Black/Corscan?tab=MIT-1-ov-file" style="text-decoration: none; margin: 0 10px;">
