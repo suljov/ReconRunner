@@ -20,7 +20,7 @@ ReconRunner is a tool designed to streamline and simplify directory and file bru
   <a href="#-examples">
     <img src="https://img.shields.io/badge/examples-🚀-green?style=for-the-badge" alt="Examples">
   </a>
- <a href="https://github.com/Angix-Black/Corscan?tab=MIT-1-ov-file" style="text-decoration: none; margin: 0 10px;">
+ <a href="https://github.com/suljov/ReconRunner?tab=MIT-1-ov-file" style="text-decoration: none; margin: 0 10px;">
     <img src="https://img.shields.io/badge/license-📜-red?style=for-the-badge" alt="License" style="vertical-align: middle;">
   </a>
     <a href="#usage" style="text-decoration: none; margin: 0 10px;">
