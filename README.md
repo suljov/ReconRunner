@@ -5,7 +5,7 @@ ReconRunner is a tool designed to streamline and simplify directory and file bru
 
 
 <p align="center">
-  <strong>By Angix Black</strong>
+  <strong>By Suljov</strong>
 </p>
 
 <p align="center">
