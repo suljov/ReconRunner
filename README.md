@@ -13,7 +13,7 @@ ReconRunner is a tool designed to streamline and simplify directory and file bru
 </p>
 
 <p align="center">
-  <a href="#installation">
+  <a href="#install">
     <img src="https://img.shields.io/badge/installation-⚙️-blue?style=for-the-badge" alt="Installation">
   </a>
 
