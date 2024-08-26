@@ -1,3 +1,9 @@
+<h1 align="center">
+  ReconRunner
+  <br>
+<sub><i>--X--</i></sub><br>
+</h1>
+
 # ReconRunner
 
 ReconRunner is a tool designed to streamline and simplify directory and file brute-forcing, subdomain enumeration and sql injections. By leveraging popular tools like Gobuster, wfuzz and sqlmap, ReconRunner offers a more flexible and powerful experience with enhanced handling of wordlists, protocols, and outputs.
