@@ -1,5 +1,25 @@
 #!/bin/bash
 
+# Define the installed version directly in this script
+INSTALLED_VERSION="0.5"  # Set this to the current installed version
+
+# Source the main script to get the version variable
+source ./main.sh
+
+# Compare versions
+if [ "$version" == "$INSTALLED_VERSION" ]; then
+    echo "Version $version is up-to-date. Exiting."
+    exit 0
+elif [ "$(echo -e "$version\n$INSTALLED_VERSION" | sort -V | head -n 1)" == "$INSTALLED_VERSION" ]; then
+    echo "A newer version detected. Continuing with installation..."
+    sudo rm /usr/local/bin/reconrunner 
+    # Place your installation or update commands here
+else
+    echo "Installed version is newer than the main script version. Exiting."
+    exit 0
+fi
+
+
 # Install jq
 sudo apt install -y jq
 
