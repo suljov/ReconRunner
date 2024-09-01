@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the installed version directly in this script
-INSTALLED_VERSION="0.5"  # Set this to the current installed version
+INSTALLED_VERSION="0.6"  # Set this to the current installed version
 
 # Source the main script to get the version variable
 source ./main.sh
