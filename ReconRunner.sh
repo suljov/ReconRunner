@@ -7,7 +7,7 @@ SHOULD_CLEANUP=false
 PROTOCOL="http"
 USE_WILDCARD=false
 WILDCARD_DOMAIN=""
-version="0.5"
+version="0.6"
 
 # Function to display help
 display_help() {
