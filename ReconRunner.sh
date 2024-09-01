@@ -11,6 +11,9 @@ version="0.6"
 
 # Function to display help
 display_help() {
+    echo "ReconRunner"
+    echo "Version: 0.6"
+    echo ""
     echo "Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--cl <custom_list>] [--wildcard <wildcard_domain>] [--extra <extra_options>] [--skip-save] [-f <file>]"
     echo
     echo "Help:"
