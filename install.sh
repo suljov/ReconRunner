@@ -3,33 +3,30 @@
 # Define the installed version directly in this script
 INSTALLED_VERSION="0.6"  # Set this to the current installed version
 
-# Check if reconrunner script exists and source it conditionally
+# Check if reconrunner script exists
 if [ -f /usr/local/bin/reconrunner ]; then
-    # Load the reconrunner script only to access variables, but do not execute commands
-    # Safe sourcing: use the 'set' command to extract version without executing
+    # Load the reconrunner script safely to get the version variable
     version=$(grep -Po '(?<=version=").*?(?=")' /usr/local/bin/reconrunner)
-    
+
     # Fallback if version is not found from grep
     if [ -z "$version" ]; then
         echo "Version variable not found in reconrunner script."
         exit 1
     fi
-else
-    echo "reconrunner script not found. Exiting."
-    exit 1
-fi
 
-# Compare versions
-if [ "$version" == "$INSTALLED_VERSION" ]; then
-    echo "Version $version is up-to-date. Exiting."
-    exit 0
-elif [ "$(echo -e "$version\n$INSTALLED_VERSION" | sort -V | head -n 1)" == "$INSTALLED_VERSION" ]; then
-    echo "A newer version detected. Continuing with installation..."
-    sudo rm /usr/local/bin/reconrunner
-    # Place your installation or update commands here
+    # Compare versions
+    if [ "$version" == "$INSTALLED_VERSION" ]; then
+        echo "Version $version is up-to-date. Exiting."
+        exit 0
+    elif [ "$(echo -e "$version\n$INSTALLED_VERSION" | sort -V | head -n 1)" == "$INSTALLED_VERSION" ]; then
+        echo "A newer version detected. Continuing with installation..."
+        sudo rm /usr/local/bin/reconrunner
+    else
+        echo "Installed version is newer than the main script version. Exiting."
+        exit 0
+    fi
 else
-    echo "Installed version is newer than the main script version. Exiting."
-    exit 0
+    echo "reconrunner script not found. Proceeding with installation..."
 fi
 
 # Install jq if not installed
@@ -45,6 +42,7 @@ fi
 if [ -f ReconRunner.sh ]; then
     chmod +x ReconRunner.sh
     sudo cp ReconRunner.sh /usr/local/bin/reconrunner
+    echo "ReconRunner.sh installed as /usr/local/bin/reconrunner."
 else
     echo "ReconRunner.sh not found. Exiting."
     exit 1
