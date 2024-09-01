@@ -4,7 +4,7 @@
 INSTALLED_VERSION="0.6"  # Set this to the current installed version
 
 # Source the main script to get the version variable
-source ./main.sh
+source /usr/local/bin/reconrunner
 
 # Compare versions
 if [ "$version" == "$INSTALLED_VERSION" ]; then
