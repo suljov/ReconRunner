@@ -1,8 +1,7 @@
 <h1 align="center">
   ReconRunner
   <br>
-<sub><i>Streamline your Recon, 
-                    Automate Your Workflow.</i></sub><br>
+<sub><i>Streamline your Recon, Automate Your Workflow.</i></sub><br>
 </h1>
 
 
