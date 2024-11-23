@@ -30,6 +30,9 @@
 
 ReconRunner is a webapp tool designed to streamline and simplify directory and file brute-forcing, subdomain enumeration and sql injections. By leveraging popular tools like Gobuster, wfuzz and sqlmap, ReconRunner offers a more flexible and powerful experience with enhanced handling of wordlists, protocols, and outputs.
 
+## NOTICE
+The tool will go from bash code to python code
+
 
 ## **TODO/idéas**
 * come up with more idéas for features
