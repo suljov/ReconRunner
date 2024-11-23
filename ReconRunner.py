@@ -216,6 +216,8 @@ args = parser.parse_args()
 
 if args.command == "subs":
     handleSUBS()
+elif args.command == "subs2":
+    handleSUBS2()
 elif args.command == "dirs":
     handleDIRS()
 elif args.command == "sql":
@@ -224,5 +226,4 @@ elif args.command == "fuzz":
     handleFUZZ()
 elif args.command == "config":
     handleCONFIG()
-elif args.command == "subs2":
-    handleSUBS2()
+
