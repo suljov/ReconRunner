@@ -6,63 +6,80 @@ import json
 configList = os.path.expanduser("~/.reconrunner/wordlists-config.json")
 
 
-# TODO: add this
-def checkJsonwordlistExist(wordlist):
-    None
-
-
-def checkJsonTypeExist(type):
+def checkJsonWordlistExist(wordlist, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
-    if type not in data:
+    if wordlist in data[obj]:
+        return True
+    else:
+        return False
+
+
+def checkJsonTypeExist(obj):
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    if obj not in data:
         return False
     else:
         return True
 
 
-def addWordlist(wordlist, to):
-    check = checkJsonTypeExist(to)
+def addWordlist(wordlist, obj):
+    check = checkJsonTypeExist(obj)
+    wordlists = checkJsonWordlistExist(wordlist, obj)
     if check:
-        with open(configList, "r") as configFile:
-            data = json.load(configFile)
-        data[to].append(wordlist)
-        with open(configList, 'w') as fp:
-            json.dump(data, fp, indent=2)
+        if not wordlists:
+            with open(configList, "r") as configFile:
+                data = json.load(configFile)
+            data[obj].append(wordlist)
+            with open(configList, 'w') as fp:
+                json.dump(data, fp, indent=2)
+            print("Done!")
+        else:
+            print(f"{wordlist} already exist in {obj}")
+            exit
     else:
-        print("This type dont exist in the configuration file!!")
+        print(f"{obj} dont exist in the configuration file!!")
         exit
 
 
-def deleteWordlist(wordlist, type):
-    check = checkJsonTypeExist(type)
+def deleteWordlist(wordlist, obj):
+    check = checkJsonTypeExist(obj)
+    wordlists = checkJsonWordlistExist(wordlist, obj)
     if check:
-        with open(configList, "r") as configFile:
-            data = json.load(configFile)
-        data[type].remove(wordlist)
-        with open(configList, 'w') as fp:
-            json.dump(data, fp, indent=2)
+        if wordlists:
+            with open(configList, "r") as configFile:
+                data = json.load(configFile)
+            data[obj].remove(wordlist)
+            with open(configList, 'w') as fp:
+                json.dump(data, fp, indent=2)
+            print("Done!")
+        else:
+            print(f"{wordlist} dont exist in {obj}")
+            exit
     else:
-        print("This type dont exist in the configuration file!!")
+        print(f"{obj} dont exist in the configuration file!!")
         exit
 
 
 def deleteList(list):
-    check = checkJsonTypeExist(type)
+    check = checkJsonTypeExist(list)
     if check:
         with open(configList, "r") as configFile:
             data = json.load(configFile)
         del data[list]
         with open(configList, 'w') as fp:
             json.dump(data, fp, indent=2)
+        print("Done!")
     else:
-        print("This type dont exist in the configuration file!!")
+        print(f"{list} dont exist in the configuration file!!")
         exit
 
 
 def addList(list):
-    check = checkJsonTypeExist(type)
+    check = checkJsonTypeExist(list)
     if check:
-        print("This type already exist")
+        print(f"{list} already exist")
         exit
     else:
         with open(configList, "r") as configFile:
@@ -70,6 +87,7 @@ def addList(list):
         data[list] = []
         with open(configList, 'w') as fp:
             json.dump(data, fp, indent=2)
+        print("Done!")
 
 
 # Handle functions
