@@ -39,7 +39,8 @@ def addWordlist(wordlist, obj):
             print(f"{wordlist} already exist in {obj}")
             exit
     else:
-        print(f"{obj} dont exist in the configuration file!!")
+        print(f"""{obj} dont exist in the configuration file!!
+See config file: reconrunner config --list-info""")
         exit
 
 
@@ -58,7 +59,8 @@ def deleteWordlist(wordlist, obj):
             print(f"{wordlist} dont exist in {obj}")
             exit
     else:
-        print(f"{obj} dont exist in the configuration file!!")
+        print(f"""{obj} dont exist in the configuration file!!
+See config file: reconrunner config --list-info""")
         exit
 
 
@@ -72,7 +74,8 @@ def deleteList(list):
             json.dump(data, fp, indent=2)
         print("Done!")
     else:
-        print(f"{list} dont exist in the configuration file!!")
+        print(f"""{list} dont exist in the configuration file!!
+See config file: reconrunner config --list-info""")
         exit
 
 
