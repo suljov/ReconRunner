@@ -1,8 +1,40 @@
 import argparse
 import os
+import json
 
 
-# Hndle functions
+configList = "test.json"
+
+
+def checkJsonTypeExist(type):
+    None
+
+
+def addWordlist(wordlist, to):
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    data[to].append(wordlist)
+    with open(configList, 'w') as fp:
+        json.dump(data, fp, indent=2)
+
+
+def deleteList(list):
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    del data[list]
+    with open(configList, 'w') as fp:
+        json.dump(data, fp)
+
+
+def addList(list):
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    data[list] = []
+    with open(configList, 'w') as fp:
+        json.dump(data, fp, indent=2)
+
+
+# Handle functions
 def handleSUBS():
     if args.commands is True:
         os.system("subfinder --help")
@@ -53,7 +85,30 @@ def handleFUZZ():
 
 
 def handleCONFIG():
-    print("config")
+    if (args.remove_list is not None
+        and args.add_wordlist is None
+        and args.remove_wordlist is None
+        and not args.list_info
+        and args.create_list is None
+        and args.to is None
+            and args.type is None):
+        deleteList(args.remove_list)
+    if (args.create_list is not None
+        and args.remove_list is None
+        and args.add_wordlist is None
+        and args.remove_wordlist is None
+        and not args.list_info
+        and args.to is None
+            and args.type is None):
+        addList(args.create_list)
+    if (args.add_wordlist is not None
+        and args.to is not None
+        and args.create_list is None
+        and args.remove_list is None
+        and args.remove_wordlist is None
+        and not args.list_info
+            and args.type is None):
+        addWordlist(args.add_wordlist, args.to)
 
 
 # Functions
@@ -195,13 +250,14 @@ CFG.add_argument("--add-wordlist", type=str,
                  help="""Adds wordlist to the configuration
                  file (needs to use flag --to for this to work).""")
 CFG.add_argument("--to", type=str,
-                 help="Needs to be used with the flag --add-wordlist to work.")
+                 help="""Specify to what list. Needs to be u
+                 sed with the flag --add-wordlist to work.""")
 CFG.add_argument("--remove-wordlist", type=str,
                  help="""Removes wordlist from the configuration
                  file (needs to use flag --from for this to work).""")
-CFG.add_argument("--from", type=str,
-                 help="""Needs to be used with the
-                 flag --remove-wordlist to work.""")
+CFG.add_argument("--type", type=str,
+                 help="""Specify what type in the list. Needs
+                 to be used with the flag --remove-wordlist to work.""")
 CFG.add_argument("--list-info", action="store_true",
                  help="""Shows the configuration file
                  contianing the lists of the wordlists.""")
@@ -226,4 +282,3 @@ elif args.command == "fuzz":
     handleFUZZ()
 elif args.command == "config":
     handleCONFIG()
-
