@@ -262,9 +262,8 @@ SUBS2 = subparsers.add_parser("subs2",
                               enumeration (tool: wfuzz).""")
 SUBS2.add_argument("-u", "--url", type=str,
                    help="Url to the target.")
-SUBS2.add_argument("--cw", type=str,
-                   help="""Use a custom wordlist instead
-                  of the default wordlists.""")
+SUBS2.add_argument("--cw", type=str, help="""Use a custom
+                   wordlist instead of the default wordlists in the list.""")
 SUBS2.add_argument("--cl", type=str,
                    help="Use a custom list of wordlists from the config file.")
 SUBS2.add_argument("--skip-save", action="store_true",
@@ -282,9 +281,8 @@ DIRS = subparsers.add_parser("dirs",
                              enumeration (tool: gobuster).""")
 DIRS.add_argument("-u", "--url", type=str,
                   help="Url to the target.")
-DIRS.add_argument("--cw", type=str,
-                  help="""Use a custom wordlist instead
-                  of the default wordlists.""")
+DIRS.add_argument("--cw", type=str, help="""Use a custom
+                   wordlist instead of the default wordlists in the list.""")
 DIRS.add_argument("--cl", type=str,
                   help="Use a custom list of wordlists from the config file.")
 DIRS.add_argument("--skip-save", action="store_true",
@@ -301,7 +299,7 @@ DIRS2 = subparsers.add_parser("dirs2", help="""Directory/file
                               enumeration (tool: feroxbuster).""")
 DIRS2.add_argument("-u", "--url", type=str, help="Url to the target.")
 DIRS2.add_argument("--cw", type=str, help="""Use a custom
-                   wordlist instead of the default wordlists.""")
+                   wordlist instead of the default wordlists in the list.""")
 DIRS2.add_argument("--cl", type=str, help="""Use a custom list of
                    wordlists from the config file.""")
 DIRS2.add_argument("--skip-save", action="store_true",
@@ -310,7 +308,7 @@ DIRS2.add_argument("-e", "--extra", type=str, help="""Extra flags
                    used for the underlaying tool (gobuster).""")
 DIRS2.add_argument("-c", "--commands",
                    action="store_true",
-                   help="""Show help page for gobuster
+                   help="""Show help page for feroxbuster
                    (for the -e/--extra flag.)""")
 
 # subparsers sql
