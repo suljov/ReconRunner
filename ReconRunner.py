@@ -3,7 +3,7 @@ import os
 import json
 
 
-configList = "test.json"
+configList = os.path.expanduser("~/.reconrunner/wordlists-config.json")
 
 
 def checkJsonTypeExist(type):
@@ -18,12 +18,21 @@ def addWordlist(wordlist, to):
         json.dump(data, fp, indent=2)
 
 
+def deleteWordlist(wordlist, type):
+    print("heheheh")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    data[type].remove(wordlist)
+    with open(configList, 'w') as fp:
+        json.dump(data, fp, indent=2)
+
+
 def deleteList(list):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     del data[list]
     with open(configList, 'w') as fp:
-        json.dump(data, fp)
+        json.dump(data, fp, indent=2)
 
 
 def addList(list):
@@ -86,29 +95,48 @@ def handleFUZZ():
 
 def handleCONFIG():
     if (args.remove_list is not None
-        and args.add_wordlist is None
-        and args.remove_wordlist is None
-        and not args.list_info
-        and args.create_list is None
-        and args.to is None
+            and args.add_wordlist is None
+            and args.remove_wordlist is None
+            and not args.list_info
+            and args.create_list is None
+            and args.to is None
             and args.type is None):
         deleteList(args.remove_list)
-    if (args.create_list is not None
-        and args.remove_list is None
-        and args.add_wordlist is None
-        and args.remove_wordlist is None
-        and not args.list_info
-        and args.to is None
-            and args.type is None):
+    elif (args.list_info is True
+          and args.add_wordlist is None
+          and args.to is None
+          and args.create_list is None
+          and args.remove_list is None
+          and args.remove_wordlist is None
+          and args.type is None):
+        print("")
+        print("File located at: '~/.reconrunner/wordlists-config.json'")
+        print("Configuration file:")
+        print("")
+        os.system("cat ~/.reconrunner/wordlists-config.json")
+    elif (args.create_list is not None
+          and args.remove_list is None
+          and args.add_wordlist is None
+          and args.remove_wordlist is None
+          and not args.list_info
+          and args.to is None
+          and args.type is None):
         addList(args.create_list)
-    if (args.add_wordlist is not None
-        and args.to is not None
-        and args.create_list is None
-        and args.remove_list is None
-        and args.remove_wordlist is None
-        and not args.list_info
-            and args.type is None):
+    elif (args.add_wordlist is not None
+          and args.to is not None
+          and args.create_list is None
+          and args.remove_list is None
+          and args.remove_wordlist is None
+          and not args.list_info
+          and args.type is None):
         addWordlist(args.add_wordlist, args.to)
+    elif (args.type is not None
+          and args.remove_wordlist is not None
+          and args.add_wordlist is None
+          and args.to is None and args.create_list is None
+          and args.remove_list is None
+          and not args.list_info):
+        deleteWordlist(args.remove_wordlist, args.type)
 
 
 # Functions
@@ -254,7 +282,7 @@ CFG.add_argument("--to", type=str,
                  sed with the flag --add-wordlist to work.""")
 CFG.add_argument("--remove-wordlist", type=str,
                  help="""Removes wordlist from the configuration
-                 file (needs to use flag --from for this to work).""")
+                 file (needs to use flag --type for this to work).""")
 CFG.add_argument("--type", type=str,
                  help="""Specify what type in the list. Needs
                  to be used with the flag --remove-wordlist to work.""")
