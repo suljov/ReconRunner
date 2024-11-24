@@ -6,7 +6,7 @@ import json
 configList = os.path.expanduser("~/.reconrunner/wordlists-config.json")
 
 
-# TODO add this
+# TODO: add this
 def checkJsonwordlistExist(wordlist):
     None
 
