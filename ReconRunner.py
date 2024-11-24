@@ -116,9 +116,14 @@ def handleSUBS2():
         findSUBSextra2(args.url, args.extra)
 
 
-def handleDIRS(url, extra):
+def handleDIRS():
     if args.commands is True:
         os.system("gobuster --help")
+
+
+def handleDIRS2():
+    if args.commands is True:
+        os.system("feroxbuster --help")
 
 
 def handleSQL():
@@ -196,12 +201,12 @@ def findSUBS(url):
     os.system(f"subfinder -d {url}")
 
 
-def findSUBS2(url):
-    print("subs tool with gobuster (subs2)")
-
-
 def findSUBSextra(url, extra):
     os.system(f"subfinder -d {url} {extra}")
+
+
+def findSUBS2(url):
+    print("subs tool with gobuster (subs2)")
 
 
 def findSUBSextra2(url, extra):
@@ -264,8 +269,6 @@ SUBS2.add_argument("--cl", type=str,
                    help="Use a custom list of wordlists from the config file.")
 SUBS2.add_argument("--skip-save", action="store_true",
                    help="Skip saving results to files.")
-SUBS2.add_argument("--https", action="store_true",
-                   help="Use HTTPS protocol instead of HTTP.")
 SUBS2.add_argument("-e", "--extra", type=str,
                    help="""Extra flags used for the underlaying
                   tool (subfinder).""")
@@ -286,14 +289,29 @@ DIRS.add_argument("--cl", type=str,
                   help="Use a custom list of wordlists from the config file.")
 DIRS.add_argument("--skip-save", action="store_true",
                   help="Skip saving results to files.")
-DIRS.add_argument("--https", action="store_true",
-                  help="Use HTTPS protocol instead of HTTP.")
 DIRS.add_argument("-e", "--extra", type=str,
                   help="Extra flags used for the underlaying tool (gobuster).")
 DIRS.add_argument("-c", "--commands", action="store_true",
                   help="""Show help page for gobuster
                   (for the -e/--extra flag.)""")
 
+
+# subparsers dirs2
+DIRS2 = subparsers.add_parser("dirs2", help="""Directory/file
+                              enumeration (tool: feroxbuster).""")
+DIRS2.add_argument("-u", "--url", type=str, help="Url to the target.")
+DIRS2.add_argument("--cw", type=str, help="""Use a custom
+                   wordlist instead of the default wordlists.""")
+DIRS2.add_argument("--cl", type=str, help="""Use a custom list of
+                   wordlists from the config file.""")
+DIRS2.add_argument("--skip-save", action="store_true",
+                   help="Skip saving results to files.")
+DIRS2.add_argument("-e", "--extra", type=str, help="""Extra flags
+                   used for the underlaying tool (gobuster).""")
+DIRS2.add_argument("-c", "--commands",
+                   action="store_true",
+                   help="""Show help page for gobuster
+                   (for the -e/--extra flag.)""")
 
 # subparsers sql
 SQL = subparsers.add_parser("sql",
@@ -312,8 +330,6 @@ SQL.add_argument("-c", "--commands", action="store_true",
 FUZZ = subparsers.add_parser("fuzz",
                              help="""For custom fuzzing of endpoints,
                              subdomains etc (tool: wfuzz).""")
-FUZZ.add_argument("--https", action="store_true",
-                  help="Use HTTPS protocol instead of HTTP.")
 FUZZ.add_argument("-e", "--extra", type=str,
                   help="Extra flags used for the underlaying tool (wfuzz).")
 FUZZ.add_argument("-c", "--commands", action="store_true",
@@ -354,6 +370,8 @@ elif args.command == "subs2":
     handleSUBS2()
 elif args.command == "dirs":
     handleDIRS()
+elif args.command == "dirs2":
+    handleCONFIG()
 elif args.command == "sql":
     handleSQL()
 elif args.command == "fuzz":
