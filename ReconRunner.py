@@ -93,6 +93,30 @@ def addList(list):
         print("Done!")
 
 
+def portScanRustscanBoth(domain, extra, extra_nmap):
+    os.system(f"""sudo rustscan -a {domain} {extra} --ulimit 5000 -- {extra_nmap}""")
+
+
+def portScanRustscanExtra(domain, extra):
+    os.system(f"""sudo rustscan -a {domain} {extra} --ulimit 5000 -- -sS -A -O -sV""")
+
+
+def portScanRustscanExtraNmap(domain, extra_nmap):
+    os.system(f"""sudo rustscan -a {domain} --ulimit 5000 -- {extra_nmap}""")
+
+
+def portScanRustscanSingle(domain):
+    os.system(f"""sudo rustscan -a {domain} --ulimit 5000 -- -sS -A -O -sV""")
+
+
+def portscanNmapSingle(domain):
+    os.system(f"sudo nmap {domain} -sS -A -O -sV -p-")
+
+
+def portscanNmapExtra(domain, extra):
+    os.system(f"sudo nmap {domain} {extra}")
+
+
 # Handle functions
 def handleSUBS():
     if args.commands is True:
@@ -192,6 +216,36 @@ def handleCONFIG():
           and args.remove_list is None
           and not args.list_info):
         deleteWordlist(args.remove_wordlist, args.type)
+
+
+def handlePORT():
+    if args.commands is True:
+        os.system("rustscan --help")
+    elif (args.domain is not None
+          and args.nmap_extra is not None
+          and args.extra is not None):
+        portScanRustscanBoth(args.domain, args.extra, args.nmap_extra)
+    elif (args.domain is not None
+          and args.nmap_extra is None
+          and args.extra is None):
+        portScanRustscanSingle(args.domain)
+    elif (args.domain is not None
+          and args.nmap_extra is None
+          and args.extra is not None):
+        portScanRustscanExtra(args.domain, args.extra)
+    elif (args.domain is not None
+          and args.nmap_extra is not None
+          and args.extra is None):
+        portScanRustscanExtraNmap(args.domain, args.extra_nmap)
+
+
+def handlePORT2():
+    if args.commands is True:
+        os.system("nmap --help")
+    elif (args.domain is not None and args.extra is None):
+        portscanNmapSingle(args.domain)
+    elif (args.domain is not None and args.extra is not None):
+        portscanNmapExtra(args.domain, args.extra)
 
 
 # Functions
@@ -333,6 +387,33 @@ FUZZ.add_argument("-e", "--extra", type=str,
 FUZZ.add_argument("-c", "--commands", action="store_true",
                   help="Show help page for wfuzz (for the -e/--extra flag.)")
 
+# subparsers portscan
+portscan = subparsers.add_parser("portscan", help="""For portscanning the
+                                 target (tool: rustscan).""")
+portscan.add_argument("-e", "--extra", type=str, help="""Extra
+                      flags used for the underlaying tool (rustscan).""")
+portscan.add_argument("-ne", "--nmap-extra", type=str,
+                      help="""Extra flags used for the underlaying tool in
+                      rustscan, OBS these are the commands
+                      for nmap that rustscan uses.""")
+portscan.add_argument("-c", "--commands",
+                      action="store_true",
+                      help="""Show help page for
+                      rustscan (for the -e/--extra flag.)""")
+portscan.add_argument("-i", "-d", "--domain", "--ip", type=str,
+                      help="Domain name or IP to target", required=True)
+
+# subparsers portscan2
+portscan2 = subparsers.add_parser("portscan2", help="""For portscanning the
+                                 target (tool: nmap).""")
+portscan2.add_argument("-e", "--extra", type=str, help="""Extra
+                      flags used for the underlaying tool (nmap).""")
+portscan2.add_argument("-c", "--commands", action="store_true",
+                       help="""Show help page for
+                       nmap (for the -e/--extra flag.)""")
+portscan2.add_argument("-i", "-d", "--domain", "--ip", type=str,
+                       help="Domain name or IP to target", required=True)
+
 # subparsers config
 CFG = subparsers.add_parser("config",
                             help="""Configuration of the wordlist of wordlists
@@ -376,3 +457,7 @@ elif args.command == "fuzz":
     handleFUZZ()
 elif args.command == "config":
     handleCONFIG()
+elif args.command == "portscan":
+    handlePORT()
+elif args.command == "portscan2":
+    handlePORT2()
