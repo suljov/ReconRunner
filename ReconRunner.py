@@ -6,6 +6,11 @@ import json
 configList = os.path.expanduser("~/.reconrunner/wordlists-config.json")
 
 
+# TODO add this
+def checkJsonwordlistExist(wordlist):
+    None
+
+
 def checkJsonTypeExist(type):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
