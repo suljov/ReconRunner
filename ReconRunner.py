@@ -7,40 +7,64 @@ configList = os.path.expanduser("~/.reconrunner/wordlists-config.json")
 
 
 def checkJsonTypeExist(type):
-    None
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    if type not in data:
+        return False
+    else:
+        return True
 
 
 def addWordlist(wordlist, to):
-    with open(configList, "r") as configFile:
-        data = json.load(configFile)
-    data[to].append(wordlist)
-    with open(configList, 'w') as fp:
-        json.dump(data, fp, indent=2)
+    check = checkJsonTypeExist(to)
+    if check:
+        with open(configList, "r") as configFile:
+            data = json.load(configFile)
+        data[to].append(wordlist)
+        with open(configList, 'w') as fp:
+            json.dump(data, fp, indent=2)
+    else:
+        print("This type dont exist in the configuration file!!")
+        exit
 
 
 def deleteWordlist(wordlist, type):
-    print("heheheh")
-    with open(configList, "r") as configFile:
-        data = json.load(configFile)
-    data[type].remove(wordlist)
-    with open(configList, 'w') as fp:
-        json.dump(data, fp, indent=2)
+    check = checkJsonTypeExist(type)
+    if check:
+        with open(configList, "r") as configFile:
+            data = json.load(configFile)
+        data[type].remove(wordlist)
+        with open(configList, 'w') as fp:
+            json.dump(data, fp, indent=2)
+    else:
+        print("This type dont exist in the configuration file!!")
+        exit
 
 
 def deleteList(list):
-    with open(configList, "r") as configFile:
-        data = json.load(configFile)
-    del data[list]
-    with open(configList, 'w') as fp:
-        json.dump(data, fp, indent=2)
+    check = checkJsonTypeExist(type)
+    if check:
+        with open(configList, "r") as configFile:
+            data = json.load(configFile)
+        del data[list]
+        with open(configList, 'w') as fp:
+            json.dump(data, fp, indent=2)
+    else:
+        print("This type dont exist in the configuration file!!")
+        exit
 
 
 def addList(list):
-    with open(configList, "r") as configFile:
-        data = json.load(configFile)
-    data[list] = []
-    with open(configList, 'w') as fp:
-        json.dump(data, fp, indent=2)
+    check = checkJsonTypeExist(type)
+    if check:
+        print("This type already exist")
+        exit
+    else:
+        with open(configList, "r") as configFile:
+            data = json.load(configFile)
+        data[list] = []
+        with open(configList, 'w') as fp:
+            json.dump(data, fp, indent=2)
 
 
 # Handle functions
