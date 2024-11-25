@@ -4,6 +4,7 @@ import json
 
 
 configList = os.path.expanduser("~/.reconrunner/wordlists-config.json")
+outpitDir = os.path.expanduser("./reconrunner-saved-data")
 
 
 def checkJsonWordlistExist(wordlist, obj):
@@ -118,9 +119,6 @@ def portscanNmapExtra(domain, extra):
 def handleSUBS():
     if args.commands is True:
         os.system("subfinder --help")
-    elif (args.url is None
-          and args.extra is not None):
-        print("URL is neeed.")
     elif (args.url is not None
           and args.extra is None):
         findSUBS(args.url)
@@ -132,16 +130,22 @@ def handleSUBS():
 def handleSUBS2():
     if args.commands is True:
         os.system("wfuzz --help")
-    elif (args.url is None
-          and args.extra is not None):
-        print("URL is neeed.")
     elif (args.url is not None
-          and args.extra is None):
+          and args.extra is None
+          and not args.skip_save):
         findSUBS2(args.url)
     elif (args.url is not None
-          and args.extra is not None):
+          and args.extra is None
+          and args.skip_save):
+        findSUBS2SAVE(args.url)
+    elif (args.url is not None
+          and args.extra is not None
+          and not args.skip_save):
         findSUBSextra2(args.url, args.extra)
-
+    elif (args.url is not None
+          and args.extra is not None
+          and args.skip_save):
+        findSUBSextra2SAVE(args.url, args.extra)
 
 def handleDIRS():
     if args.commands is True:
@@ -271,8 +275,16 @@ def findSUBS2(url):
     print("subs tool with gobuster (subs2)")
 
 
+def findSUBS2SAVE(url):
+    print("subs tool with gobuster (subs2) + SAVE")
+
+
 def findSUBSextra2(url, extra):
     print("subs tool with gobuster and extra (subs2)")
+
+
+def findSUBSextra2SAVE(url, extra):
+    print("subs tool with gobuster and extra (subs2) + SAVE")
 
 
 def sqlWithFile(file):
@@ -299,15 +311,15 @@ subparsers = parser.add_subparsers(dest="command", required=True)
 
 # subparsers subs
 SUBS = subparsers.add_parser("subs", help="Subdomain enumeration (tool: subfinder).")
-SUBS.add_argument("-u", "--url", type=str, help="Url to the target.")
+SUBS.add_argument("-u", "--url", required=True, type=str, help="Url to the target.")
 SUBS.add_argument("--skip-save", action="store_true", help="Skip saving results to files.")
 SUBS.add_argument("-e", "--extra", type=str, help="""Extra flags used for the underlaying tool (subfinder).""")
 SUBS.add_argument("-c", "--commands", action="store_true", help="""Show help page for subfinder (for the -e/--extra flag.)""")
 
 
 # subparsers subs2
-SUBS2 = subparsers.add_parser("subs2",  help="""Second way of subdomain enumeration (tool: wfuzz).""")
-SUBS2.add_argument("-u", "--url", type=str, help="Url to the target.")
+SUBS2 = subparsers.add_parser("subs2", help="""Second way of subdomain enumeration (tool: wfuzz).""")
+SUBS2.add_argument("-u", "--url", required=True, type=str, help="Url to the target.")
 SUBS2.add_argument("--cw", type=str, help="""Use a custom  wordlist instead of the default wordlists in the list.""")
 SUBS2.add_argument("--cl", type=str,  help="Use a custom list of wordlists from the config file.")
 SUBS2.add_argument("--skip-save", action="store_true",  help="Skip saving results to files.")
@@ -316,7 +328,7 @@ SUBS2.add_argument("-c", "--commands", action="store_true", help="""Show help pa
 
 # subparsers dirs
 DIRS = subparsers.add_parser("dirs", help="""Directory/file enumeration (tool: gobuster).""")
-DIRS.add_argument("-u", "--url", type=str, help="Url to the target.")
+DIRS.add_argument("-u", "--url", required=True, type=str, help="Url to the target.")
 DIRS.add_argument("--cw", type=str, help="""Use a custom wordlist instead of the default wordlists in the list.""")
 DIRS.add_argument("--cl", type=str, help="Use a custom list of wordlists from the config file.")
 DIRS.add_argument("--skip-save", action="store_true", help="Skip saving results to files.")
@@ -326,7 +338,7 @@ DIRS.add_argument("-c", "--commands", action="store_true", help="""Show help pag
 
 # subparsers dirs2
 DIRS2 = subparsers.add_parser("dirs2", help="""Directory/file enumeration (tool: feroxbuster).""")
-DIRS2.add_argument("-u", "--url", type=str, help="Url to the target.")
+DIRS2.add_argument("-u", "--url", required=True, type=str, help="Url to the target.")
 DIRS2.add_argument("--cw", type=str, help="""Use a custom wordlist instead of the default wordlists in the list.""")
 DIRS2.add_argument("--cl", type=str, help="""Use a custom list of wordlists from the config file.""")
 DIRS2.add_argument("--skip-save", action="store_true", help="Skip saving results to files.")
@@ -342,8 +354,11 @@ SQL.add_argument("-c", "--commands", action="store_true", help="Show help page f
 
 # subparsers fuzz
 FUZZ = subparsers.add_parser("fuzz", help="""For custom fuzzing of endpoints, subdomains etc (tool: wfuzz).""")
+FUZZ.add_argument("-u", "--url", required=True, type=str, help="URL to the target")
 FUZZ.add_argument("-e", "--extra", type=str, help="Extra flags used for the underlaying tool (wfuzz).")
 FUZZ.add_argument("-c", "--commands", action="store_true", help="Show help page for wfuzz (for the -e/--extra flag.)")
+FUZZ.add_argument("--skip-save", action="store_true", help="Skip saving results to files.")
+
 
 # subparsers portscan
 portscan = subparsers.add_parser("portscan", help="""For portscanning the target (tool: rustscan).""")
@@ -351,12 +366,15 @@ portscan.add_argument("-e", "--extra", type=str, help="""Extra flags used for th
 portscan.add_argument("-ne", "--nmap-extra", type=str, help="""Extra flags used for the underlaying tool in rustscan, OBS these are the commands for nmap that rustscan uses.""")
 portscan.add_argument("-c", "--commands", action="store_true", help="""Show help page for rustscan (for the -e/--extra flag.)""")
 portscan.add_argument("-i", "-d", "--domain", "--ip", type=str, help="Domain name or IP to target", required=True)
+portscan.add_argument("--skip-save", action="store_true", help="Skip saving results to files.")
+
 
 # subparsers portscan2
-portscan2 = subparsers.add_parser("portscan2", help="""For portscanning the target (tool: nmap).""")
+portscan2 = subparsers.add_parser("portscan2", help="""For portscanning the target (tool: nmap). OBS: output does not get saved by default.""")
 portscan2.add_argument("-e", "--extra", type=str, help="""Extra flags used for the underlaying tool (nmap).""")
 portscan2.add_argument("-c", "--commands", action="store_true", help="""Show help page for nmap (for the -e/--extra flag.)""")
 portscan2.add_argument("-i", "-d", "--domain", "--ip", type=str, help="Domain name or IP to target", required=True)
+
 
 # subparsers config
 CFG = subparsers.add_parser("config", help="""Configuration of the wordlist of wordlists (json file containing wordlists for different uses)""")
@@ -395,14 +413,14 @@ elif args.command == "portscan2":
 
 
 # what is done:
-# subs
 # sql
 # config
 # portscan
-# portscan2
 
 
 # TODO what is left to be done:
-# TODO! subs2
+# TODO! subs
+# TODO! subs2 (the functions is made, all is left is to make each funtion do its thing)
 # TODO! dirs + dirs2
 # TODO! fuzz
+# TODO! portscan2 (add --skip-save)
