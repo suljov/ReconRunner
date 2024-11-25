@@ -164,11 +164,11 @@ def portScanRustscanSingle(domain):
 
 
 def portscanNmapSingle(domain):
-    os.system(f"sudo nmap {domain} -sS -A -O -sV -p-")
+    os.system(f"sudo nmap {domain} -sS -A -O -sV -p- -oN {outpitDir}/portscan2/{domain}.txt")
 
 
 def portscanNmapSingleNoSAVE(domain, extra):
-    os.system(f"sudo nmap {domain} -sS -A -O -sV -p- -oN {outpitDir}/portscan2/{domain}.txt")
+    os.system(f"sudo nmap {domain} -sS -A -O -sV -p-")
 
 
 def portscanNmapExtra(domain, extra):
@@ -461,10 +461,10 @@ elif args.command == "portscan2":
 # config
 # portscan
 # subs
+# portscan2
 
 
 # TODO what is left to be done:
 # TODO! subs2
 # TODO! dirs + dirs2
 # TODO! fuzz
-# TODO! portscan2
