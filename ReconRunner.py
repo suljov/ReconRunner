@@ -368,6 +368,8 @@ elif args.command == "subs2":
 elif args.command == "dirs":
     handleDIRS()
 elif args.command == "dirs2":
+    handleDIRS2()
+elif args.command == "dirs2":
     handleCONFIG()
 elif args.command == "sql":
     handleSQL()
@@ -379,3 +381,17 @@ elif args.command == "portscan":
     handlePORT()
 elif args.command == "portscan2":
     handlePORT2()
+
+
+# what is done:
+# subs
+# sql
+# config
+# portscan
+# portscan2
+
+
+# TODO what is left to be done:
+# TODO! subs2
+# TODO! dirs + dirs2
+# TODO! fuzz
