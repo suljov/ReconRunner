@@ -1,10 +1,66 @@
 import argparse
 import os
 import json
+import re
 
 
 configList = os.path.expanduser("~/.reconrunner/wordlists-config.json")
 outpitDir = os.path.expanduser("./reconrunner-saved-data")
+
+
+# Functions
+
+
+def findSUBS(url):
+    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    os.system(f"subfinder -d {url} -o {outpitDir}/subs/{cleaned_url}.txt")
+
+
+def findSUBSnoSAVE(url):
+    os.system(f"subfinder -d {url}")
+
+
+def findSUBSextra(url, extra):
+    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    os.system(f"subfinder -d {url} {extra} -o {outpitDir}/subs/{cleaned_url}.txt")
+
+
+def findSUBSextraNosave(url, extra):
+    os.system(f"subfinder -d {url} {extra}")
+
+
+def findSUBS2(url):
+    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    print(f"subs tool with gobuster (subs2)")
+
+
+def findSUBS2NoSAVE(url):
+    print("subs tool with gobuster (subs2) + no SAVE")
+
+
+def findSUBSextra2(url, extra):
+    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    print(f"subs tool with gobuster and extra (subs2)")
+
+
+def findSUBSextra2NoSAVE(url, extra):
+    print("subs tool with gobuster and extra (subs2) + no SAVE")
+
+
+def sqlWithFile(file):
+    os.system(f"sqlmap -r {file} --batch")
+
+
+def sqlWithFileExtra(file, extra):
+    os.system(f"sqlmap -r {file} --batch {extra}")
+
+
+def sqlWithURL(url):
+    os.system(f"sqlmap -u {url} --batch")
+
+
+def sqlWithURLextra(url, extra):
+    os.system(f"sqlmap -u {url} --batch {extra}")
 
 
 def checkJsonWordlistExist(wordlist, obj):
@@ -116,15 +172,26 @@ def portscanNmapExtra(domain, extra):
 
 
 # Handle functions
+
 def handleSUBS():
     if args.commands is True:
         os.system("subfinder --help")
     elif (args.url is not None
-          and args.extra is None):
+          and args.extra is None
+          and not args.skip_save):
         findSUBS(args.url)
     elif (args.url is not None
-          and args.extra is not None):
+          and args.extra is None
+          and args.skip_save):
+        findSUBSnoSAVE(args.url)
+    elif (args.url is not None
+          and args.extra is not None
+          and not args.skip_save):
         findSUBSextra(args.url, args.extra)
+    elif (args.url is not None
+          and args.extra is not None
+          and args.skip_save):
+        findSUBSextraNosave(args.url, args.extra)
 
 
 def handleSUBS2():
@@ -137,7 +204,7 @@ def handleSUBS2():
     elif (args.url is not None
           and args.extra is None
           and args.skip_save):
-        findSUBS2SAVE(args.url)
+        findSUBS2NoSAVE(args.url)
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save):
@@ -145,7 +212,8 @@ def handleSUBS2():
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save):
-        findSUBSextra2SAVE(args.url, args.extra)
+        findSUBSextra2NoSAVE(args.url, args.extra)
+
 
 def handleDIRS():
     if args.commands is True:
@@ -164,7 +232,8 @@ def handleSQL():
         os.system("sqlmap --help")
     elif (args.url is not None
           and args.file is not None):
-        print("You cant have both flags for a url and a file... choose one.")
+        print("You cant have both flags for a url and a file... choose one :)")
+        exit
     elif (args.file is not None
           and args.extra is None):
         sqlWithFile(args.file)
@@ -254,53 +323,15 @@ def handlePORT():
 def handlePORT2():
     if args.commands is True:
         os.system("nmap --help")
-    elif (args.domain is not None and args.extra is None):
+    elif (args.domain is not None
+          and args.extra is None):
         portscanNmapSingle(args.domain)
-    elif (args.domain is not None and args.extra is not None):
+    elif (args.domain is not None
+          and args.extra is not None):
         portscanNmapExtra(args.domain, args.extra)
 
 
-# Functions
 
-
-def findSUBS(url):
-    os.system(f"subfinder -d {url}")
-
-
-def findSUBSextra(url, extra):
-    os.system(f"subfinder -d {url} {extra}")
-
-
-def findSUBS2(url):
-    print("subs tool with gobuster (subs2)")
-
-
-def findSUBS2SAVE(url):
-    print("subs tool with gobuster (subs2) + SAVE")
-
-
-def findSUBSextra2(url, extra):
-    print("subs tool with gobuster and extra (subs2)")
-
-
-def findSUBSextra2SAVE(url, extra):
-    print("subs tool with gobuster and extra (subs2) + SAVE")
-
-
-def sqlWithFile(file):
-    os.system(f"sqlmap -r {file} --batch")
-
-
-def sqlWithFileExtra(file, extra):
-    os.system(f"sqlmap -r {file} --batch {extra}")
-
-
-def sqlWithURL(url):
-    os.system(f"sqlmap -u {url} --batch")
-
-
-def sqlWithURLextra(url, extra):
-    os.system(f"sqlmap -u {url} --batch {extra}")
 
 
 # Argeparse stuff
@@ -366,7 +397,6 @@ portscan.add_argument("-e", "--extra", type=str, help="""Extra flags used for th
 portscan.add_argument("-ne", "--nmap-extra", type=str, help="""Extra flags used for the underlaying tool in rustscan, OBS these are the commands for nmap that rustscan uses.""")
 portscan.add_argument("-c", "--commands", action="store_true", help="""Show help page for rustscan (for the -e/--extra flag.)""")
 portscan.add_argument("-i", "-d", "--domain", "--ip", type=str, help="Domain name or IP to target", required=True)
-portscan.add_argument("--skip-save", action="store_true", help="Skip saving results to files.")
 
 
 # subparsers portscan2
@@ -374,6 +404,7 @@ portscan2 = subparsers.add_parser("portscan2", help="""For portscanning the targ
 portscan2.add_argument("-e", "--extra", type=str, help="""Extra flags used for the underlaying tool (nmap).""")
 portscan2.add_argument("-c", "--commands", action="store_true", help="""Show help page for nmap (for the -e/--extra flag.)""")
 portscan2.add_argument("-i", "-d", "--domain", "--ip", type=str, help="Domain name or IP to target", required=True)
+portscan2.add_argument("--skip-save", action="store_true", help="Skip saving results to files.")
 
 
 # subparsers config
