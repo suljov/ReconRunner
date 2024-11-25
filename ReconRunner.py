@@ -22,7 +22,7 @@ def findSUBSnoSAVE(url):
 
 def findSUBSextra(url, extra):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"subfinder -d {url} {extra} -o {outpitDir}/subs/{cleaned_url}.txt")
+    os.system(f"subfinder -d {url} {extra} -o {outpitDir}/subs/{cleaned_url}-extra.txt")
 
 
 def findSUBSextraNosave(url, extra):
@@ -167,7 +167,15 @@ def portscanNmapSingle(domain):
     os.system(f"sudo nmap {domain} -sS -A -O -sV -p-")
 
 
+def portscanNmapSingleNoSAVE(domain, extra):
+    os.system(f"sudo nmap {domain} -sS -A -O -sV -p- -oN {outpitDir}/portscan2/{domain}.txt")
+
+
 def portscanNmapExtra(domain, extra):
+    os.system(f"sudo nmap {domain} {extra} -oN {outpitDir}/portscan2/{domain}-extra.txt")
+
+
+def portscanNmapExtraNoSave(domain, extra):
     os.system(f"sudo nmap {domain} {extra}")
 
 
@@ -324,8 +332,13 @@ def handlePORT2():
     if args.commands is True:
         os.system("nmap --help")
     elif (args.domain is not None
-          and args.extra is None):
+          and args.extra is None
+          and not args.skip_save):
         portscanNmapSingle(args.domain)
+    elif (args.domain is not None
+          and args.extra is None
+          and not args.skip_save):
+        portscanNmapSingleNoSAVE(args.domain)
     elif (args.domain is not None
           and args.extra is not None):
         portscanNmapExtra(args.domain, args.extra)
@@ -447,11 +460,11 @@ elif args.command == "portscan2":
 # sql
 # config
 # portscan
+# subs
 
 
 # TODO what is left to be done:
-# TODO! subs
-# TODO! subs2 (the functions is made, all is left is to make each funtion do its thing)
+# TODO! subs2
 # TODO! dirs + dirs2
 # TODO! fuzz
-# TODO! portscan2 (add --skip-save)
+# TODO! portscan2
