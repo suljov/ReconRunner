@@ -118,22 +118,28 @@ def portscanNmapExtra(domain, extra):
 def handleSUBS():
     if args.commands is True:
         os.system("subfinder --help")
-    elif args.url is None and args.extra is not None:
+    elif (args.url is None
+          and args.extra is not None):
         print("URL is neeed.")
-    elif args.url is not None and args.extra is None:
+    elif (args.url is not None
+          and args.extra is None):
         findSUBS(args.url)
-    elif args.url is not None and args.extra is not None:
+    elif (args.url is not None
+          and args.extra is not None):
         findSUBSextra(args.url, args.extra)
 
 
 def handleSUBS2():
     if args.commands is True:
         os.system("wfuzz --help")
-    elif args.url is None and args.extra is not None:
+    elif (args.url is None
+          and args.extra is not None):
         print("URL is neeed.")
-    elif args.url is not None and args.extra is None:
+    elif (args.url is not None
+          and args.extra is None):
         findSUBS2(args.url)
-    elif args.url is not None and args.extra is not None:
+    elif (args.url is not None
+          and args.extra is not None):
         findSUBSextra2(args.url, args.extra)
 
 
@@ -152,15 +158,20 @@ def handleSQL():
     print(f"lol {args.commands}")
     if args.commands is True:
         os.system("sqlmap --help")
-    elif args.url is not None and args.file is not None:
+    elif (args.url is not None
+          and args.file is not None):
         print("You cant have both flags for a url and a file... choose one.")
-    elif args.file is not None and args.extra is None:
+    elif (args.file is not None
+          and args.extra is None):
         sqlWithFile(args.file)
-    elif args.file is not None and args.extra is not None:
+    elif (args.file is not None
+          and args.extra is not None):
         sqlWithFileExtra(args.file, args.extra)
-    elif args.url is not None and args.extra is None:
+    elif (args.url is not None
+          and args.extra is None):
         sqlWithURL(args.url)
-    elif args.url is not None and args.extra is not None:
+    elif (args.url is not None
+          and args.extra is not None):
         sqlWithURLextra(args.url, args.extra)
 
 
@@ -323,7 +334,7 @@ DIRS2.add_argument("-e", "--extra", type=str, help="""Extra flags  used for the 
 DIRS2.add_argument("-c", "--commands",  action="store_true",  help="""Show help page for feroxbuster  (for the -e/--extra flag.)""")
 
 # subparsers sql
-SQL = subparsers.add_parser("sql",           help="SQL Injection detection (tool: sqlmap).")
+SQL = subparsers.add_parser("sql",           help="SQL Injection detection (tool: sqlmap). OBS: output does not get saved by default.")
 SQL.add_argument("-u", "--url", type=str, help="URL to the target")
 SQL.add_argument("-f", "--file", type=str, help="""File containing the request in question (from Burp or similar).""")
 SQL.add_argument("-e", "--extra", type=str, help="Extra flags used for the underlaying tool (SQLmap).")
