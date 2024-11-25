@@ -39,8 +39,7 @@ def addWordlist(wordlist, obj):
             print(f"{wordlist} already exist in {obj}")
             exit
     else:
-        print(f"""{obj} dont exist in the configuration file!!
-See config file: reconrunner config --list-info""")
+        print(f"""{obj} dont exist in the configuration file! See config file: reconrunner config --list-info""")
         exit
 
 
@@ -59,8 +58,7 @@ def deleteWordlist(wordlist, obj):
             print(f"{wordlist} dont exist in {obj}")
             exit
     else:
-        print(f"""{obj} dont exist in the configuration file!!
-See config file: reconrunner config --list-info""")
+        print(f"""{obj} dont exist in the configuration file! See config file: reconrunner config --list-info""")
         exit
 
 
@@ -74,8 +72,7 @@ def deleteList(list):
             json.dump(data, fp, indent=2)
         print("Done!")
     else:
-        print(f"""{list} dont exist in the configuration file!!
-See config file: reconrunner config --list-info""")
+        print(f"""{list} dont exist in the configuration file! See config file: reconrunner config --list-info""")
         exit
 
 
@@ -286,158 +283,79 @@ def sqlWithURLextra(url, extra):
 # Argeparse stuff
 
 
-parser = argparse.ArgumentParser(prog="ReconRunner",
-                                 description="""ReconRunner made by suljov.
-                                 Streamlines scanning by
-                                 automating tasks for webapp pentest and
-                                 organizing results for a more
-                                 efficient experience.""",
-                                 epilog="Help page for ReconRunner.")
+parser = argparse.ArgumentParser(prog="ReconRunner", description="""ReconRunner made by suljov. Streamlines scanning by automating tasks for webapp pentest and organizing results for a more efficient experience.""", epilog="Help page for ReconRunner.")
 subparsers = parser.add_subparsers(dest="command", required=True)
 
 # subparsers subs
-SUBS = subparsers.add_parser("subs",
-                             help="Subdomain enumeration (tool: subfinder).")
-SUBS.add_argument("-u", "--url", type=str,
-                  help="Url to the target.")
-SUBS.add_argument("--skip-save", action="store_true",
-                  help="Skip saving results to files.")
-SUBS.add_argument("-e", "--extra", type=str,
-                  help="""Extra flags used for the underlaying
-                  tool (subfinder).""")
-SUBS.add_argument("-c", "--commands", action="store_true",
-                  help="""Show help page for subfinder
-                  (for the -e/--extra flag.)""")
+SUBS = subparsers.add_parser("subs", help="Subdomain enumeration (tool: subfinder).")
+SUBS.add_argument("-u", "--url", type=str, help="Url to the target.")
+SUBS.add_argument("--skip-save", action="store_true", help="Skip saving results to files.")
+SUBS.add_argument("-e", "--extra", type=str, help="""Extra flags used for the underlaying tool (subfinder).""")
+SUBS.add_argument("-c", "--commands", action="store_true", help="""Show help page for subfinder (for the -e/--extra flag.)""")
 
 
 # subparsers subs2
-SUBS2 = subparsers.add_parser("subs2",
-                              help="""Second way of subdomain
-                              enumeration (tool: wfuzz).""")
-SUBS2.add_argument("-u", "--url", type=str,
-                   help="Url to the target.")
-SUBS2.add_argument("--cw", type=str, help="""Use a custom
-                   wordlist instead of the default wordlists in the list.""")
-SUBS2.add_argument("--cl", type=str,
-                   help="Use a custom list of wordlists from the config file.")
-SUBS2.add_argument("--skip-save", action="store_true",
-                   help="Skip saving results to files.")
-SUBS2.add_argument("-e", "--extra", type=str,
-                   help="""Extra flags used for the underlaying
-                  tool (subfinder).""")
-SUBS2.add_argument("-c", "--commands", action="store_true",
-                   help="""Show help page for subfinder
-                  (for the -e/--extra flag.)""")
+SUBS2 = subparsers.add_parser("subs2",  help="""Second way of subdomain  enumeration (tool: wfuzz).""")
+SUBS2.add_argument("-u", "--url", type=str,  help="Url to the target.")
+SUBS2.add_argument("--cw", type=str, help="""Use a custom  wordlist instead of the default wordlists in the list.""")
+SUBS2.add_argument("--cl", type=str,  help="Use a custom list of wordlists from the config file.")
+SUBS2.add_argument("--skip-save", action="store_true",  help="Skip saving results to files.")
+SUBS2.add_argument("-e", "--extra", type=str,  help="""Extra flags used for the underlaying tool (subfinder).""")
+SUBS2.add_argument("-c", "--commands", action="store_true",  help="""Show help page for subfinder (for the -e/--extra flag.)""")
 
 # subparsers dirs
-DIRS = subparsers.add_parser("dirs",
-                             help="""Directory/file
-                             enumeration (tool: gobuster).""")
-DIRS.add_argument("-u", "--url", type=str,
-                  help="Url to the target.")
-DIRS.add_argument("--cw", type=str, help="""Use a custom
-                   wordlist instead of the default wordlists in the list.""")
-DIRS.add_argument("--cl", type=str,
-                  help="Use a custom list of wordlists from the config file.")
-DIRS.add_argument("--skip-save", action="store_true",
-                  help="Skip saving results to files.")
-DIRS.add_argument("-e", "--extra", type=str,
-                  help="Extra flags used for the underlaying tool (gobuster).")
-DIRS.add_argument("-c", "--commands", action="store_true",
-                  help="""Show help page for gobuster
-                  (for the -e/--extra flag.)""")
+DIRS = subparsers.add_parser("dirs", help="""Directory/file enumeration (tool: gobuster).""")
+DIRS.add_argument("-u", "--url", type=str, help="Url to the target.")
+DIRS.add_argument("--cw", type=str, help="""Use a custom  wordlist instead of the default wordlists in the list.""")
+DIRS.add_argument("--cl", type=str, help="Use a custom list of wordlists from the config file.")
+DIRS.add_argument("--skip-save", action="store_true", help="Skip saving results to files.")
+DIRS.add_argument("-e", "--extra", type=str, help="Extra flags used for the underlaying tool (gobuster).")
+DIRS.add_argument("-c", "--commands", action="store_true", help="""Show help page for gobuster (for the -e/--extra flag.)""")
 
 
 # subparsers dirs2
-DIRS2 = subparsers.add_parser("dirs2", help="""Directory/file
-                              enumeration (tool: feroxbuster).""")
+DIRS2 = subparsers.add_parser("dirs2", help="""Directory/file  enumeration (tool: feroxbuster).""")
 DIRS2.add_argument("-u", "--url", type=str, help="Url to the target.")
-DIRS2.add_argument("--cw", type=str, help="""Use a custom
-                   wordlist instead of the default wordlists in the list.""")
-DIRS2.add_argument("--cl", type=str, help="""Use a custom list of
-                   wordlists from the config file.""")
-DIRS2.add_argument("--skip-save", action="store_true",
-                   help="Skip saving results to files.")
-DIRS2.add_argument("-e", "--extra", type=str, help="""Extra flags
-                   used for the underlaying tool (gobuster).""")
-DIRS2.add_argument("-c", "--commands",
-                   action="store_true",
-                   help="""Show help page for feroxbuster
-                   (for the -e/--extra flag.)""")
+DIRS2.add_argument("--cw", type=str, help="""Use a custom  wordlist instead of the default wordlists in the list.""")
+DIRS2.add_argument("--cl", type=str, help="""Use a custom list of  wordlists from the config file.""")
+DIRS2.add_argument("--skip-save", action="store_true",  help="Skip saving results to files.")
+DIRS2.add_argument("-e", "--extra", type=str, help="""Extra flags  used for the underlaying tool (gobuster).""")
+DIRS2.add_argument("-c", "--commands",  action="store_true",  help="""Show help page for feroxbuster  (for the -e/--extra flag.)""")
 
 # subparsers sql
-SQL = subparsers.add_parser("sql",
-                            help="SQL Injection detection (tool: sqlmap).")
-SQL.add_argument("-u", "--url", type=str,
-                 help="URL to the target")
-SQL.add_argument("-f", "--file", type=str,
-                 help="""File containing the request in
-                 question (from Burp or similar).""")
-SQL.add_argument("-e", "--extra", type=str,
-                 help="Extra flags used for the underlaying tool (SQLmap).")
-SQL.add_argument("-c", "--commands", action="store_true",
-                 help="Show help page for SQLmap (for the -e/--extra flag.)")
+SQL = subparsers.add_parser("sql",           help="SQL Injection detection (tool: sqlmap).")
+SQL.add_argument("-u", "--url", type=str, help="URL to the target")
+SQL.add_argument("-f", "--file", type=str, help="""File containing the request in question (from Burp or similar).""")
+SQL.add_argument("-e", "--extra", type=str, help="Extra flags used for the underlaying tool (SQLmap).")
+SQL.add_argument("-c", "--commands", action="store_true", help="Show help page for SQLmap (for the -e/--extra flag.)")
 
 # subparsers fuzz
-FUZZ = subparsers.add_parser("fuzz",
-                             help="""For custom fuzzing of endpoints,
-                             subdomains etc (tool: wfuzz).""")
-FUZZ.add_argument("-e", "--extra", type=str,
-                  help="Extra flags used for the underlaying tool (wfuzz).")
-FUZZ.add_argument("-c", "--commands", action="store_true",
-                  help="Show help page for wfuzz (for the -e/--extra flag.)")
+FUZZ = subparsers.add_parser("fuzz", help="""For custom fuzzing of endpoints, subdomains etc (tool: wfuzz).""")
+FUZZ.add_argument("-e", "--extra", type=str, help="Extra flags used for the underlaying tool (wfuzz).")
+FUZZ.add_argument("-c", "--commands", action="store_true", help="Show help page for wfuzz (for the -e/--extra flag.)")
 
 # subparsers portscan
-portscan = subparsers.add_parser("portscan", help="""For portscanning the
-                                 target (tool: rustscan).""")
-portscan.add_argument("-e", "--extra", type=str, help="""Extra
-                      flags used for the underlaying tool (rustscan).""")
-portscan.add_argument("-ne", "--nmap-extra", type=str,
-                      help="""Extra flags used for the underlaying tool in
-                      rustscan, OBS these are the commands
-                      for nmap that rustscan uses.""")
-portscan.add_argument("-c", "--commands",
-                      action="store_true",
-                      help="""Show help page for
-                      rustscan (for the -e/--extra flag.)""")
-portscan.add_argument("-i", "-d", "--domain", "--ip", type=str,
-                      help="Domain name or IP to target", required=True)
+portscan = subparsers.add_parser("portscan", help="""For portscanning the target (tool: rustscan).""")
+portscan.add_argument("-e", "--extra", type=str, help="""Extra     flags used for the underlaying tool (rustscan).""")
+portscan.add_argument("-ne", "--nmap-extra", type=str,     help="""Extra flags used for the underlaying tool in     rustscan, OBS these are the commands     for nmap that rustscan uses.""")
+portscan.add_argument("-c", "--commands",     action="store_true",     help="""Show help page for     rustscan (for the -e/--extra flag.)""")
+portscan.add_argument("-i", "-d", "--domain", "--ip", type=str,     help="Domain name or IP to target", required=True)
 
 # subparsers portscan2
-portscan2 = subparsers.add_parser("portscan2", help="""For portscanning the
-                                 target (tool: nmap).""")
-portscan2.add_argument("-e", "--extra", type=str, help="""Extra
-                      flags used for the underlaying tool (nmap).""")
-portscan2.add_argument("-c", "--commands", action="store_true",
-                       help="""Show help page for
-                       nmap (for the -e/--extra flag.)""")
-portscan2.add_argument("-i", "-d", "--domain", "--ip", type=str,
-                       help="Domain name or IP to target", required=True)
+portscan2 = subparsers.add_parser("portscan2", help="""For portscanning the target (tool: nmap).""")
+portscan2.add_argument("-e", "--extra", type=str, help="""Extra     flags used for the underlaying tool (nmap).""")
+portscan2.add_argument("-c", "--commands", action="store_true",      help="""Show help page for      nmap (for the -e/--extra flag.)""")
+portscan2.add_argument("-i", "-d", "--domain", "--ip", type=str,      help="Domain name or IP to target", required=True)
 
 # subparsers config
-CFG = subparsers.add_parser("config",
-                            help="""Configuration of the wordlist of wordlists
-                            (json file containing wordlists
-                            for different uses)""")
-CFG.add_argument("--add-wordlist", type=str,
-                 help="""Adds wordlist to the configuration
-                 file (needs to use flag --to for this to work).""")
-CFG.add_argument("--to", type=str,
-                 help="""Specify to what list. Needs to be u
-                 sed with the flag --add-wordlist to work.""")
-CFG.add_argument("--remove-wordlist", type=str,
-                 help="""Removes wordlist from the configuration
-                 file (needs to use flag --type for this to work).""")
-CFG.add_argument("--type", type=str,
-                 help="""Specify what type in the list. Needs
-                 to be used with the flag --remove-wordlist to work.""")
-CFG.add_argument("--list-info", action="store_true",
-                 help="""Shows the configuration file
-                 contianing the lists of the wordlists.""")
-CFG.add_argument("--create-list", type=str,
-                 help="Creates a custom list for wordlists.")
-CFG.add_argument("--remove-list", type=str,
-                 help="Removes a list of wordlists.")
+CFG = subparsers.add_parser("config",           help="""Configuration of the wordlist of wordlists           (json file containing wordlists           for different uses)""")
+CFG.add_argument("--add-wordlist", type=str, help="""Adds wordlist to the configuration file (needs to use flag --to for this to work).""")
+CFG.add_argument("--to", type=str, help="""Specify to what list. Needs to be u sed with the flag --add-wordlist to work.""")
+CFG.add_argument("--remove-wordlist", type=str, help="""Removes wordlist from the configuration file (needs to use flag --type for this to work).""")
+CFG.add_argument("--type", type=str, help="""Specify what type in the list. Needs to be used with the flag --remove-wordlist to work.""")
+CFG.add_argument("--list-info", action="store_true", help="""Shows the configuration file contianing the lists of the wordlists.""")
+CFG.add_argument("--create-list", type=str, help="Creates a custom list for wordlists.")
+CFG.add_argument("--remove-list", type=str, help="Removes a list of wordlists.")
 
 args = parser.parse_args()
 
