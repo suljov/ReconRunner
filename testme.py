@@ -346,48 +346,21 @@ def handleFUZZ():
 
 
 def handleCONFIG():
-    if (args.remove_list is not None
-            and args.add_wordlist is None
-            and args.remove_wordlist is None
-            and not args.list_info
-            and args.create_list is None
-            and args.to is None
-            and args.type is None):
+    if args.remove_list is not None:
         deleteList(args.remove_list)
-    elif (args.list_info is True
-          and args.add_wordlist is None
-          and args.to is None
-          and args.create_list is None
-          and args.remove_list is None
-          and args.remove_wordlist is None
-          and args.type is None):
+    elif args.list_info is True:
         print("")
         print("File located at: '~/.reconrunner/wordlists-config.json'")
         print("Configuration file:")
         print("")
         os.system("cat ~/.reconrunner/wordlists-config.json")
-    elif (args.create_list is not None
-          and args.remove_list is None
-          and args.add_wordlist is None
-          and args.remove_wordlist is None
-          and not args.list_info
-          and args.to is None
-          and args.type is None):
+    elif args.create_list is not None:
         addList(args.create_list)
     elif (args.add_wordlist is not None
-          and args.to is not None
-          and args.create_list is None
-          and args.remove_list is None
-          and args.remove_wordlist is None
-          and not args.list_info
-          and args.type is None):
+          and args.to is not None):
         addWordlist(args.add_wordlist, args.to)
     elif (args.type is not None
-          and args.remove_wordlist is not None
-          and args.add_wordlist is None
-          and args.to is None and args.create_list is None
-          and args.remove_list is None
-          and not args.list_info):
+          and args.remove_wordlist is not None):
         deleteWordlist(args.remove_wordlist, args.type)
 
 
