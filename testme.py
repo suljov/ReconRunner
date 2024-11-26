@@ -185,16 +185,13 @@ def handleSUBS():
     if args.commands is True:
         os.system("subfinder --help")
     elif (args.url is not None
-          and args.extra is None
-          and not args.skip_save):
+          and args.extra is None):
         findSUBS(args.url)
     elif (args.url is not None
-          and args.extra is None
           and args.skip_save):
         findSUBSnoSAVE(args.url)
     elif (args.url is not None
-          and args.extra is not None
-          and not args.skip_save):
+          and args.extra is not None):
         findSUBSextra(args.url, args.extra)
     elif (args.url is not None
           and args.extra is not None
@@ -206,104 +203,64 @@ def handleSUBS2():
     if args.commands is True:
         os.system("wfuzz --help")
 # no cl or cw
-    elif (args.url is not None
-          and args.extra is None
-          and not args.skip_save
-          and not args.cw
-          and not args.cl):
+    elif args.url is not None:
         findSUBS2(args.url)
     elif (args.url is not None
-          and args.extra is None
-          and args.skip_save
-          and not args.cw
-          and not args.cl):
+          and args.skip_save):
         findSUBS2NoSAVE(args.url)
     elif (args.url is not None
-          and args.extra is not None
-          and not args.skip_save
-          and not args.cw
-          and not args.cl):
+          and args.extra is not None):
         findSUBSextra2(args.url, args.extra)
     elif (args.url is not None
           and args.extra is not None
-          and args.skip_save
-          and not args.cw
-          and not args.cl):
+          and args.skip_save):
         findSUBSextra2NoSAVE(args.url, args.extra)
 # with cl and not cw
     elif (args.url is not None
-          and args.extra is None
-          and not args.skip_save
-          and not args.cw
-          and args.cl):
+          and args.cl is not None):
         findSUBS2CL(args.url)
     elif (args.url is not None
-          and args.extra is None
           and args.skip_save
-          and not args.cw
-          and args.cl):
+          and args.cl is not None):
         findSUBS2NoSAVECL(args.url)
     elif (args.url is not None
           and args.extra is not None
-          and not args.skip_save
-          and not args.cw
-          and args.cl):
+          and args.cl is not None):
         findSUBSextra2CL(args.url, args.extra)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
-          and not args.cw
-          and args.cl):
+          and args.cl is not None):
         findSUBSextra2NoSAVECL(args.url, args.extra)
-# with cw and cl
-    elif (args.url is not None
-          and args.extra is None
-          and not args.skip_save
-          and args.cw
-          and not args.cl):
+# with cw and not cl
+    elif args.url is not None:
         findSUBS2CW(args.url)
     elif (args.url is not None
-          and args.extra is None
-          and args.skip_save
-          and args.cw
-          and not args.cl):
+          and args.skip_save):
         findSUBS2NoSAVECW(args.url)
     elif (args.url is not None
-          and args.extra is not None
-          and not args.skip_save
-          and args.cw
-          and not args.cl):
+          and args.extra is not None):
         findSUBSextra2CW(args.url, args.extra)
     elif (args.url is not None
           and args.extra is not None
-          and args.skip_save
-          and args.cw
-          and not args.cl):
+          and args.skip_save):
         findSUBSextra2NoSAVECW(args.url, args.extra)
-# with cl and cw
+# with cl and not cw
     elif (args.url is not None
-          and args.extra is None
-          and not args.skip_save
-          and args.cw
-          and args.cl):
+          and args.cl is not None):
         findSUBS2CLandCW(args.url)
     elif (args.url is not None
-          and args.extra is None
           and args.skip_save
-          and args.cw
-          and args.cl):
+          and args.cl is not None):
         findSUBS2NoSAVECLandCW(args.url)
     elif (args.url is not None
           and args.extra is not None
-          and not args.skip_save
-          and args.cw
-          and args.cl):
+          and args.cl is not None):
         findSUBSextra2CLandCW(args.url, args.extra)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
-          and args.cw
-          and args.cl):
+          and args.cl is not None):
         findSUBSextra2NoSAVECLandCW(args.url, args.extra)
 
 
@@ -371,17 +328,13 @@ def handlePORT():
           and args.nmap_extra is not None
           and args.extra is not None):
         portScanRustscanBoth(args.domain, args.extra, args.nmap_extra)
-    elif (args.domain is not None
-          and args.nmap_extra is None
-          and args.extra is None):
+    elif args.domain is not None:
         portScanRustscanSingle(args.domain)
     elif (args.domain is not None
-          and args.nmap_extra is None
           and args.extra is not None):
         portScanRustscanExtra(args.domain, args.extra)
     elif (args.domain is not None
-          and args.nmap_extra is not None
-          and args.extra is None):
+          and args.nmap_extra is not None):
         portScanRustscanExtraNmap(args.domain, args.extra_nmap)
 
 
@@ -389,12 +342,9 @@ def handlePORT2():
     if args.commands is True:
         os.system("nmap --help")
     elif (args.domain is not None
-          and args.extra is None
-          and not args.skip_save):
+          and args.extra is None):
         portscanNmapSingle(args.domain)
-    elif (args.domain is not None
-          and args.extra is None
-          and not args.skip_save):
+    elif args.domain is not None:
         portscanNmapSingleNoSAVE(args.domain)
     elif (args.domain is not None
           and args.extra is not None):
