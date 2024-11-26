@@ -184,8 +184,7 @@ def portscanNmapExtraNoSave(domain, extra):
 def handleSUBS():
     if args.commands is True:
         os.system("subfinder --help")
-    elif (args.url is not None
-          and args.extra is None):
+    elif args.url is not None:
         findSUBS(args.url)
     elif (args.url is not None
           and args.skip_save):
@@ -283,14 +282,12 @@ def handleSQL():
           and args.file is not None):
         print("You cant have both flags for a url and a file... choose one :)")
         exit
-    elif (args.file is not None
-          and args.extra is None):
+    elif args.file is not None:
         sqlWithFile(args.file)
     elif (args.file is not None
           and args.extra is not None):
         sqlWithFileExtra(args.file, args.extra)
-    elif (args.url is not None
-          and args.extra is None):
+    elif args.url is not None:
         sqlWithURL(args.url)
     elif (args.url is not None
           and args.extra is not None):
@@ -341,8 +338,7 @@ def handlePORT():
 def handlePORT2():
     if args.commands is True:
         os.system("nmap --help")
-    elif (args.domain is not None
-          and args.extra is None):
+    elif args.domain is not None:
         portscanNmapSingle(args.domain)
     elif args.domain is not None:
         portscanNmapSingleNoSAVE(args.domain)
