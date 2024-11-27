@@ -280,7 +280,7 @@ def handleSUBS2():
           and args.cw is not None
           and args.cl is None):
         findSUBSextra2NoSAVECW(args.url, args.extra)
-# with cl and not cw
+# with cl and cw
     elif (args.url is not None
           and args.extra is None
           and not args.skip_save
@@ -302,7 +302,7 @@ def handleSUBS2():
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
-          and args.cw is None
+          and args.cw is not None
           and args.cl is not None):
         findSUBSextra2NoSAVECLandCW(args.url, args.extra)
 
