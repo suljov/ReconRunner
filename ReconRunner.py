@@ -167,7 +167,7 @@ def portscanNmapSingle(domain):
     os.system(f"sudo nmap {domain} -sS -A -O -sV -p- -oN {outpitDir}/portscan2/{domain}.txt")
 
 
-def portscanNmapSingleNoSAVE(domain, extra):
+def portscanNmapSingleNoSAVE(domain):
     os.system(f"sudo nmap {domain} -sS -A -O -sV -p-")
 
 
