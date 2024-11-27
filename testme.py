@@ -232,34 +232,42 @@ def handleSUBS2():
           and args.cl is not None):
         findSUBSextra2NoSAVECL(args.url, args.extra)
 # with cw and not cl
-    elif args.url is not None:
+    elif (args.url is not None
+          and args.cw is not None):
         findSUBS2CW(args.url)
     elif (args.url is not None
-          and args.skip_save):
+          and args.skip_save
+          and args.cw is not None):
         findSUBS2NoSAVECW(args.url)
     elif (args.url is not None
-          and args.extra is not None):
+          and args.extra is not None
+          and args.cw is not None):
         findSUBSextra2CW(args.url, args.extra)
     elif (args.url is not None
           and args.extra is not None
-          and args.skip_save):
+          and args.skip_save
+          and args.cw is not None):
         findSUBSextra2NoSAVECW(args.url, args.extra)
-# with cl and not cw
+# with cl and cw
     elif (args.url is not None
-          and args.cl is not None):
+          and args.cl is not None
+          and args.cw is not None):
         findSUBS2CLandCW(args.url)
     elif (args.url is not None
           and args.skip_save
-          and args.cl is not None):
+          and args.cl is not None
+          and args.cw is not None):
         findSUBS2NoSAVECLandCW(args.url)
     elif (args.url is not None
           and args.extra is not None
-          and args.cl is not None):
+          and args.cl is not None
+          and args.cw is not None):
         findSUBSextra2CLandCW(args.url, args.extra)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
-          and args.cl is not None):
+          and args.cl is not None
+          and args.cw is not None):
         findSUBSextra2NoSAVECLandCW(args.url, args.extra)
 
 
