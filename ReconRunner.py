@@ -18,9 +18,6 @@ ascii_art_reconrunner = r"""
 """
 
 
-
-
-
 print("")
 print("")
 print(ascii_art_reconrunner)
