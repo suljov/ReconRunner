@@ -8,6 +8,29 @@ configList = os.path.expanduser("~/.reconrunner/wordlists-config.json")
 outpitDir = os.path.expanduser("./reconrunner-saved-data")
 
 
+ascii_art_reconrunner = r"""
+██████╗ ███████╗ ██████╗ ██████╗ ███╗   ██╗██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗███████╗██████╗ 
+██╔══██╗██╔════╝██╔════╝██╔═══██╗████╗  ██║██╔══██╗██║   ██║████╗  ██║████╗  ██║██╔════╝██╔══██╗
+██████╔╝█████╗  ██║     ██║   ██║██╔██╗ ██║██████╔╝██║   ██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝
+██╔══██╗██╔══╝  ██║     ██║   ██║██║╚██╗██║██╔══██╗██║   ██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗
+██║  ██║███████╗╚██████╗╚██████╔╝██║ ╚████║██║  ██║╚██████╔╝██║ ╚████║██║ ╚████║███████╗██║  ██║
+╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝
+"""
+
+
+
+
+
+print("")
+print("")
+print(ascii_art_reconrunner)
+print("")
+print("")
+print("(\\__/)")
+print("(='.'=)")
+print('("")_("")')
+
+
 # the handle Functions
 
 # subs
@@ -1114,6 +1137,7 @@ CFG.add_argument("--remove-list", type=str, help="Removes a list of wordlists.")
 args = parser.parse_args()
 
 # Checking what flags are used etc
+
 
 if args.command == "subs":
     handleSUBS()
