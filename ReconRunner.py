@@ -1171,3 +1171,5 @@ elif args.command == "portscan2":
 # TODO! dirs (functions are created)
 # TODO! dirs2 (functions are created)
 # TODO! fuzz (functions are created)
+
+# TODO! after the tools is done. refactor stuff
