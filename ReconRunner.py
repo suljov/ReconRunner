@@ -198,27 +198,6 @@ def dirsExtraCWnoSave(url, extra):
     print(f"dirs with cw and extra + no save with feroxbuster (dirs) at: {cleaned_url}")
 
 
-# dirs with cl and cw
-def dirsCLandCW(url):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs with cw and and cl with feroxbuster (dirs) at: {cleaned_url}")
-
-
-def dirsCLandCWnoSave(url):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs with cw and and cl + no save with feroxbuster (dirs) at: {cleaned_url}")
-
-
-def dirsExtraCLandCW(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs with cw and and cl + extra with feroxbuster (dirs) at: {cleaned_url}")
-
-
-def dirsExtraCLandCWnoSave(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs with cw and and cl + extra + no save with feroxbuster (dirs) at: {cleaned_url}")
-
-
 # dirs2 normal
 def dirs2(url):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
@@ -280,27 +259,6 @@ def dirs2ExtraCWnoSave(url, extra):
     print(f"dirs2 with cw and extra + no save with gobuster (dirs2) at: {cleaned_url}")
 
 
-# dirs2 with cl and cw
-def dirs2CLandCW(url):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs2 with cw and and cl with gobuster (dirs2) at: {cleaned_url}")
-
-
-def dirs2CLandCWnoSave(url):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs2 with cw and and cl + no save with gobuster (dirs2) at: {cleaned_url}")
-
-
-def dirs2ExtraCLandCW(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs2 with cw and and cl + extra with gobuster (dirs2) at: {cleaned_url}")
-
-
-def dirs2ExtraCLandCWnoSave(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs2 with cw and and cl + extra + no save with gobuster (dirs2) at: {cleaned_url}")
-
-
 # fuzz normal
 def fuzz(url):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
@@ -360,27 +318,6 @@ def fuzzExtraCW(url, extra):
 def fuzzExtraCWnoSave(url, extra):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     print(f"fuzz with cw and extra + no save with wfuzz (fuzz) at: {cleaned_url}")
-
-
-# fuzz with cl and cw
-def fuzzCLandCW(url):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"fuzz with cw and and cl with wfuzz (fuzz) at: {cleaned_url}")
-
-
-def fuzzCLandCWnoSave(url):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"fuzz with cw and and cl + no save with wfuzz (fuzz) at: {cleaned_url}")
-
-
-def fuzzExtraCLandCW(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"fuzz with cw and and cl + extra with wfuzz (fuzz) at: {cleaned_url}")
-
-
-def fuzzExtraCLandCWnoSave(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"fuzz with cw and and cl + extra + no save with wfuzz (fuzz) at: {cleaned_url}")
 
 
 # sql
@@ -741,25 +678,29 @@ def handleDIRS2():
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        dirs2CLandCW(args.url)
+        print("Choose either a custom list or a custom wordlsit")
+        exit
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        dirs2CLandCWnoSave(args.url)
+        print("Choose either a custom list or a custom wordlsit")
+        exit
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        dirs2ExtraCLandCW(args.url, args.extra)
+        print("Choose either a custom list or a custom wordlsit")
+        exit
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        dirs2ExtraCLandCWnoSave(args.url, args.extra)
+        print("Choose either a custom list or a custom wordlsit")
+        exit
 
 
 def handleDIRS():
@@ -846,25 +787,29 @@ def handleDIRS():
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        dirsCLandCW(args.url)
+        print("Choose either a custom list or a custom wordlsit")
+        exit
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        dirsCLandCWnoSave(args.url)
+        print("Choose either a custom list or a custom wordlsit")
+        exit
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        dirsExtraCLandCW(args.url, args.extra)
+        print("Choose either a custom list or a custom wordlsit")
+        exit
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        dirsExtraCLandCWnoSave(args.url, args.extra)
+        print("Choose either a custom list or a custom wordlsit")
+        exit
 
 
 def handleSQL():
@@ -974,25 +919,29 @@ def handleFUZZ():
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        fuzzCLandCW(args.url)
+        print("Choose either a custom list or a custom wordlsit")
+        exit
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        fuzzCLandCWnoSave(args.url)
+        print("Choose either a custom list or a custom wordlsit")
+        exit
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        fuzzExtraCLandCW(args.url, args.extra)
+        print("Choose either a custom list or a custom wordlsit")
+        exit
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        fuzzExtraCLandCWnoSave(args.url, args.extra)
+        print("Choose either a custom list or a custom wordlsit")
+        exit
 
 
 def handleCONFIG():
