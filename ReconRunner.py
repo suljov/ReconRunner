@@ -90,7 +90,7 @@ def findSUBSextra2NoSAVECW(url, extra):
     print(f"subs2 with cw and extra + no save with gobuster (subs2) at: {cleaned_url}")
 
 
-# subs with cl and cw
+# subs2 with cl and cw
 def findSUBS2CLandCW(url):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     print(f"subs2 with cw and and cl with gobuster (subs2) at: {cleaned_url}")
