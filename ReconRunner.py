@@ -13,7 +13,8 @@ outpitDir = os.path.expanduser("./reconrunner-saved-data")
 # subs
 def findSUBS(url):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"subfinder -d {url} -o {outpitDir}/subs/subs-{cleaned_url}.txt")
+    print(cleaned_url)
+    os.system(f"subfinder -d {cleaned_url} -o {outpitDir}/subs/subs-{cleaned_url}.txt")
 
 
 def findSUBSnoSAVE(url):
@@ -22,7 +23,7 @@ def findSUBSnoSAVE(url):
 
 def findSUBSextra(url, extra):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"subfinder -d {url} {extra} -o {outpitDir}/subs/subs-{cleaned_url}-extra.txt")
+    os.system(f"subfinder -d {cleaned_url} {extra} -o {outpitDir}/subs/subs-{cleaned_url}-extra.txt")
 
 
 def findSUBSextraNosave(url, extra):
@@ -33,82 +34,107 @@ def findSUBSextraNosave(url, extra):
 def findSUBS2(url):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data["dns"])):
+        wordlist = data["dns"[i]]
+        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}.csv,csv {cleaned_url}")
 
 
 def findSUBS2NoSAVE(url):
-    print("subs tool with gobuster (subs2) + no SAVE")
+    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data["dns"])):
+        wordlist = data["dns"[i]]
+        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {cleaned_url}")
 
 
 def findSUBSextra2(url, extra):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs tool with gobuster and extra (subs2) at: {cleaned_url}")
+    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data["dns"])):
+        wordlist = data["dns"[i]]
+        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra.csv,csv {cleaned_url}")
 
 
 def findSUBSextra2NoSAVE(url, extra):
-    print("subs tool with gobuster and extra (subs2) + no SAVE")
+    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data["dns"])):
+        wordlist = data["dns"[i]]
+        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} {cleaned_url}")
 
 
 # subs2 with cl
-def findSUBS2CL(url):
+def findSUBS2CL(url, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 with cl tol with gobuster (subs2) at: {cleaned_url}")
+    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data[obj])):
+        wordlist = data[data][i]
+        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}-CL.csv,csv {cleaned_url}")
 
 
 def findSUBS2NoSAVECL(url):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 with cl + no save with gobuster (subs2) at: {cleaned_url}")
+    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data[obj])):
+        wordlist = data[data][i]
+        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {cleaned_url}")
 
 
 def findSUBSextra2CL(url, extra):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 with cl with gobuster (subs2) at: {cleaned_url}")
+    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data[obj])):
+        wordlist = data[data][i]
+        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra-CL.csv,csv {cleaned_url}")
 
 
-def findSUBSextra2NoSAVECL(url, extra):
+def findSUBSextra2NoSAVECL(url, extra, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 with cl and extra + no save with gobuster (subs2) at: {cleaned_url}")
+    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data[obj])):
+        wordlist = data[data][i]
+        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} {cleaned_url}")
 
 
 # subs2 with cw
-def findSUBS2CW(url):
+def findSUBS2CW(url, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 with cw with gobuster (subs2) at: {cleaned_url}")
+    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
+    os.system(f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}-CW.csv,csv {cleaned_url}")
 
 
-def findSUBS2NoSAVECW(url):
+def findSUBS2NoSAVECW(url, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 with cw + no save with gobuster (subs2) at: {cleaned_url}")
+    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
+    os.system(f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {cleaned_url}")
 
 
-def findSUBSextra2CW(url, extra):
+def findSUBSextra2CW(url, extra, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 with cw and extra with gobuster (subs2) at: {cleaned_url}")
+    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
+    os.system(f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra-CW.csv,csv {urcleaned_urll}")
 
 
-def findSUBSextra2NoSAVECW(url, extra):
+def findSUBSextra2NoSAVECW(url, extra, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 with cw and extra + no save with gobuster (subs2) at: {cleaned_url}")
-
-
-# subs2 with cl and cw
-def findSUBS2CLandCW(url):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 with cw and and cl with gobuster (subs2) at: {cleaned_url}")
-
-
-def findSUBS2NoSAVECLandCW(url):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 with cw and and cl + no save with gobuster (subs2) at: {cleaned_url}")
-
-
-def findSUBSextra2CLandCW(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 with cw and and cl + extra with gobuster (subs2) at: {cleaned_url}")
-
-
-def findSUBSextra2NoSAVECLandCW(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 with cw and and cl + extra + no save with gobuster (subs2) at: {cleaned_url}")
+    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
+    os.system(f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {extra} {cleaned_url}")
 
 
 # dirs normal
@@ -556,7 +582,7 @@ def handleSUBS2():
           and not args.skip_save
           and args.cw is None
           and args.cl is not None):
-        findSUBS2CL(args.url)
+        findSUBS2CL(args.url, args.cl)
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
@@ -574,57 +600,61 @@ def handleSUBS2():
           and args.skip_save
           and args.cw is None
           and args.cl is not None):
-        findSUBSextra2NoSAVECL(args.url, args.extra)
+        findSUBSextra2NoSAVECL(args.url, args.extra, args.cl)
 # with cw and not cl
     elif (args.url is not None
           and args.extra is None
           and not args.skip_save
           and args.cw is not None
           and args.cl is None):
-        findSUBS2CW(args.url)
+        findSUBS2CW(args.url, args.cw)
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is None):
-        findSUBS2NoSAVECW(args.url)
+        findSUBS2NoSAVECW(args.url, args.cw)
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is not None
           and args.cl is None):
-        findSUBSextra2CW(args.url, args.extra)
+        findSUBSextra2CW(args.url, args.extra, args.cw)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
           and args.cw is not None
           and args.cl is None):
-        findSUBSextra2NoSAVECW(args.url, args.extra)
+        findSUBSextra2NoSAVECW(args.url, args.extra, args.cw)
 # with cl and cw
     elif (args.url is not None
           and args.extra is None
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        findSUBS2CLandCW(args.url)
+        print("Choose either a custom list or a custom wordlsit")
+        exit
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        findSUBS2NoSAVECLandCW(args.url)
+        print("Choose either a custom list or a custom wordlsit")
+        exit
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        findSUBSextra2CLandCW(args.url, args.extra)
+        print("Choose either a custom list or a custom wordlsit")
+        exit
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        findSUBSextra2NoSAVECLandCW(args.url, args.extra)
+        print("Choose either a custom list or a custom wordlsit")
+        exit
 
 
 def handleDIRS2():
