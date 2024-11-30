@@ -24,7 +24,7 @@
 
 ## About
 
-ReconRunner is a webapp tool designed to streamline and simplify directory and file brute-forcing, subdomain enumeration and sql injections. By leveraging popular tools like Gobuster, wfuzz and sqlmap, ReconRunner offers a more flexible and powerful experience with enhanced handling of wordlists, protocols, and outputs.
+ReconRunner is a webapp tool designed to streamline and simplify directory and file brute-forcing, subdomain enumeration and sql injections. By leveraging popular tools like gobuster, wfuzz, feroxbuster, rustscan, nmap, subfinder and sqlmap, ReconRunner offers a more flexible and powerful experience with enhanced handling of wordlists, protocols, and outputs.
 
 ## NOTICE
 
@@ -67,14 +67,14 @@ ReconRunner made by suljov. Streamlines scanning by automating tasks for webapp 
 
 positional arguments:
   {subs,subs2,dirs,dirs2,sql,fuzz,portscan,portscan2,config}
-    subs                Subdomain enumeration (tool: subfinder).
-    subs2               Second way of subdomain enumeration (tool: wfuzz).
-    dirs                Directory/file enumeration (tool: feroxbuster).
-    dirs2               Directory/file enumeration (tool: gobuster).
-    sql                 SQL Injection detection (tool: sqlmap). OBS: output does not get saved.
-    fuzz                For custom fuzzing of endpoints, subdomains, parameters etc (tool: wfuzz).
-    portscan            For portscanning the target (tool: rustscan).
-    portscan2           For portscanning the target (tool: nmap).
+    subs                Subdomain enumeration. (tool: subfinder)
+    subs2               Second way of subdomain enumeration. (tool: wfuzz)
+    dirs                Directory/file enumeration. (tool: feroxbuster)
+    dirs2               Directory/file enumeration. (tool: gobuster)
+    sql                 SQL Injection detection. OBS: output does not get saved. (tool: sqlmap)
+    fuzz                For custom fuzzing of endpoints, subdomains, parameters etc. OBS: Don`t forget to add 'FUZZ' att the position you want to fuzz. (tool: wfuzz)
+    portscan            For portscanning the target. (tool: rustscan)
+    portscan2           For portscanning the target. (tool: nmap)
     config              Configuration of the wordlist of wordlists (json file containing wordlists for different uses)
 
 options:
@@ -87,7 +87,7 @@ Help page for ReconRunner.
 
 ### Directory enumeration
 
-##### Basic Usage
+##### Basic Usage (examples)
 
 ```
 reconrunner dirs -u http://example.com
@@ -97,6 +97,12 @@ reconrunner dirs -u http://example.com
 
 ```
 reconrunner dirs -u http://example.com --cw /path/to/custom_wordlist.txt
+```
+
+##### With Custom list
+
+```
+reconrunner dirs -u http://example.com --cl api
 ```
 
 ##### With Extra Options
@@ -119,16 +125,16 @@ reconrunner subs -u example.com
 reconrunner subs2 -u example.com --cw /path/to/custom_wordlist.txt
 ```
 
+##### With Custom list
+
+```
+reconrunner subs2 -u example.com --cl dns
+```
+
 ##### With Extra Options
 
 ```
 reconrunner subs -u example.com --extra '-recursive'
-```
-
-#### with another or custom list (lists that are in the config file)
-
-```
-reconrunner subs -u example.com --cl <name of list>
 ```
 
 ### SQL injection

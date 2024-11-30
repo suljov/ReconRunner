@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import argparse
 import os
 import json
@@ -1439,5 +1441,4 @@ elif args.command == "portscan2":
 
 
 # TODO what is left to be done:
-# TODO! fuzz (functions are created)
 # TODO! after the tools is done. refactor stuff
