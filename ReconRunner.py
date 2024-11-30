@@ -12,6 +12,18 @@ time = datetime.datetime.now()
 time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
 
 
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKCYAN = '\033[96m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
 ascii_art_reconrunner = r"""
 ██████╗ ███████╗ ██████╗ ██████╗ ███╗   ██╗██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗███████╗██████╗ 
 ██╔══██╗██╔════╝██╔════╝██╔═══██╗████╗  ██║██╔══██╗██║   ██║████╗  ██║████╗  ██║██╔════╝██╔══██╗
@@ -24,7 +36,7 @@ ascii_art_reconrunner = r"""
 
 print("")
 print("")
-print(ascii_art_reconrunner)
+print(bcolors.OKCYAN + ascii_art_reconrunner + bcolors.ENDC)
 print("")
 print("")
 
@@ -34,7 +46,6 @@ print("")
 # subs
 def findSUBS(url):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(cleaned_url)
     command = (f"subfinder -d {cleaned_url} -o {outpitDir}/subs/subs-{cleaned_url}-{time_clean}.txt")
     try:
         subprocess.run(command, shell=True, check=True)
@@ -483,73 +494,90 @@ def dirsExtraCWnoSave(url, extra, obj):
         print(f"Error {e}")
 
 
-# fuzz normal
-def fuzz(url):
+# fuzz with cl
+def fuzzCL(url, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
-    for i in range(len(data["dirs"])):
-        wordlist = data["dirs"][i]
-        command = (f"feroxbuster -u {url} -w {wordlist} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-{time_clean}.txt")
+    for i in range(len(data[obj])):
+        wordlist = data[obj][i]
+        command = (f"wfuzz -c -w {wordlist} -u {url} -f {outpitDir}/fuzz/fuzz-{cleaned_url}-CL-{time_clean}.txt")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
 
 
-def fuzzNoSave(url):
-    print("fuzz tool with wfuzz (fuzz) + no SAVE")
+def fuzzCLnoSave(url, obj):
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data[obj])):
+        wordlist = data[obj][i]
+        command = (f"wfuzz -c -w {wordlist} -u {url} {extra}")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
-def fuzzExtra(url, extra):
+def fuzzExtraCL(url, extra, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"fuzz tool with wfuzz and extra (fuzz) at: {cleaned_url}")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data[obj])):
+        wordlist = data[obj][i]
+        command = (f"wfuzz -c -w {wordlist} -u {url} {extra} -f {outpitDir}/fuzz/fuzz-{cleaned_url}-extra-CL-{time_clean}.txt")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
-def fuzzExtraNoSave(url, extra):
-    print("fuzz tool with wfuzz and extra (fuzz2) + no SAVE")
-
-
-# fuzz with cl
-def fuzzCL(url):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"fuzz with cl tol with wfuzz (fuzz) at: {cleaned_url}")
-
-
-def fuzzCLnoSave(url):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"fuzz with cl + no save with wfuzz (fuzz) at: {cleaned_url}")
-
-
-def fuzzExtraCL(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"fuzz with cl with wfuzz (fuzz) at: {cleaned_url}")
-
-
-def fuzzExtraCLnoSave(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"fuzz with cl and extra + no save with wfuzz (fuzz) at: {cleaned_url}")
+def fuzzExtraCLnoSave(url, extra, obj):
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data[obj])):
+        wordlist = data[obj][i]
+        command = (f"wfuzz -c -w {wordlist} -u {url} {extra}")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
 # fuzz with cw
-def fuzzCW(url):
+def fuzzCW(url, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"fuzz with cw with wfuzz (fuzz) at: {cleaned_url}")
+    command = (f"wfuzz -c -w {obj} -u {url} -f {outpitDir}/fuzz/fuzz-{cleaned_url}-CW-{time_clean}.txt")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
-def fuzzCWnoSave(url):
+def fuzzCWnoSave(url, obj):
+    command = (f"wfuzz -c -w {obj} -u {url}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
+
+
+def fuzzExtraCW(url, extra, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"fuzz with cw + no save with wfuzz (fuzz) at: {cleaned_url}")
+    command = (f"wfuzz -c -w {obj} -u {url} {extra} -f {outpitDir}/fuzz/fuzz-{cleaned_url}-extra-CW-{time_clean}.txt")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
-def fuzzExtraCW(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"fuzz with cw and extra with wfuzz (fuzz) at: {cleaned_url}")
-
-
-def fuzzExtraCWnoSave(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"fuzz with cw and extra + no save with wfuzz (fuzz) at: {cleaned_url}")
+def fuzzExtraCWnoSave(url, extra, obj):
+    command = (f"wfuzz -c -w {obj} -u {url} {extra}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 # sql
@@ -616,12 +644,12 @@ def addWordlist(wordlist, obj):
             data[obj].append(wordlist)
             with open(configList, 'w') as fp:
                 json.dump(data, fp, indent=2)
-            print("Done!")
+            print(f"{bcolors.OKGREEN}Done!{bcolors.ENDC}")
         else:
-            print(f"{wordlist} already exist in {obj}")
+            print(f"{bcolors.FAIL}{wordlist} already exist in {obj}{bcolors.ENDC}")
             exit
     else:
-        print(f"""{obj} dont exist in the configuration file! See config file: reconrunner config --list-info""")
+        print(f"""{bcolors.FAIL}{obj} dont exist in the configuration file! See config file: reconrunner config --list-info{bcolors.ENDC}""")
         exit
 
 
@@ -635,12 +663,12 @@ def deleteWordlist(wordlist, obj):
             data[obj].remove(wordlist)
             with open(configList, 'w') as fp:
                 json.dump(data, fp, indent=2)
-            print("Done!")
+            print(f"{bcolors.OKGREEN}Done!{bcolors.ENDC}")
         else:
-            print(f"{wordlist} dont exist in {obj}")
+            print(f"{bcolors.FAIL}{wordlist} dont exist in {obj}{bcolors.ENDC}")
             exit
     else:
-        print(f"""{obj} dont exist in the configuration file! See config file: reconrunner config --list-info""")
+        print(f"""{bcolors.FAIL}{obj} dont exist in the configuration file! See config file: reconrunner config --list-info{bcolors.ENDC}""")
         exit
 
 
@@ -652,16 +680,16 @@ def deleteList(list):
         del data[list]
         with open(configList, 'w') as fp:
             json.dump(data, fp, indent=2)
-        print("Done!")
+        print(f"{bcolors.OKGREEN}Done!{bcolors.ENDC}")
     else:
-        print(f"""{list} dont exist in the configuration file! See config file: reconrunner config --list-info""")
+        print(f"""{bcolors.FAIL}{list} dont exist in the configuration file! See config file: reconrunner config --list-info{bcolors.ENDC}""")
         exit
 
 
 def addList(list):
     check = checkJsonTypeExist(list)
     if check:
-        print(f"{list} already exist")
+        print(f"{bcolors.FAIL}{list} already exist{bcolors.ENDC}")
         exit
     else:
         with open(configList, "r") as configFile:
@@ -669,7 +697,7 @@ def addList(list):
         data[list] = []
         with open(configList, 'w') as fp:
             json.dump(data, fp, indent=2)
-        print("Done!")
+        print(f"{bcolors.OKGREEN}Done!{bcolors.ENDC}")
 
 
 # portscan
@@ -826,7 +854,7 @@ def handleSUBS2():
           and not args.skip_save
           and args.cw is None
           and args.cl is not None):
-        findSUBSextra2CL(args.url, args.extra, arg.cl)
+        findSUBSextra2CL(args.url, args.extra, args.cl)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
@@ -864,28 +892,28 @@ def handleSUBS2():
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        print("Choose either a custom list or a custom wordlsit")
+        print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        print("Choose either a custom list or a custom wordlsit")
+        print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        print("Choose either a custom list or a custom wordlsit")
+        print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        print("Choose either a custom list or a custom wordlsit")
+        print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit
 
 
@@ -973,28 +1001,28 @@ def handleDIRS2():
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        print("Choose either a custom list or a custom wordlsit")
+        print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        print("Choose either a custom list or a custom wordlsit")
+        print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        print("Choose either a custom list or a custom wordlsit")
+        print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        print("Choose either a custom list or a custom wordlsit")
+        print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit
 
 
@@ -1082,28 +1110,28 @@ def handleDIRS():
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        print("Choose either a custom list or a custom wordlsit")
+        print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        print("Choose either a custom list or a custom wordlsit")
+        print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        print("Choose either a custom list or a custom wordlsit")
+        print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        print("Choose either a custom list or a custom wordlsit")
+        print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit
 
 
@@ -1114,7 +1142,7 @@ def handleSQL():
         os.system("sqlmap --help")
     elif (args.url is not None
           and args.file is not None):
-        print("You cant have both flags for a url and a file... choose one :)")
+        print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit
     elif (args.file is not None
           and args.extra is None):
@@ -1133,103 +1161,80 @@ def handleSQL():
 def handleFUZZ():
     if args.commands is True:
         os.system("wfuzz --help")
-# no cl or cw
-    elif (args.url is not None
-          and not args.skip_save
-          and args.cw is None
-          and args.cl is None):
-        fuzz(args.url)
-    elif (args.url is not None
-          and args.skip_save
-          and args.cw is None
-          and args.cl is None):
-        fuzzNoSave(args.url)
-    elif (args.url is not None
-          and args.extra is not None
-          and not args.skip_save
-          and args.cw is None
-          and args.cl is None):
-        fuzzExtra(args.url, args.extra)
-    elif (args.url is not None
-          and args.extra is not None
-          and args.skip_save
-          and args.cw is None
-          and args.cl is None):
-        fuzzExtraNoSave(args.url, args.extra)
 # with cl and not cw
     elif (args.url is not None
           and not args.skip_save
           and args.cw is None
           and args.cl is not None):
-        fuzzCL(args.url)
+        fuzzCL(args.url, args.cl)
     elif (args.url is not None
           and args.skip_save
           and args.cw is None
           and args.cl is not None):
-        fuzzCLnoSave(args.url)
+        fuzzCLnoSave(args.url, args.cl)
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is None
           and args.cl is not None):
-        fuzzExtraCL(args.url, args.extra)
+        fuzzExtraCL(args.url, args.extra, args.cl)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
           and args.cw is None
           and args.cl is not None):
-        fuzzExtraCLnoSave(args.url, args.extra)
+        fuzzExtraCLnoSave(args.url, args.extra, args.cl)
 # with cw and not cl
     elif (args.url is not None
           and not args.skip_save
           and args.cw is not None
           and args.cl is None):
-        fuzzCW(args.url)
+        fuzzCW(args.url, args.cw)
     elif (args.url is not None
           and args.skip_save
           and args.cw is not None
           and args.cl is None):
-        fuzzCWnoSave(args.url)
+        fuzzCWnoSave(args.url, args.cw)
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is not None
           and args.cl is None):
-        fuzzExtraCW(args.url, args.extra)
+        fuzzExtraCW(args.url, args.extra, args.cw)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
           and args.cw is not None
           and args.cl is None):
-        fuzzExtraCWnoSave(args.url, args.extra)
+        fuzzExtraCWnoSave(args.url, args.extra, args.cw)
 # with cl and cw
     elif (args.url is not None
           and args.extra is None
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        print("Choose either a custom list or a custom wordlsit")
+        print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        print("Choose either a custom list or a custom wordlsit")
+        print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        print("Choose either a custom list or a custom wordlsit")
+        print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
-        print("Choose either a custom list or a custom wordlsit")
+        print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit
 
 
@@ -1250,10 +1255,11 @@ def handleCONFIG():
           and args.remove_wordlist is None
           and args.type is None):
         print("")
-        print("File located at: '~/.reconrunner/wordlists-config.json'")
-        print("Configuration file:")
+        print(f"{bcolors.OKGREEN}{bcolors.BOLD}File located at:  {bcolors.ENDC}{bcolors.WARNING}~/.reconrunner/wordlists-config.json{bcolors.ENDC}")
         print("")
-        os.system("cat ~/.reconrunner/wordlists-config.json")
+        print(f"{bcolors.OKGREEN}{bcolors.BOLD}Configuration file:{bcolors.ENDC}")
+        print("")
+        os.system(f"cat ~/.reconrunner/wordlists-config.json")
     elif (args.create_list is not None
           and args.remove_list is None
           and args.add_wordlist is None
@@ -1315,14 +1321,15 @@ def handlePORT2():
           and args.extra is not None):
         portscanNmapExtra(args.domain, args.extra)
 
+
 # Argeparse stuff
 
 
-parser = argparse.ArgumentParser(prog="ReconRunner", description=""" ReconRunner made by suljov. Streamlines scanning by automating tasks for webapp pentest and organizing results for a more efficient experience.""", epilog="""Help page for ReconRunner.""")
+parser = argparse.ArgumentParser(prog="ReconRunner", description="ReconRunner made by suljov. Streamlines scanning by automating tasks for webapp pentest and organizing results for a more efficient experience.", epilog="Help page for ReconRunner.")
 subparsers = parser.add_subparsers(dest="command", required=True)
 
 # subparsers subs
-SUBS = subparsers.add_parser("subs", help="Subdomain enumeration (tool: subfinder).")
+SUBS = subparsers.add_parser("subs", help="Subdomain enumeration. (tool: subfinder)")
 SUBS.add_argument("-u", "--url", required=True, type=str, help="Url to the target.")
 SUBS.add_argument("--skip-save", action="store_true", help="Skip saving results to files.")
 SUBS.add_argument("-e", "--extra", type=str, help="""Extra flags used for the underlaying tool (subfinder).""")
@@ -1330,7 +1337,7 @@ SUBS.add_argument("-c", "--commands", action="store_true", help="""Show help pag
 
 
 # subparsers subs2
-SUBS2 = subparsers.add_parser("subs2", help="""Second way of subdomain enumeration (tool: wfuzz).""")
+SUBS2 = subparsers.add_parser("subs2", help="""Second way of subdomain enumeration. (tool: wfuzz)""")
 SUBS2.add_argument("-u", "--url", required=True, type=str, help="Url to the target.")
 SUBS2.add_argument("--cw", type=str, help="""Use a custom  wordlist instead of the default wordlists in the list.""")
 SUBS2.add_argument("--cl", type=str,  help="Use a custom list of wordlists from the config file.")
@@ -1339,7 +1346,7 @@ SUBS2.add_argument("-e", "--extra", type=str,  help="""Extra flags used for the 
 SUBS2.add_argument("-c", "--commands", action="store_true", help="""Show help page for subfinder (for the -e/--extra flag.)""")
 
 # subparsers dirs
-DIRS = subparsers.add_parser("dirs", help="""Directory/file enumeration (tool: feroxbuster).""")
+DIRS = subparsers.add_parser("dirs", help="""Directory/file enumeration. (tool: feroxbuster)""")
 DIRS.add_argument("-u", "--url", required=True, type=str, help="Url to the target.")
 DIRS.add_argument("--cw", type=str, help="""Use a custom wordlist instead of the default wordlists in the list.""")
 DIRS.add_argument("--cl", type=str, help="Use a custom list of wordlists from the config file.")
@@ -1349,7 +1356,7 @@ DIRS.add_argument("-c", "--commands", action="store_true", help="""Show help pag
 
 
 # subparsers dirs2
-DIRS2 = subparsers.add_parser("dirs2", help="""Directory/file enumeration (tool: gobuster).""")
+DIRS2 = subparsers.add_parser("dirs2", help="""Directory/file enumeration. (tool: gobuster)""")
 DIRS2.add_argument("-u", "--url", required=True, type=str, help="Url to the target.")
 DIRS2.add_argument("--cw", type=str, help="""Use a custom wordlist instead of the default wordlists in the list.""")
 DIRS2.add_argument("--cl", type=str, help="""Use a custom list of wordlists from the config file.""")
@@ -1359,23 +1366,23 @@ DIRS2.add_argument("-c", "--commands", action="store_true", help="""Show help pa
 
 
 # subparsers sql
-SQL = subparsers.add_parser("sql", help="SQL Injection detection (tool: sqlmap). OBS: output does not get saved.")
+SQL = subparsers.add_parser("sql", help="SQL Injection detection. OBS: output does not get saved. (tool: sqlmap)")
 SQL.add_argument("-u", "--url", type=str, help="URL to the target")
 SQL.add_argument("-f", "--file", type=str, help="""File containing the request in question (from Burp or similar).""")
 SQL.add_argument("-e", "--extra", type=str, help="Extra flags used for the underlaying tool (SQLmap).")
 SQL.add_argument("-c", "--commands", action="store_true", help="Show help page for SQLmap (for the -e/--extra flag.)")
 
 # subparsers fuzz
-FUZZ = subparsers.add_parser("fuzz", help="""For custom fuzzing of endpoints, subdomains, parameters etc (tool: wfuzz).""")
-FUZZ.add_argument("-u", "--url", required=True, type=str, help="URL to the target")
-FUZZ.add_argument("-e", "--extra", type=str,required=True, help="Extra flags used for the underlaying tool (wfuzz).")
+FUZZ = subparsers.add_parser("fuzz", help="""For custom fuzzing of endpoints, subdomains, parameters etc. OBS: Don`t forget to add 'FUZZ' att the position you want to fuzz. (tool: wfuzz)""")
+FUZZ.add_argument("-u", "--url", required=True, type=str, help="URL to the target. Add 'FUZZ' in the URL if needed.")
+FUZZ.add_argument("-e", "--extra", type=str, help="Extra flags used for the underlaying tool (wfuzz). OBS: Don`t forget to add 'FUZZ' somewhere in the headers if needed.")
 FUZZ.add_argument("-c", "--commands", action="store_true", help="Show help page for wfuzz (for the -e/--extra flag.)")
 FUZZ.add_argument("--skip-save", action="store_true", help="Skip saving results to files.")
 FUZZ.add_argument("--cw", type=str, help="""Use a custom wordlist instead of the default wordlists in the list.""")
 FUZZ.add_argument("--cl", type=str, help="""Use a custom list of wordlists from the config file.""")
 
 # subparsers portscan
-portscan = subparsers.add_parser("portscan", help="""For portscanning the target (tool: rustscan).""")
+portscan = subparsers.add_parser("portscan", help="""For portscanning the target. (tool: rustscan)""")
 portscan.add_argument("-e", "--extra", type=str, help="""Extra flags used for the underlaying tool (rustscan).""")
 portscan.add_argument("-ne", "--nmap-extra", type=str, help="""Extra flags used for the underlaying tool in rustscan, OBS these are the commands for nmap that rustscan uses.""")
 portscan.add_argument("-c", "--commands", action="store_true", help="""Show help page for rustscan (for the -e/--extra flag.)""")
@@ -1383,7 +1390,7 @@ portscan.add_argument("-d", "--domain", "--ip", type=str, help="Domain name or I
 
 
 # subparsers portscan2
-portscan2 = subparsers.add_parser("portscan2", help="""For portscanning the target (tool: nmap).""")
+portscan2 = subparsers.add_parser("portscan2", help="""For portscanning the target. (tool: nmap)""")
 portscan2.add_argument("-e", "--extra", type=str, help="""Extra flags used for the underlaying tool (nmap).""")
 portscan2.add_argument("-c", "--commands", action="store_true", help="""Show help page for nmap (for the -e/--extra flag.)""")
 portscan2.add_argument("-d", "--domain", "--ip", type=str, help="Domain name or IP to target", required=True)
