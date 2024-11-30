@@ -27,7 +27,11 @@
   ],
   "osinjection": [],
   "ssti": [],
-  "xss": ["/usr/share/wordlists/wfuzz/Injections/XSS.txt"],
+  "xss": [
+    "/usr/share/wordlists/wfuzz/Injections/XSS.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/XSS/human-friendly/XSS-BruteLogic.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/XSS/human-friendly/XSS-Cheat-Sheet-PortSwigger.txt"
+  ],
   "xml": [
     "/usr/share/wordlists/wfuzz/Injections/XML.txt",
     "/usr/share/wordlists/seclists/Fuzzing/XML-FUZZ.txt"
