@@ -323,7 +323,11 @@ def dirsExtraCWnoSave(url, extra):
 # fuzz normal
 def fuzz(url):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"fuzz tool with wfuzz (fuzz) at: {cleaned_url}")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data["dirs"])):
+        wordlist = data["dirs"[i]]
+        os.system(f"feroxbuster -u {url} -w {wordlist} -o {outpitDir}/dirs2/dirs2-{cleaned_url}.txt")
 
 
 def fuzzNoSave(url):
@@ -901,13 +905,11 @@ def handleFUZZ():
         os.system("wfuzz --help")
 # no cl or cw
     elif (args.url is not None
-          and args.extra is None
           and not args.skip_save
           and args.cw is None
           and args.cl is None):
         fuzz(args.url)
     elif (args.url is not None
-          and args.extra is None
           and args.skip_save
           and args.cw is None
           and args.cl is None):
@@ -926,13 +928,11 @@ def handleFUZZ():
         fuzzExtraNoSave(args.url, args.extra)
 # with cl and not cw
     elif (args.url is not None
-          and args.extra is None
           and not args.skip_save
           and args.cw is None
           and args.cl is not None):
         fuzzCL(args.url)
     elif (args.url is not None
-          and args.extra is None
           and args.skip_save
           and args.cw is None
           and args.cl is not None):
@@ -951,13 +951,11 @@ def handleFUZZ():
         fuzzExtraCLnoSave(args.url, args.extra)
 # with cw and not cl
     elif (args.url is not None
-          and args.extra is None
           and not args.skip_save
           and args.cw is not None
           and args.cl is None):
         fuzzCW(args.url)
     elif (args.url is not None
-          and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is None):
@@ -1140,7 +1138,7 @@ SQL.add_argument("-c", "--commands", action="store_true", help="Show help page f
 # subparsers fuzz
 FUZZ = subparsers.add_parser("fuzz", help="""For custom fuzzing of endpoints, subdomains, parameters etc (tool: wfuzz).""")
 FUZZ.add_argument("-u", "--url", required=True, type=str, help="URL to the target")
-FUZZ.add_argument("-e", "--extra", type=str, help="Extra flags used for the underlaying tool (wfuzz).")
+FUZZ.add_argument("-e", "--extra", type=str,required=True, help="Extra flags used for the underlaying tool (wfuzz).")
 FUZZ.add_argument("-c", "--commands", action="store_true", help="Show help page for wfuzz (for the -e/--extra flag.)")
 FUZZ.add_argument("--skip-save", action="store_true", help="Skip saving results to files.")
 FUZZ.add_argument("--cw", type=str, help="""Use a custom wordlist instead of the default wordlists in the list.""")
@@ -1151,14 +1149,14 @@ portscan = subparsers.add_parser("portscan", help="""For portscanning the target
 portscan.add_argument("-e", "--extra", type=str, help="""Extra flags used for the underlaying tool (rustscan).""")
 portscan.add_argument("-ne", "--nmap-extra", type=str, help="""Extra flags used for the underlaying tool in rustscan, OBS these are the commands for nmap that rustscan uses.""")
 portscan.add_argument("-c", "--commands", action="store_true", help="""Show help page for rustscan (for the -e/--extra flag.)""")
-portscan.add_argument("-i", "-d", "--domain", "--ip", type=str, help="Domain name or IP to target", required=True)
+portscan.add_argument("-d", "--domain", "--ip", type=str, help="Domain name or IP to target", required=True)
 
 
 # subparsers portscan2
 portscan2 = subparsers.add_parser("portscan2", help="""For portscanning the target (tool: nmap).""")
 portscan2.add_argument("-e", "--extra", type=str, help="""Extra flags used for the underlaying tool (nmap).""")
 portscan2.add_argument("-c", "--commands", action="store_true", help="""Show help page for nmap (for the -e/--extra flag.)""")
-portscan2.add_argument("-i", "-d", "--domain", "--ip", type=str, help="Domain name or IP to target", required=True)
+portscan2.add_argument("-d", "--domain", "--ip", type=str, help="Domain name or IP to target", required=True)
 portscan2.add_argument("--skip-save", action="store_true", help="Skip saving results to files.")
 
 
@@ -1205,12 +1203,12 @@ elif args.command == "portscan2":
 # portscan
 # subs
 # portscan2
+# subs2
+# dirs
+# dirs2
 
 
 # TODO what is left to be done:
-# TODO! subs2 (functions are created)
-# TODO! dirs (functions are created)
-# TODO! dirs2 (functions are created)
 # TODO! fuzz (functions are created)
 
 # TODO! after the tools is done. refactor stuff
