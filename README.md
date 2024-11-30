@@ -36,13 +36,6 @@ The tool will go from bash code to python code
   - add feature for simple fuzzing (web)
     - add flag to urlencode the payload
 
-## 🌟 Features
-
-- **Custom List of Wordlists:** Utilize a specific list of wordlists from a configuration file.
-  - Create, add, or remove custom lists of wordlists to meet your needs.
-- **Detailed Help and Usage Instructions:** Comprehensive help options for both the tool and underlying tools.
-- **Clean and Organized Output:** Results are saved in a structured format (with time and date for each file) with customization options.
-
 ## **Install**
 
 ```
