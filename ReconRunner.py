@@ -2,10 +2,13 @@ import argparse
 import os
 import json
 import re
+import datetime
 
 
 configList = os.path.expanduser("~/.reconrunner/wordlists-config.json")
 outpitDir = os.path.expanduser("./reconrunner-saved-data")
+time = datetime.datetime.now()
+time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
 
 
 ascii_art_reconrunner = r"""
@@ -31,7 +34,7 @@ print("")
 def findSUBS(url):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     print(cleaned_url)
-    os.system(f"subfinder -d {cleaned_url} -o {outpitDir}/subs/subs-{cleaned_url}.txt")
+    os.system(f"subfinder -d {cleaned_url} -o {outpitDir}/subs/subs-{cleaned_url}-{time_clean}.txt)
 
 
 def findSUBSnoSAVE(url):
@@ -40,7 +43,7 @@ def findSUBSnoSAVE(url):
 
 def findSUBSextra(url, extra):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"subfinder -d {cleaned_url} {extra} -o {outpitDir}/subs/subs-{cleaned_url}-extra.txt")
+    os.system(f"subfinder -d {cleaned_url} {extra} -o {outpitDir}/subs/subs-{cleaned_url}-extra-{time_clean}.txt")
 
 
 def findSUBSextraNosave(url, extra):
@@ -54,7 +57,7 @@ def findSUBS2(url):
         data = json.load(configFile)
     for i in range(len(data["dns"])):
         wordlist = data["dns"[i]]
-        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}.csv,csv {cleaned_url}")
+        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}-{time_clean}.csv,csv {cleaned_url}")
 
 
 def findSUBS2NoSAVE(url):
@@ -72,7 +75,7 @@ def findSUBSextra2(url, extra):
         data = json.load(configFile)
     for i in range(len(data["dns"])):
         wordlist = data["dns"[i]]
-        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra.csv,csv {cleaned_url}")
+        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra-{time_clean}.csv,csv {cleaned_url}")
 
 
 def findSUBSextra2NoSAVE(url, extra):
@@ -91,7 +94,7 @@ def findSUBS2CL(url, obj):
         data = json.load(configFile)
     for i in range(len(data[obj])):
         wordlist = data[data][i]
-        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}-CL.csv,csv {cleaned_url}")
+        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}-CL-{time_clean}.csv,csv {cleaned_url}")
 
 
 def findSUBS2NoSAVECL(url):
@@ -109,7 +112,7 @@ def findSUBSextra2CL(url, extra):
         data = json.load(configFile)
     for i in range(len(data[obj])):
         wordlist = data[data][i]
-        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra-CL.csv,csv {cleaned_url}")
+        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra-CL-{time_clean}.csv,csv {cleaned_url}")
 
 
 def findSUBSextra2NoSAVECL(url, extra, obj):
@@ -124,7 +127,7 @@ def findSUBSextra2NoSAVECL(url, extra, obj):
 # subs2 with cw
 def findSUBS2CW(url, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}-CW.csv,csv {cleaned_url}")
+    os.system(f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}-CW-{time_clean}.csv,csv {cleaned_url}")
 
 
 def findSUBS2NoSAVECW(url, obj):
@@ -134,7 +137,7 @@ def findSUBS2NoSAVECW(url, obj):
 
 def findSUBSextra2CW(url, extra, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra-CW.csv,csv {urcleaned_urll}")
+    os.system(f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra-CW-{time_clean}.csv,csv {urcleaned_urll}")
 
 
 def findSUBSextra2NoSAVECW(url, extra, obj):
@@ -149,7 +152,7 @@ def dirs2(url):
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
         wordlist = data["dirs"[i]]
-        os.system(f"gobuster dir -u {url} -w {wordlist} -o {outpitDir}/dirs/dirs-{cleaned_url}.txt")
+        os.system(f"gobuster dir -u {url} -w {wordlist} -o {outpitDir}/dirs/dirs-{cleaned_url}-{time_clean}.txt")
 
 
 def dirs2NoSave(url):
@@ -166,7 +169,7 @@ def dirs2Extra(url, extra):
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
         wordlist = data["dirs"[i]]
-        os.system(f"gobuster dir -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra.txt")
+        os.system(f"gobuster dir -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra-{time_clean}.txt")
 
 
 def dirs2ExtraNoSave(url, extra):
@@ -184,7 +187,7 @@ def dirs2CL(url, obj):
         data = json.load(configFile)
     for i in range(len(data[obj])):
         wordlist = data[obj[i]]
-        os.system(f"gobuster dir -u {url} -w {wordlist} -o {outpitDir}/dirs/dirs-{cleaned_url}-CL.txt")
+        os.system(f"gobuster dir -u {url} -w {wordlist} -o {outpitDir}/dirs/dirs-{cleaned_url}-CL-{time_clean}.txt")
 
 
 def dirs2CLnoSave(url, obj):
@@ -201,7 +204,7 @@ def dirs2ExtraCL(url, extra, obj):
         data = json.load(configFile)
     for i in range(len(data[obj])):
         wordlist = data[obj[i]]
-        os.system(f"gobuster dir -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra-CL.txt")
+        os.system(f"gobuster dir -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra-CL-{time_clean}.txt")
 
 
 def dirs2ExtraCLnoSave(url, extra, obj):
@@ -215,7 +218,7 @@ def dirs2ExtraCLnoSave(url, extra, obj):
 # dirs2 with cw
 def dirs2CW(url, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"gobuster dir -u {url} -w {obj} -o {outpitDir}/dirs/dirs-{cleaned_url}-CW.txt")
+    os.system(f"gobuster dir -u {url} -w {obj} -o {outpitDir}/dirs/dirs-{cleaned_url}-CW-{time_clean}.txt")
 
 
 def dirs2CWnoSave(url, obj):
@@ -224,7 +227,7 @@ def dirs2CWnoSave(url, obj):
 
 def dirs2ExtraCW(url, extra, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"gobuster dir -u {url} -w {obj} {obj} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra-CW.txt")
+    os.system(f"gobuster dir -u {url} -w {obj} {obj} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra-CW-{time_clean}.txt")
 
 
 def dirs2ExtraCWnoSave(url, extra, obj):
@@ -238,7 +241,7 @@ def dirs(url):
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
         wordlist = data["dirs"[i]]
-        os.system(f"feroxbuster -u {url} -w {wordlist} -o {outpitDir}/dirs2/dirs2-{cleaned_url}.txt")
+        os.system(f"feroxbuster -u {url} -w {wordlist} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-{time_clean}.txt")
 
 
 def dirsNoSave(url):
@@ -255,7 +258,7 @@ def dirsExtra(url, extra):
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
         wordlist = data["dirs"[i]]
-        os.system(f"feroxbuster -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra.txt")
+        os.system(f"feroxbuster -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra-{time_clean}.txt")
 
 
 def dirsExtraNoSave(url, extra):
@@ -273,7 +276,7 @@ def dirsCL(url, obj):
         data = json.load(configFile)
     for i in range(len(data[obj])):
         wordlist = data[obj[i]]
-        os.system(f"feroxbuster -u {url} -w {wordlist} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-CL.txt")
+        os.system(f"feroxbuster -u {url} -w {wordlist} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-CL-{time_clean}.txt")
 
 
 def dirsCLnoSave(url, obj):
@@ -290,7 +293,7 @@ def dirsExtraCL(url, extra, obj):
         data = json.load(configFile)
     for i in range(len(data[obj])):
         wordlist = data[obj[i]]
-        os.system(f"feroxbuster -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra-CL.txt")
+        os.system(f"feroxbuster -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra-CL-{time_clean}.txt")
 
 
 def dirsExtraCLnoSave(url, extra, obj):
@@ -304,7 +307,7 @@ def dirsExtraCLnoSave(url, extra, obj):
 # dirs with cw
 def dirsCW(url, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"feroxbuster -u {url} -w {obj} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-CW.txt")
+    os.system(f"feroxbuster -u {url} -w {obj} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-CW-{time_clean}.txt")
 
 
 def dirsCWnoSave(url, obj):
@@ -313,7 +316,7 @@ def dirsCWnoSave(url, obj):
 
 def dirsExtraCW(url, extra, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"feroxbuster -u {url} -w {obj} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra-CW.txt")
+    os.system(f"feroxbuster -u {url} -w {obj} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra-CW-{time_clean}.txt")
 
 
 def dirsExtraCWnoSave(url, extra):
@@ -327,7 +330,7 @@ def fuzz(url):
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
         wordlist = data["dirs"[i]]
-        os.system(f"feroxbuster -u {url} -w {wordlist} -o {outpitDir}/dirs2/dirs2-{cleaned_url}.txt")
+        os.system(f"feroxbuster -u {url} -w {wordlist} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-{time_clean}.txt")
 
 
 def fuzzNoSave(url):
@@ -512,7 +515,7 @@ def portScanRustscanSingle(domain):
 
 
 def portscanNmapSingle(domain):
-    os.system(f"sudo nmap {domain} -sS -A -O -sV -p- -oN {outpitDir}/portscan/portscan2-{domain}.txt")
+    os.system(f"sudo nmap {domain} -sS -A -O -sV -p- -oN {outpitDir}/portscan/portscan2-{domain}-{time_clean}.txt")
 
 
 def portscanNmapSingleNoSAVE(domain):
@@ -520,7 +523,7 @@ def portscanNmapSingleNoSAVE(domain):
 
 
 def portscanNmapExtra(domain, extra):
-    os.system(f"sudo nmap {domain} {extra} -oN {outpitDir}/portscan/portscan2-{domain}-extra.txt")
+    os.system(f"sudo nmap {domain} {extra} -oN {outpitDir}/portscan/portscan2-{domain}-extra-{time_clean}.txt")
 
 
 def portscanNmapExtraNoSave(domain, extra):
@@ -1195,17 +1198,6 @@ elif args.command == "portscan":
     handlePORT()
 elif args.command == "portscan2":
     handlePORT2()
-
-
-# what is done:
-# sql
-# config
-# portscan
-# subs
-# portscan2
-# subs2
-# dirs
-# dirs2
 
 
 # TODO what is left to be done:
