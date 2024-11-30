@@ -39,5 +39,10 @@
     "/usr/share/wordlists/seclists/Fuzzing/LDAP-openldap-classes.txt",
     "/usr/share/wordlists/seclists/Fuzzing/LDAP.Fuzzing.txt"
   ],
-  "api": []
+  "api": [
+    "/usr/share/wordlists/seclists/Discovery/Web-Content/api/api-endpoints.txt",
+    "/usr/share/wordlists/seclists/Discovery/Web-Content/api/api-endpoints-res.txt",
+    "/usr/share/wordlists/seclists/Discovery/Web-Content/api/api-seen-in-wild.txt",
+    "/usr/share/wordlists/seclists/Discovery/Web-Content/api/salesforce-aura-objects.txt"
+  ]
 }
