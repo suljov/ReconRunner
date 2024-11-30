@@ -185,13 +185,13 @@ reconrunner config --remove-list [name]
 - **Create wordlist:**
 
 ```
-reconrunner config --add-list /path/to/wordlist.txt --type [name of the type in the config list]
+reconrunner config --add-list /path/to/wordlist.txt --type [name of the list in the config file]
 ```
 
 - **Remove wordlist:**
 
 ```
-reconrunner config --remove-word /path/to/wordlist.txt --type [name of the type in the config list]
+reconrunner config --remove-word /path/to/wordlist.txt --type [name of the list in the config file]
 ```
 
 - **List Info:**
