@@ -38,14 +38,10 @@ The tool will go from bash code to python code
 
 ## 🌟 Features
 
-- **Protocol Flexibility:** Seamlessly switch between HTTP and HTTPS protocols.
-- **Custom Wordlists:** Prioritize custom wordlists before default ones for a more tailored approach.
 - **Custom List of Wordlists:** Utilize a specific list of wordlists from a configuration file.
   - Create, add, or remove custom lists of wordlists to meet your needs.
-- **Wildcard Support:** Incorporate wildcard domains easily for subdomain enumeration.
-- **Interactive Control:** Cancel the tool anytime with CTRL + C, ensuring results are saved and temporary resources are cleaned.
 - **Detailed Help and Usage Instructions:** Comprehensive help options for both the tool and underlying tools.
-- **Clean and Organized Output:** Results are saved in a structured format with customization options.
+- **Clean and Organized Output:** Results are saved in a structured format (with time and date for each file) with customization options.
 
 ## **Install**
 
