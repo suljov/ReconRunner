@@ -61,48 +61,37 @@ To install ReconRunner, clone the repository and run the installation script:
 
 ```
 $ reconrunner --help
-Usage: reconrunner <enum_type> <ip> [--https] [--cw <custom_wordlist>] [--cl <custom_list>] [--wildcard <wildcard_domain>] [--extra <extra_options>] [--skip-save] [-f <file>]
 
-Help:
-  --help                       Prints this message
-  dirs --help                  Prints all the extra options for dirs
-  subs --help                  Prints all the extra options for subs
-  sql --help                   Prints all the extra options for sql
 
-Available types:
-  dirs    Directory/file enumeration (tool: gobuster)
-  subs    Subdomain enumeration (tool: wfuzz)
-  sql     SQL Injection detection (tool: sqlmap)
+██████╗ ███████╗ ██████╗ ██████╗ ███╗   ██╗██████╗ ██╗   ██╗███╗   ██╗███╗   ██╗███████╗██████╗
+██╔══██╗██╔════╝██╔════╝██╔═══██╗████╗  ██║██╔══██╗██║   ██║████╗  ██║████╗  ██║██╔════╝██╔══██╗
+██████╔╝█████╗  ██║     ██║   ██║██╔██╗ ██║██████╔╝██║   ██║██╔██╗ ██║██╔██╗ ██║█████╗  ██████╔╝
+██╔══██╗██╔══╝  ██║     ██║   ██║██║╚██╗██║██╔══██╗██║   ██║██║╚██╗██║██║╚██╗██║██╔══╝  ██╔══██╗
+██║  ██║███████╗╚██████╗╚██████╔╝██║ ╚████║██║  ██║╚██████╔╝██║ ╚████║██║ ╚████║███████╗██║  ██║
+╚═╝  ╚═╝╚══════╝ ╚═════╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═╝ ╚═════╝ ╚═╝  ╚═══╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝
 
-Options:
-  <enum_type>                  The type of enumeration (e.g., dirs, subs, sql).
-  <ip>                         The target IP address or domain (for dirs and subs).
-  -u <url>                     The target URL (for sql).
-  -f <file>                    The request file (for sql).
-  --https                      (Optional) Use HTTPS protocol instead of HTTP.
-  --cw <custom_wordlist>       (Optional) Use a custom wordlist instead of the default wordlists.
-  --cl <custom_list>           (Optional) Use a custom list of wordlists from the config file.
-  --wildcard <wildcard_domain> (Optional) Use wildcard in the Host header for subdomain enumeration.
-  --extra <extra_options>      (Optional) Additional options for the enumeration tool.
-  --skip-save                  (Optional) Skip saving results to files.
 
-Configuration commands:
-  reconrunner config --add-wordlist <path to wordlist> --to <type>
-  reconrunner config --remove-wordlist <path to wordlist> --from <type>
-  reconrunner config --create-list <name>
-  reconrunner config --remove-list <name>
-  reconrunner config --list-info
 
-Examples:
-  reconrunner dirs example.com
-  reconrunner dirs example.com --https
-  reconrunner dirs example.com --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'
+usage: ReconRunner [-h] {subs,subs2,dirs,dirs2,sql,fuzz,portscan,portscan2,config} ...
 
-  reconrunner subs example.com
-  reconrunner subs example.com --cw /path/to/custom_wordlist.txt --wildcard test-*.example.com --extra '--timeout=30 --rate=100'
+ReconRunner made by suljov. Streamlines scanning by automating tasks for webapp pentest and organizing results for a more efficient experience.
 
-  reconrunner sql -u http://example.com/vulnerable.php?id=1
-  reconrunner sql -f /path/to/request_file.txt
+positional arguments:
+  {subs,subs2,dirs,dirs2,sql,fuzz,portscan,portscan2,config}
+    subs                Subdomain enumeration (tool: subfinder).
+    subs2               Second way of subdomain enumeration (tool: wfuzz).
+    dirs                Directory/file enumeration (tool: feroxbuster).
+    dirs2               Directory/file enumeration (tool: gobuster).
+    sql                 SQL Injection detection (tool: sqlmap). OBS: output does not get saved.
+    fuzz                For custom fuzzing of endpoints, subdomains, parameters etc (tool: wfuzz).
+    portscan            For portscanning the target (tool: rustscan).
+    portscan2           For portscanning the target (tool: nmap).
+    config              Configuration of the wordlist of wordlists (json file containing wordlists for different uses)
+
+options:
+  -h, --help            show this help message and exit
+
+Help page for ReconRunner.
 ```
 
 ## **🚀 Examples**
@@ -112,25 +101,19 @@ Examples:
 ##### Basic Usage
 
 ```
-reconrunner dirs example.com
-```
-
-##### Using HTTPS
-
-```
-reconrunner dirs example.com --https
+reconrunner dirs -u http://example.com
 ```
 
 ##### With Custom Wordlist
 
 ```
-reconrunner dirs example.com --cw /path/to/custom_wordlist.txt
+reconrunner dirs -u http://example.com --cw /path/to/custom_wordlist.txt
 ```
 
 ##### With Extra Options
 
 ```
-reconrunner dirs example.com --cw /path/to/custom_wordlist.txt --extra '--delay=500ms'
+reconrunner dirs -u http://example.com --extra '--delay=500ms'
 ```
 
 ### Subdomain enumeration
@@ -138,39 +121,25 @@ reconrunner dirs example.com --cw /path/to/custom_wordlist.txt --extra '--delay=
 ##### Basic Usage
 
 ```
-reconrunner subs example.com
-```
-
-##### Using HTTPS
-
-```
-reconrunner subs example.com --https
+reconrunner subs -u example.com
 ```
 
 ##### With Custom Wordlist
 
 ```
-reconrunner subs example.com --cw /path/to/custom_wordlist.txt
+reconrunner subs2 -u example.com --cw /path/to/custom_wordlist.txt
 ```
 
 ##### With Extra Options
 
 ```
-reconrunner subs example.com --cw /path/to/custom_wordlist.txt --extra '-fl 100'
+reconrunner subs -u example.com --extra '-recursive'
 ```
-
-##### With wildcard
-
-```
-reconrunner subs example.com --wildcard example*.com
-```
-
-The wildcard will be replaced with the word `FUZZ`
 
 #### with another or custom list (lists that are in the config file)
 
 ```
-reconrunner subs example.com --cw <name of list>
+reconrunner subs -u example.com --cl <name of list>
 ```
 
 ### SQL injection
@@ -184,7 +153,7 @@ reconrunner sql -u "http://example.com/vulnerable.php?id=1"
 #### With file
 
 ```
-reconrunner sql -r /path/to/file.txt
+reconrunner sql -f /path/to/file.txt
 ```
 
 ## **The ability to customize**
@@ -201,9 +170,35 @@ Edit the JSON file located at $HOME/.reconrunner/wordlists-config.json. You can 
 
 - **Add Wordlist:** reconrunner config --add-wordlist [path to wordlist] --to [type-of-list]
 - **Remove Wordlist:** reconrunner config --remove-wordlist [path to wordlist] --from [type-of-list]
-- **Create List:** reconrunner config --create-list [name]
-- **Remove List:** reconrunner config --remove-list [name]
-- **List Info:** reconrunner config --list-info
+- **Create List:**
+
+```
+reconrunner config --create-list [name]
+```
+
+- **Remove List:**
+
+```
+reconrunner config --remove-list [name]
+```
+
+- **Create wordlist:**
+
+```
+reconrunner config --add-list /path/to/wordlist.txt --type [name of the type in the config list]
+```
+
+- **Remove wordlist:**
+
+```
+reconrunner config --remove-word /path/to/wordlist.txt --type [name of the type in the config list]
+```
+
+- **List Info:**
+
+```
+reconrunner config --list-info
+```
 
 #### List configuration (default lists with wordlists)
 
@@ -220,6 +215,7 @@ Edit the JSON file located at $HOME/.reconrunner/wordlists-config.json. You can 
   ],
   "dirs": [
     "/usr/share/wordlists/seclists/Discovery/Web-Content/quickhits.txt",
+    "/usr/share/wordlists/seclists/Discovery/Web-Content/common.txt",
     "/usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt"
   ],
   "dns": [
@@ -236,9 +232,7 @@ Edit the JSON file located at $HOME/.reconrunner/wordlists-config.json. You can 
   ],
   "osinjection": [],
   "ssti": [],
-  "xss": [
-    "/usr/share/wordlists/wfuzz/Injections/XSS.txt"
-  ],
+  "xss": ["/usr/share/wordlists/wfuzz/Injections/XSS.txt"],
   "xml": [
     "/usr/share/wordlists/wfuzz/Injections/XML.txt",
     "/usr/share/wordlists/seclists/Fuzzing/XML-FUZZ.txt"
@@ -252,14 +246,15 @@ Edit the JSON file located at $HOME/.reconrunner/wordlists-config.json. You can 
   ],
   "api": []
 }
+
 ```
-
-## **Cleaning Up**
-
-ReconRunner ensures that partial results are saved and cleaned up on-the-fly. If you cancel the tool using CTRL + C, it will save results up to that point and clean temporary files.
 
 ## **Acknowledgments**
 
+- **Feroxbuster**: A tool by Ben "epi" Risher. [GitHub Repository](https://github.com/epi052/feroxbuster)
 - **Gobuster**: A tool by OJ Reeves (@TheColonial) & Christian Mehlmauer (@firefart). [GitHub Repository](https://github.com/OJ/gobuster)
+- **Subfinder**: A tool by ProjectDiscovery (@projectdiscovery). [GitHub Repository](https://github.com/projectdiscovery/subfinder)
 - **wfuzz**: A tool by @xmendez. [GitHub Repository](https://github.com/xmendez/wfuzz)
-- **sqlmap**: A tool by Bernardo Damele A. G. (@bdamele ) & Miroslav Stampar (@stamparm). [GitHub Repository](https://github.com/sqlmapproject/sqlmap)
+- **sqlmap**: A tool by Bernardo Damele A. G. (@bdamele) & Miroslav Stampar (@stamparm). [GitHub Repository](https://github.com/sqlmapproject/sqlmap)
+- **Rustscan**: A fast port scanner written in Rust. [GitHub Repository](https://github.com/RustScan/RustScan)
+- **Nmap**: A powerful network scanning tool by Gordon Lyon (@fyodor). [GitHub Repository](https://github.com/nmap/nmap)
