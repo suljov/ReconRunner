@@ -34,7 +34,7 @@ print("")
 def findSUBS(url):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     print(cleaned_url)
-    os.system(f"subfinder -d {cleaned_url} -o {outpitDir}/subs/subs-{cleaned_url}-{time_clean}.txt)
+    os.system(f"subfinder -d {cleaned_url} -o {outpitDir}/subs/subs-{cleaned_url}-{time_clean}.txt")
 
 
 def findSUBSnoSAVE(url):
