@@ -740,7 +740,7 @@ def portScanRustscanSingle(domain):
 
 
 def portscanNmapSingle(domain):
-    command = (f"sudo nmap {domain} -sS -A -O -sV -p- -oN {outpitDir}/portscan/portscan2-{domain}-{time_clean}.txt")
+    command = (f"sudo nmap {domain} -sS -A -O -sV -p- -oN {outpitDir}/portscan2/portscan2-{domain}-{time_clean}.txt")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -756,7 +756,7 @@ def portscanNmapSingleNoSAVE(domain):
 
 
 def portscanNmapExtra(domain, extra):
-    command = (f"sudo nmap {domain} {extra} -oN {outpitDir}/portscan/portscan2-{domain}-extra-{time_clean}.txt")
+    command = (f"sudo nmap {domain} {extra} -oN {outpitDir}/portscan2/portscan2-{domain}-extra-{time_clean}.txt")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -1316,11 +1316,16 @@ def handlePORT2():
         portscanNmapSingle(args.domain)
     elif (args.domain is not None
           and args.extra is None
-          and not args.skip_save):
+          and args.skip_save):
         portscanNmapSingleNoSAVE(args.domain)
     elif (args.domain is not None
-          and args.extra is not None):
+          and args.extra is not None
+          and not args.skip_save):
         portscanNmapExtra(args.domain, args.extra)
+    elif (args.domain is not None
+          and args.extra is not None
+          and args.skip_save):
+        portscanNmapExtraNoSave(args.domain, args.extra)
 
 
 # Argeparse stuff
@@ -1331,7 +1336,7 @@ subparsers = parser.add_subparsers(dest="command", required=True)
 
 # subparsers subs
 SUBS = subparsers.add_parser("subs", help="Subdomain enumeration. (tool: subfinder)")
-SUBS.add_argument("-u", "--url", required=True, type=str, help="Url to the target.")
+SUBS.add_argument("-u", "--url", type=str, help="Url to the target.")
 SUBS.add_argument("--skip-save", action="store_true", help="Skip saving results to files.")
 SUBS.add_argument("-e", "--extra", type=str, help="""Extra flags used for the underlaying tool (subfinder).""")
 SUBS.add_argument("-c", "--commands", action="store_true", help="""Show help page for subfinder (for the -e/--extra flag.)""")
@@ -1339,7 +1344,7 @@ SUBS.add_argument("-c", "--commands", action="store_true", help="""Show help pag
 
 # subparsers subs2
 SUBS2 = subparsers.add_parser("subs2", help="""Second way of subdomain enumeration. (tool: wfuzz)""")
-SUBS2.add_argument("-u", "--url", required=True, type=str, help="Url to the target.")
+SUBS2.add_argument("-u", "--url", type=str, help="Url to the target.")
 SUBS2.add_argument("--cw", type=str, help="""Use a custom  wordlist instead of the default wordlists in the list.""")
 SUBS2.add_argument("--cl", type=str,  help="Use a custom list of wordlists from the config file.")
 SUBS2.add_argument("--skip-save", action="store_true",  help="Skip saving results to files.")
@@ -1348,7 +1353,7 @@ SUBS2.add_argument("-c", "--commands", action="store_true", help="""Show help pa
 
 # subparsers dirs
 DIRS = subparsers.add_parser("dirs", help="""Directory/file enumeration. (tool: feroxbuster)""")
-DIRS.add_argument("-u", "--url", required=True, type=str, help="Url to the target.")
+DIRS.add_argument("-u", "--url", type=str, help="Url to the target.")
 DIRS.add_argument("--cw", type=str, help="""Use a custom wordlist instead of the default wordlists in the list.""")
 DIRS.add_argument("--cl", type=str, help="Use a custom list of wordlists from the config file.")
 DIRS.add_argument("--skip-save", action="store_true", help="Skip saving results to files.")
@@ -1358,7 +1363,7 @@ DIRS.add_argument("-c", "--commands", action="store_true", help="""Show help pag
 
 # subparsers dirs2
 DIRS2 = subparsers.add_parser("dirs2", help="""Directory/file enumeration. (tool: gobuster)""")
-DIRS2.add_argument("-u", "--url", required=True, type=str, help="Url to the target.")
+DIRS2.add_argument("-u", "--url", type=str, help="Url to the target.")
 DIRS2.add_argument("--cw", type=str, help="""Use a custom wordlist instead of the default wordlists in the list.""")
 DIRS2.add_argument("--cl", type=str, help="""Use a custom list of wordlists from the config file.""")
 DIRS2.add_argument("--skip-save", action="store_true", help="Skip saving results to files.")
@@ -1375,7 +1380,7 @@ SQL.add_argument("-c", "--commands", action="store_true", help="Show help page f
 
 # subparsers fuzz
 FUZZ = subparsers.add_parser("fuzz", help="""For custom fuzzing of endpoints, subdomains, parameters etc. OBS: Don`t forget to add 'FUZZ' att the position you want to fuzz. (tool: wfuzz)""")
-FUZZ.add_argument("-u", "--url", required=True, type=str, help="URL to the target. Add 'FUZZ' in the URL if needed.")
+FUZZ.add_argument("-u", "--url", type=str, help="URL to the target. Add 'FUZZ' in the URL if needed.")
 FUZZ.add_argument("-e", "--extra", type=str, help="Extra flags used for the underlaying tool (wfuzz). OBS: Don`t forget to add 'FUZZ' somewhere in the headers if needed.")
 FUZZ.add_argument("-c", "--commands", action="store_true", help="Show help page for wfuzz (for the -e/--extra flag.)")
 FUZZ.add_argument("--skip-save", action="store_true", help="Skip saving results to files.")
@@ -1387,14 +1392,14 @@ portscan = subparsers.add_parser("portscan", help="""For portscanning the target
 portscan.add_argument("-e", "--extra", type=str, help="""Extra flags used for the underlaying tool (rustscan).""")
 portscan.add_argument("-ne", "--nmap-extra", type=str, help="""Extra flags used for the underlaying tool in rustscan, OBS these are the commands for nmap that rustscan uses.""")
 portscan.add_argument("-c", "--commands", action="store_true", help="""Show help page for rustscan (for the -e/--extra flag.)""")
-portscan.add_argument("-d", "--domain", "--ip", type=str, help="Domain name or IP to target", required=True)
+portscan.add_argument("-d", "--domain", "--ip", type=str, help="Domain name or IP to target")
 
 
 # subparsers portscan2
 portscan2 = subparsers.add_parser("portscan2", help="""For portscanning the target. (tool: nmap)""")
 portscan2.add_argument("-e", "--extra", type=str, help="""Extra flags used for the underlaying tool (nmap).""")
 portscan2.add_argument("-c", "--commands", action="store_true", help="""Show help page for nmap (for the -e/--extra flag.)""")
-portscan2.add_argument("-d", "--domain", "--ip", type=str, help="Domain name or IP to target", required=True)
+portscan2.add_argument("-d", "--domain", "--ip", type=str, help="Domain name or IP to target")
 portscan2.add_argument("--skip-save", action="store_true", help="Skip saving results to files.")
 
 
