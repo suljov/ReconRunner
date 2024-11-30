@@ -23,9 +23,6 @@ print("")
 print(ascii_art_reconrunner)
 print("")
 print("")
-print("(\\__/)")
-print("(='.'=)")
-print('("")_("")')
 
 
 # the handle Functions
@@ -53,7 +50,6 @@ def findSUBSextraNosave(url, extra):
 # subs2 normal
 def findSUBS2(url):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dns"])):
@@ -63,7 +59,6 @@ def findSUBS2(url):
 
 def findSUBS2NoSAVE(url):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dns"])):
@@ -73,7 +68,6 @@ def findSUBS2NoSAVE(url):
 
 def findSUBSextra2(url, extra):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dns"])):
@@ -83,7 +77,6 @@ def findSUBSextra2(url, extra):
 
 def findSUBSextra2NoSAVE(url, extra):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dns"])):
@@ -94,7 +87,6 @@ def findSUBSextra2NoSAVE(url, extra):
 # subs2 with cl
 def findSUBS2CL(url, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
@@ -104,7 +96,6 @@ def findSUBS2CL(url, obj):
 
 def findSUBS2NoSAVECL(url):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
@@ -114,7 +105,6 @@ def findSUBS2NoSAVECL(url):
 
 def findSUBSextra2CL(url, extra):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
@@ -124,7 +114,6 @@ def findSUBSextra2CL(url, extra):
 
 def findSUBSextra2NoSAVECL(url, extra, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
@@ -135,148 +124,200 @@ def findSUBSextra2NoSAVECL(url, extra, obj):
 # subs2 with cw
 def findSUBS2CW(url, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
     os.system(f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}-CW.csv,csv {cleaned_url}")
 
 
 def findSUBS2NoSAVECW(url, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
     os.system(f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {cleaned_url}")
 
 
 def findSUBSextra2CW(url, extra, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
     os.system(f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra-CW.csv,csv {urcleaned_urll}")
 
 
 def findSUBSextra2NoSAVECW(url, extra, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"subs2 tool with gobuster (subs2) at: {cleaned_url}")
     os.system(f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {extra} {cleaned_url}")
-
-
-# dirs normal
-def dirs(url):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs tool with feroxbuster (dirs) at: {cleaned_url}")
-
-
-def dirsNoSave(url):
-    print("dirs tool with feroxbuster (dirs) + no SAVE")
-
-
-def dirsExtra(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs tool with feroxbuster and extra (dirs) at: {cleaned_url}")
-
-
-def dirsExtraNoSave(url, extra):
-    print("dirs tool with feroxbuster and extra (dirs2) + no SAVE")
-
-
-# dirs with cl
-def dirsCL(url):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs with cl tol with feroxbuster (dirs) at: {cleaned_url}")
-
-
-def dirsCLnoSave(url):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs with cl + no save with feroxbuster (dirs) at: {cleaned_url}")
-
-
-def dirsExtraCL(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs with cl with feroxbuster (dirs) at: {cleaned_url}")
-
-
-def dirsExtraCLnoSave(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs with cl and extra + no save with feroxbuster (dirs) at: {cleaned_url}")
-
-
-# dirs with cw
-def dirsCW(url):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs with cw with feroxbuster (dirs) at: {cleaned_url}")
-
-
-def dirsCWnoSave(url):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs with cw + no save with feroxbuster (dirs) at: {cleaned_url}")
-
-
-def dirsExtraCW(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs with cw and extra with feroxbuster (dirs) at: {cleaned_url}")
-
-
-def dirsExtraCWnoSave(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs with cw and extra + no save with feroxbuster (dirs) at: {cleaned_url}")
 
 
 # dirs2 normal
 def dirs2(url):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs2 tool with gobuster (dirs2) at: {cleaned_url}")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data["dirs"])):
+        wordlist = data["dirs"[i]]
+        os.system(f"gobuster dir -u {url} -w {wordlist} -o {outpitDir}/dirs/dirs-{cleaned_url}.txt")
 
 
 def dirs2NoSave(url):
-    print("dirs2 tool with gobuster (dirs2) + no SAVE")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data["dirs"])):
+        wordlist = data["dirs"[i]]
+        os.system(f"gobuster dir -u {url} -w {wordlist}")
 
 
 def dirs2Extra(url, extra):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs2 tool with gobuster and extra (dirs2) at: {cleaned_url}")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data["dirs"])):
+        wordlist = data["dirs"[i]]
+        os.system(f"gobuster dir -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra.txt")
 
 
 def dirs2ExtraNoSave(url, extra):
-    print("dirs2 tool with gobuster and extra (dirs22) + no SAVE")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data["dirs"])):
+        wordlist = data["dirs"[i]]
+        os.system(f"gobuster dir -u {url} -w {wordlist} {extra}")
 
 
 # dirs2 with cl
-def dirs2CL(url):
+def dirs2CL(url, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs2 with cl tol with gobuster (dirs2) at: {cleaned_url}")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data[obj])):
+        wordlist = data[obj[i]]
+        os.system(f"gobuster dir -u {url} -w {wordlist} -o {outpitDir}/dirs/dirs-{cleaned_url}-CL.txt")
 
 
-def dirs2CLnoSave(url):
+def dirs2CLnoSave(url, obj):
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data[obj])):
+        wordlist = data[obj[i]]
+        os.system(f"gobuster dir -u {url} -w {wordlist}")
+
+
+def dirs2ExtraCL(url, extra, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs2 with cl + no save with gobuster (dirs2) at: {cleaned_url}")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data[obj])):
+        wordlist = data[obj[i]]
+        os.system(f"gobuster dir -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra-CL.txt")
 
 
-def dirs2ExtraCL(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs2 with cl with gobuster (dirs2) at: {cleaned_url}")
-
-
-def dirs2ExtraCLnoSave(url, extra):
-    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs2 with cl and extra + no save with gobuster (dirs2) at: {cleaned_url}")
+def dirs2ExtraCLnoSave(url, extra, obj):
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data[obj])):
+        wordlist = data[obj[i]]
+        os.system(f"gobuster dir -u {url} -w {wordlist}")
 
 
 # dirs2 with cw
-def dirs2CW(url):
+def dirs2CW(url, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs2 with cw with gobuster (dirs2) at: {cleaned_url}")
+    os.system(f"gobuster dir -u {url} -w {obj} -o {outpitDir}/dirs/dirs-{cleaned_url}-CW.txt")
 
 
-def dirs2CWnoSave(url):
+def dirs2CWnoSave(url, obj):
+        os.system(f"gobuster dir -u {url} -w {obj}")
+
+
+def dirs2ExtraCW(url, extra, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs2 with cw + no save with gobuster (dirs2) at: {cleaned_url}")
+    os.system(f"gobuster dir -u {url} -w {obj} {obj} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra-CW.txt")
 
 
-def dirs2ExtraCW(url, extra):
+def dirs2ExtraCWnoSave(url, extra, obj):
+    os.system(f"gobuster dir -u {url} -w {obj}")
+
+
+# dirs normal
+def dirs(url):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs2 with cw and extra with gobuster (dirs2) at: {cleaned_url}")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data["dirs"])):
+        wordlist = data["dirs"[i]]
+        os.system(f"feroxbuster -u {url} -w {wordlist} -o {outpitDir}/dirs2/dirs2-{cleaned_url}.txt")
 
 
-def dirs2ExtraCWnoSave(url, extra):
+def dirsNoSave(url):
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data["dirs"])):
+        wordlist = data["dirs"[i]]
+        os.system(f"feroxbuster -u {url} -w {wordlist}")
+
+
+def dirsExtra(url, extra):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    print(f"dirs2 with cw and extra + no save with gobuster (dirs2) at: {cleaned_url}")
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data["dirs"])):
+        wordlist = data["dirs"[i]]
+        os.system(f"feroxbuster -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra.txt")
+
+
+def dirsExtraNoSave(url, extra):
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data["dirs"])):
+        wordlist = data["dirs"[i]]
+        os.system(f"feroxbuster -u {url} -w {wordlist} {extra}")
+
+
+# dirs with cl
+def dirsCL(url, obj):
+    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data[obj])):
+        wordlist = data[obj[i]]
+        os.system(f"feroxbuster -u {url} -w {wordlist} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-CL.txt")
+
+
+def dirsCLnoSave(url, obj):
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data[obj])):
+        wordlist = data[obj[i]]
+        os.system(f"feroxbuster -u {url} -w {wordlist}")
+
+
+def dirsExtraCL(url, extra, obj):
+    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data[obj])):
+        wordlist = data[obj[i]]
+        os.system(f"feroxbuster -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra-CL.txt")
+
+
+def dirsExtraCLnoSave(url, extra, obj):
+    with open(configList, "r") as configFile:
+        data = json.load(configFile)
+    for i in range(len(data[obj])):
+        wordlist = data[obj[i]]
+        os.system(f"feroxbuster -u {url} -w {wordlist} {extra}")
+
+
+# dirs with cw
+def dirsCW(url, obj):
+    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    os.system(f"feroxbuster -u {url} -w {obj} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-CW.txt")
+
+
+def dirsCWnoSave(url, obj):
+    os.system(f"feroxbuster -u {url} -w {obj}")
+
+
+def dirsExtraCW(url, extra, obj):
+    cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    os.system(f"feroxbuster -u {url} -w {obj} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra-CW.txt")
+
+
+def dirsExtraCWnoSave(url, extra):
+    os.system(f"feroxbuster -u {url} -w {obj} {extra}")
 
 
 # fuzz normal
@@ -648,50 +689,50 @@ def handleDIRS2():
           and not args.skip_save
           and args.cw is None
           and args.cl is not None):
-        dirs2CL(args.url)
+        dirs2CL(args.url, args.cl)
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
           and args.cw is None
           and args.cl is not None):
-        dirs2CLnoSave(args.url)
+        dirs2CLnoSave(args.url, args.cl)
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is None
           and args.cl is not None):
-        dirs2ExtraCL(args.url, args.extra)
+        dirs2ExtraCL(args.url, args.extra, args.cl)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
           and args.cw is None
           and args.cl is not None):
-        dirs2ExtraCLnoSave(args.url, args.extra)
+        dirs2ExtraCLnoSave(args.url, args.extra, args.cl)
 # with cw and not cl
     elif (args.url is not None
           and args.extra is None
           and not args.skip_save
           and args.cw is not None
           and args.cl is None):
-        dirs2CW(args.url)
+        dirs2CW(args.url, args.cw)
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is None):
-        dirs2CWnoSave(args.url)
+        dirs2CWnoSave(args.url, args.cw)
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is not None
           and args.cl is None):
-        dirs2ExtraCW(args.url, args.extra)
+        dirs2ExtraCW(args.url, args.extra, args.cw)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
           and args.cw is not None
           and args.cl is None):
-        dirs2ExtraCWnoSave(args.url, args.extra)
+        dirs2ExtraCWnoSave(args.url, args.extra, args.cw)
 # with cl and cw
     elif (args.url is not None
           and args.extra is None
@@ -757,50 +798,50 @@ def handleDIRS():
           and not args.skip_save
           and args.cw is None
           and args.cl is not None):
-        dirsCL(args.url)
+        dirsCL(args.url, args.cl)
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
           and args.cw is None
           and args.cl is not None):
-        dirsCLnoSave(args.url)
+        dirsCLnoSave(args.url, args.cl)
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is None
           and args.cl is not None):
-        dirsExtraCL(args.url, args.extra)
+        dirsExtraCL(args.url, args.extra, args.cl)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
           and args.cw is None
           and args.cl is not None):
-        dirsExtraCLnoSave(args.url, args.extra)
+        dirsExtraCLnoSave(args.url, args.extra, args.cl)
 # with cw and not cl
     elif (args.url is not None
           and args.extra is None
           and not args.skip_save
           and args.cw is not None
           and args.cl is None):
-        dirsCW(args.url)
+        dirsCW(args.url, args.cw)
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is None):
-        dirsCWnoSave(args.url)
+        dirsCWnoSave(args.url, args.cw)
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is not None
           and args.cl is None):
-        dirsExtraCW(args.url, args.extra)
+        dirsExtraCW(args.url, args.extra, args.cw)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
           and args.cw is not None
           and args.cl is None):
-        dirsExtraCWnoSave(args.url, args.extra)
+        dirsExtraCWnoSave(args.url, args.extra, args.cw)
 # with cl and cw
     elif (args.url is not None
           and args.extra is None
@@ -1049,7 +1090,7 @@ def handlePORT2():
 # Argeparse stuff
 
 
-parser = argparse.ArgumentParser(prog="ReconRunner", description="""ReconRunner made by suljov. Streamlines scanning by automating tasks for webapp pentest and organizing results for a more efficient experience.""", epilog="""Help page for ReconRunner.""")
+parser = argparse.ArgumentParser(prog="ReconRunner", description=""" ReconRunner made by suljov. Streamlines scanning by automating tasks for webapp pentest and organizing results for a more efficient experience.""", epilog="""Help page for ReconRunner.""")
 subparsers = parser.add_subparsers(dest="command", required=True)
 
 # subparsers subs
