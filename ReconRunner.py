@@ -648,10 +648,10 @@ def addWordlist(wordlist, obj):
             print(f"{bcolors.OKGREEN}Done!{bcolors.ENDC}")
         else:
             print(f"{bcolors.FAIL}{wordlist} already exist in {obj}{bcolors.ENDC}")
-            exit
+            exit()
     else:
         print(f"""{bcolors.FAIL}{obj} dont exist in the configuration file! See config file: reconrunner config --list-info{bcolors.ENDC}""")
-        exit
+        exit()
 
 
 def deleteWordlist(wordlist, obj):
@@ -667,10 +667,10 @@ def deleteWordlist(wordlist, obj):
             print(f"{bcolors.OKGREEN}Done!{bcolors.ENDC}")
         else:
             print(f"{bcolors.FAIL}{wordlist} dont exist in {obj}{bcolors.ENDC}")
-            exit
+            exit()
     else:
         print(f"""{bcolors.FAIL}{obj} dont exist in the configuration file! See config file: reconrunner config --list-info{bcolors.ENDC}""")
-        exit
+        exit()
 
 
 def deleteList(list):
@@ -684,14 +684,14 @@ def deleteList(list):
         print(f"{bcolors.OKGREEN}Done!{bcolors.ENDC}")
     else:
         print(f"""{bcolors.FAIL}{list} dont exist in the configuration file! See config file: reconrunner config --list-info{bcolors.ENDC}""")
-        exit
+        exit()
 
 
 def addList(list):
     check = checkJsonTypeExist(list)
     if check:
         print(f"{bcolors.FAIL}{list} already exist{bcolors.ENDC}")
-        exit
+        exit()
     else:
         with open(configList, "r") as configFile:
             data = json.load(configFile)
@@ -894,21 +894,21 @@ def handleSUBS2():
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
-        exit
+        exit()
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
-        exit
+        exit()
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
-        exit
+        exit()
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
@@ -1003,28 +1003,28 @@ def handleDIRS2():
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
-        exit
+        exit()
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
-        exit
+        exit()
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
-        exit
+        exit()
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
-        exit
+        exit()
 
 
 def handleDIRS():
@@ -1112,28 +1112,28 @@ def handleDIRS():
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
-        exit
+        exit()
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
-        exit
+        exit()
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
-        exit
+        exit()
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
-        exit
+        exit()
 
 
 def handleSQL():
@@ -1144,7 +1144,7 @@ def handleSQL():
     elif (args.url is not None
           and args.file is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
-        exit
+        exit()
     elif (args.file is not None
           and args.extra is None):
         sqlWithFile(args.file)
@@ -1215,28 +1215,28 @@ def handleFUZZ():
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
-        exit
+        exit()
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
-        exit
+        exit()
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
-        exit
+        exit()
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
-        exit
+        exit()
 
 
 def handleCONFIG():
@@ -1416,6 +1416,7 @@ if checkFolderExist() is True:
     None
 else:
     createFolder()
+
 
 if args.command == "subs":
     handleSUBS()

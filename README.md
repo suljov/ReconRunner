@@ -146,6 +146,20 @@ reconrunner sql -u "http://example.com/vulnerable.php?id=1"
 reconrunner sql -f /path/to/file.txt
 ```
 
+### Portscanning
+
+#### Normal scan
+
+```
+reconrunner portscan -d <ip>
+```
+
+#### Scan with extra commands
+
+```
+reconrunner portscan -d <ip> --extra "-g -r 8000-8999"
+```
+
 ## **The ability to customize**
 
 ### Customizing list of wordlists
