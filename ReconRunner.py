@@ -3,10 +3,11 @@ import os
 import json
 import re
 import datetime
+import subprocess
 
 
 configList = os.path.expanduser("~/.reconrunner/wordlists-config.json")
-outpitDir = os.path.expanduser("./reconrunner-saved-data")
+outpitDir = os.path.expanduser("reconrunner-saved-data")
 time = datetime.datetime.now()
 time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
 
@@ -34,20 +35,36 @@ print("")
 def findSUBS(url):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     print(cleaned_url)
-    os.system(f"subfinder -d {cleaned_url} -o {outpitDir}/subs/subs-{cleaned_url}-{time_clean}.txt")
+    command = (f"subfinder -d {cleaned_url} -o {outpitDir}/subs/subs-{cleaned_url}-{time_clean}.txt")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def findSUBSnoSAVE(url):
-    os.system(f"subfinder -d {url}")
+    command = (f"subfinder -d {url}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def findSUBSextra(url, extra):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"subfinder -d {cleaned_url} {extra} -o {outpitDir}/subs/subs-{cleaned_url}-extra-{time_clean}.txt")
+    command = (f"subfinder -d {cleaned_url} {extra} -o {outpitDir}/subs/subs-{cleaned_url}-extra-{time_clean}.txt")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def findSUBSextraNosave(url, extra):
-    os.system(f"subfinder -d {url} {extra}")
+    command = (f"subfinder -d {url} {extra}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 # subs2 normal
@@ -56,8 +73,12 @@ def findSUBS2(url):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dns"])):
-        wordlist = data["dns"[i]]
-        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}-{time_clean}.csv,csv {cleaned_url}")
+        wordlist = data["dns"][i]
+        command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}-{time_clean}.csv,csv {cleaned_url}")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
 def findSUBS2NoSAVE(url):
@@ -65,8 +86,12 @@ def findSUBS2NoSAVE(url):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dns"])):
-        wordlist = data["dns"[i]]
-        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {cleaned_url}")
+        wordlist = data["dns"][i]
+        command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {cleaned_url}")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
 def findSUBSextra2(url, extra):
@@ -74,8 +99,12 @@ def findSUBSextra2(url, extra):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dns"])):
-        wordlist = data["dns"[i]]
-        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra-{time_clean}.csv,csv {cleaned_url}")
+        wordlist = data["dns"][i]
+        command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra-{time_clean}.csv,csv {cleaned_url}")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
 def findSUBSextra2NoSAVE(url, extra):
@@ -83,8 +112,12 @@ def findSUBSextra2NoSAVE(url, extra):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dns"])):
-        wordlist = data["dns"[i]]
-        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} {cleaned_url}")
+        wordlist = data["dns"][i]
+        command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} {cleaned_url}")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
 # subs2 with cl
@@ -93,26 +126,38 @@ def findSUBS2CL(url, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
-        wordlist = data[data][i]
-        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}-CL-{time_clean}.csv,csv {cleaned_url}")
+        wordlist = data[obj][i]
+        command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}-CL-{time_clean}.csv,csv {cleaned_url}")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
-def findSUBS2NoSAVECL(url):
+def findSUBS2NoSAVECL(url, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
-        wordlist = data[data][i]
-        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {cleaned_url}")
+        wordlist = data[obj][i]
+        command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {cleaned_url}")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
-def findSUBSextra2CL(url, extra):
+def findSUBSextra2CL(url, extra, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
-        wordlist = data[data][i]
-        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra-CL-{time_clean}.csv,csv {cleaned_url}")
+        wordlist = data[obj][i]
+        command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra-CL-{time_clean}.csv,csv {cleaned_url}")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
 def findSUBSextra2NoSAVECL(url, extra, obj):
@@ -120,29 +165,49 @@ def findSUBSextra2NoSAVECL(url, extra, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
-        wordlist = data[data][i]
-        os.system(f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} {cleaned_url}")
+        wordlist = data[obj][i]
+        command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} {cleaned_url}")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
 # subs2 with cw
 def findSUBS2CW(url, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}-CW-{time_clean}.csv,csv {cleaned_url}")
+    command = (f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}-CW-{time_clean}.csv,csv {cleaned_url}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def findSUBS2NoSAVECW(url, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {cleaned_url}")
+    command = (f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {cleaned_url}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def findSUBSextra2CW(url, extra, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra-CW-{time_clean}.csv,csv {urcleaned_urll}")
+    command = (f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra-CW-{time_clean}.csv,csv {urcleaned_urll}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def findSUBSextra2NoSAVECW(url, extra, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {extra} {cleaned_url}")
+    command = (f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {extra} {cleaned_url}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 # dirs2 normal
@@ -151,16 +216,24 @@ def dirs2(url):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
-        wordlist = data["dirs"[i]]
-        os.system(f"gobuster dir -u {url} -w {wordlist} -o {outpitDir}/dirs/dirs-{cleaned_url}-{time_clean}.txt")
+        wordlist = data["dirs"][i]
+        command = (f"gobuster dir -u {url} -w {wordlist} -o {outpitDir}/dirs/dirs-{cleaned_url}-{time_clean}.txt")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def dirs2NoSave(url):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
-        wordlist = data["dirs"[i]]
-        os.system(f"gobuster dir -u {url} -w {wordlist}")
+        wordlist = data["dirs"][i]
+        command = (f"gobuster dir -u {url} -w {wordlist}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def dirs2Extra(url, extra):
@@ -168,16 +241,24 @@ def dirs2Extra(url, extra):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
-        wordlist = data["dirs"[i]]
-        os.system(f"gobuster dir -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra-{time_clean}.txt")
+        wordlist = data["dirs"][i]
+        command = (f"gobuster dir -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra-{time_clean}.txt")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def dirs2ExtraNoSave(url, extra):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
-        wordlist = data["dirs"[i]]
-        os.system(f"gobuster dir -u {url} -w {wordlist} {extra}")
+        wordlist = data["dirs"][i]
+        command = (f"gobuster dir -u {url} -w {wordlist} {extra}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 # dirs2 with cl
@@ -186,16 +267,24 @@ def dirs2CL(url, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
-        wordlist = data[obj[i]]
-        os.system(f"gobuster dir -u {url} -w {wordlist} -o {outpitDir}/dirs/dirs-{cleaned_url}-CL-{time_clean}.txt")
+        wordlist = data[obj][i]
+        command = (f"gobuster dir -u {url} -w {wordlist} -o {outpitDir}/dirs/dirs-{cleaned_url}-CL-{time_clean}.txt")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def dirs2CLnoSave(url, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
-        wordlist = data[obj[i]]
-        os.system(f"gobuster dir -u {url} -w {wordlist}")
+        wordlist = data[obj][i]
+        command = (f"gobuster dir -u {url} -w {wordlist}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def dirs2ExtraCL(url, extra, obj):
@@ -203,35 +292,59 @@ def dirs2ExtraCL(url, extra, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
-        wordlist = data[obj[i]]
-        os.system(f"gobuster dir -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra-CL-{time_clean}.txt")
+        wordlist = data[obj][i]
+        command = (f"gobuster dir -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra-CL-{time_clean}.txt")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def dirs2ExtraCLnoSave(url, extra, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
-        wordlist = data[obj[i]]
-        os.system(f"gobuster dir -u {url} -w {wordlist}")
+        wordlist = data[obj][i]
+        command = (f"gobuster dir -u {url} -w {wordlist}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 # dirs2 with cw
 def dirs2CW(url, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"gobuster dir -u {url} -w {obj} -o {outpitDir}/dirs/dirs-{cleaned_url}-CW-{time_clean}.txt")
+    command = (f"gobuster dir -u {url} -w {obj} -o {outpitDir}/dirs/dirs-{cleaned_url}-CW-{time_clean}.txt")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def dirs2CWnoSave(url, obj):
-        os.system(f"gobuster dir -u {url} -w {obj}")
+    command = (f"gobuster dir -u {url} -w {obj}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def dirs2ExtraCW(url, extra, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"gobuster dir -u {url} -w {obj} {obj} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra-CW-{time_clean}.txt")
+    command = (f"gobuster dir -u {url} -w {obj} {obj} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra-CW-{time_clean}.txt")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def dirs2ExtraCWnoSave(url, extra, obj):
-    os.system(f"gobuster dir -u {url} -w {obj}")
+    command = (f"gobuster dir -u {url} -w {obj}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 # dirs normal
@@ -239,17 +352,24 @@ def dirs(url):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
-    for i in range(len(data["dirs"])):
-        wordlist = data["dirs"[i]]
-        os.system(f"feroxbuster -u {url} -w {wordlist} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-{time_clean}.txt")
+    for wordlist in data["dirs"]:
+        command = (f"feroxbuster -u {url} -w {wordlist} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-{time_clean}.txt")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
 def dirsNoSave(url):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
-        wordlist = data["dirs"[i]]
-        os.system(f"feroxbuster -u {url} -w {wordlist}")
+        wordlist = data["dirs"][i]
+        command = (f"feroxbuster -u {url} -w {wordlist}")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
 def dirsExtra(url, extra):
@@ -257,16 +377,24 @@ def dirsExtra(url, extra):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
-        wordlist = data["dirs"[i]]
-        os.system(f"feroxbuster -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra-{time_clean}.txt")
+        wordlist = data["dirs"][i]
+        command = (f"feroxbuster -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra-{time_clean}.txt")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
 def dirsExtraNoSave(url, extra):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
-        wordlist = data["dirs"[i]]
-        os.system(f"feroxbuster -u {url} -w {wordlist} {extra}")
+        wordlist = data["dirs"][i]
+        command = (f"feroxbuster -u {url} -w {wordlist} {extra}")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
 # dirs with cl
@@ -275,16 +403,24 @@ def dirsCL(url, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
-        wordlist = data[obj[i]]
-        os.system(f"feroxbuster -u {url} -w {wordlist} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-CL-{time_clean}.txt")
+        wordlist = data[obj][i]
+        command = (f"feroxbuster -u {url} -w {wordlist} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-CL-{time_clean}.txt")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
 def dirsCLnoSave(url, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
-        wordlist = data[obj[i]]
-        os.system(f"feroxbuster -u {url} -w {wordlist}")
+        wordlist = data[obj][i]
+        command = (f"feroxbuster -u {url} -w {wordlist}")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
 def dirsExtraCL(url, extra, obj):
@@ -292,35 +428,59 @@ def dirsExtraCL(url, extra, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
-        wordlist = data[obj[i]]
-        os.system(f"feroxbuster -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra-CL-{time_clean}.txt")
+        wordlist = data[obj][i]
+        command = (f"feroxbuster -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra-CL-{time_clean}.txt")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
 def dirsExtraCLnoSave(url, extra, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
-        wordlist = data[obj[i]]
-        os.system(f"feroxbuster -u {url} -w {wordlist} {extra}")
+        wordlist = data[obj][i]
+        command = (f"feroxbuster -u {url} -w {wordlist} {extra}")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
 # dirs with cw
 def dirsCW(url, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"feroxbuster -u {url} -w {obj} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-CW-{time_clean}.txt")
+    command = (f"feroxbuster -u {url} -w {obj} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-CW-{time_clean}.txt")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def dirsCWnoSave(url, obj):
-    os.system(f"feroxbuster -u {url} -w {obj}")
+    command = (f"feroxbuster -u {url} -w {obj}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def dirsExtraCW(url, extra, obj):
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    os.system(f"feroxbuster -u {url} -w {obj} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra-CW-{time_clean}.txt")
+    command = (f"feroxbuster -u {url} -w {obj} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra-CW-{time_clean}.txt")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
-def dirsExtraCWnoSave(url, extra):
-    os.system(f"feroxbuster -u {url} -w {obj} {extra}")
+def dirsExtraCWnoSave(url, extra, obj):
+    command = (f"feroxbuster -u {url} -w {obj} {extra}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 # fuzz normal
@@ -329,8 +489,12 @@ def fuzz(url):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
-        wordlist = data["dirs"[i]]
-        os.system(f"feroxbuster -u {url} -w {wordlist} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-{time_clean}.txt")
+        wordlist = data["dirs"][i]
+        command = (f"feroxbuster -u {url} -w {wordlist} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-{time_clean}.txt")
+        try:
+            subprocess.run(command, shell=True, check=True)
+        except subprocess.CalledProcessError as e:
+            print(f"Error {e}")
 
 
 def fuzzNoSave(url):
@@ -390,19 +554,35 @@ def fuzzExtraCWnoSave(url, extra):
 
 # sql
 def sqlWithFile(file):
-    os.system(f"sqlmap -r {file} --batch")
+    command = (f"sqlmap -r {file} --batch")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def sqlWithFileExtra(file, extra):
-    os.system(f"sqlmap -r {file} --batch {extra}")
+    command = (f"sqlmap -r {file} --batch {extra}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def sqlWithURL(url):
-    os.system(f"sqlmap -u {url} --batch")
+    command = (f"sqlmap -u {url} --batch")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def sqlWithURLextra(url, extra):
-    os.system(f"sqlmap -u {url} --batch {extra}")
+    command = (f"sqlmap -u {url} --batch {extra}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 # config
@@ -496,38 +676,85 @@ def addList(list):
 
 
 def portScanRustscanBoth(domain, extra, extra_nmap):
-    os.system(f"""sudo rustscan -a {domain} {extra} --ulimit 5000 -- {extra_nmap}""")
+    command = (f"""sudo rustscan -a {domain} {extra} --ulimit 5000 -- {extra_nmap}""")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def portScanRustscanExtra(domain, extra):
-    os.system(f"""sudo rustscan -a {domain} {extra} --ulimit 5000 -- -sS -A -O -sV""")
+    command = (f"""sudo rustscan -a {domain} {extra} --ulimit 5000 -- -sS -A -O -sV""")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def portScanRustscanExtraNmap(domain, extra_nmap):
-    os.system(f"""sudo rustscan -a {domain} --ulimit 5000 -- {extra_nmap}""")
+    command = (f"""sudo rustscan -a {domain} --ulimit 5000 -- {extra_nmap}""")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def portScanRustscanSingle(domain):
-    os.system(f"""sudo rustscan -a {domain} --ulimit 5000 -- -sS -A -O -sV""")
+    command = (f"""sudo rustscan -a {domain} --ulimit 5000 -- -sS -A -O -sV""")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 # portscan2
 
 
 def portscanNmapSingle(domain):
-    os.system(f"sudo nmap {domain} -sS -A -O -sV -p- -oN {outpitDir}/portscan/portscan2-{domain}-{time_clean}.txt")
+    command = (f"sudo nmap {domain} -sS -A -O -sV -p- -oN {outpitDir}/portscan/portscan2-{domain}-{time_clean}.txt")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def portscanNmapSingleNoSAVE(domain):
-    os.system(f"sudo nmap {domain} -sS -A -O -sV -p-")
+    command = (f"sudo nmap {domain} -sS -A -O -sV -p-")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def portscanNmapExtra(domain, extra):
-    os.system(f"sudo nmap {domain} {extra} -oN {outpitDir}/portscan/portscan2-{domain}-extra-{time_clean}.txt")
+    command = (f"sudo nmap {domain} {extra} -oN {outpitDir}/portscan/portscan2-{domain}-extra-{time_clean}.txt")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
 
 
 def portscanNmapExtraNoSave(domain, extra):
-    os.system(f"sudo nmap {domain} {extra}")
+    command = (f"sudo nmap {domain} {extra}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
+
+
+# create folder
+def createFolder():
+    command = (f"mkdir {outpitDir} && mkdir {outpitDir}/subs && mkdir {outpitDir}/subs2 && mkdir {outpitDir}/dirs && mkdir {outpitDir}/dirs2 && mkdir {outpitDir}/portscan && mkdir {outpitDir}/portscan2")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
+
+
+# check if folder exist
+def checkFolderExist():
+    check = os.path.exists(outpitDir)
+    return check
 
 
 # Handle functions
@@ -593,13 +820,13 @@ def handleSUBS2():
           and args.skip_save
           and args.cw is None
           and args.cl is not None):
-        findSUBS2NoSAVECL(args.url)
+        findSUBS2NoSAVECL(args.url, args.cl)
     elif (args.url is not None
           and args.extra is not None
           and not args.skip_save
           and args.cw is None
           and args.cl is not None):
-        findSUBSextra2CL(args.url, args.extra)
+        findSUBSextra2CL(args.url, args.extra, arg.cl)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
@@ -1177,6 +1404,10 @@ args = parser.parse_args()
 
 # Checking what flags are used etc
 
+if checkFolderExist() is True:
+    None
+else:
+    createFolder()
 
 if args.command == "subs":
     handleSUBS()
@@ -1202,5 +1433,4 @@ elif args.command == "portscan2":
 
 # TODO what is left to be done:
 # TODO! fuzz (functions are created)
-
 # TODO! after the tools is done. refactor stuff
