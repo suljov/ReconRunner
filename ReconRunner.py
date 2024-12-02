@@ -791,17 +791,13 @@ def checkFolderExist():
 def handleSUBS():
     if args.commands is True:
         os.system("subfinder --help")
-    elif (args.url is not None
-          and args.extra is None
-          and not args.skip_save):
+    elif args.url is not None:
         findSUBS(args.url)
     elif (args.url is not None
-          and args.extra is None
           and args.skip_save):
         findSUBSnoSAVE(args.url)
     elif (args.url is not None
-          and args.extra is not None
-          and not args.skip_save):
+          and args.extra is not None):
         findSUBSextra(args.url, args.extra)
     elif (args.url is not None
           and args.extra is not None
@@ -814,83 +810,58 @@ def handleSUBS2():
         os.system("wfuzz --help")
 # no cl or cw
     elif (args.url is not None
-          and args.extra is None
-          and not args.skip_save
-          and args.cw is None
-          and args.cl is None):
+          and args.extra is None):
         findSUBS2(args.url)
     elif (args.url is not None
-          and args.extra is None
-          and args.skip_save
-          and args.cw is None
-          and args.cl is None):
+          and args.skip_save):
         findSUBS2NoSAVE(args.url)
     elif (args.url is not None
-          and args.extra is not None
-          and not args.skip_save
-          and args.cw is None
-          and args.cl is None):
+          and args.extra is not None):
         findSUBSextra2(args.url, args.extra)
     elif (args.url is not None
           and args.extra is not None
-          and args.skip_save
-          and args.cw is None
-          and args.cl is None):
+          and args.skip_save):
         findSUBSextra2NoSAVE(args.url, args.extra)
 # with cl and not cw
     elif (args.url is not None
-          and args.extra is None
-          and not args.skip_save
-          and args.cw is None
           and args.cl is not None):
         findSUBS2CL(args.url, args.cl)
     elif (args.url is not None
-          and args.extra is None
           and args.skip_save
-          and args.cw is None
           and args.cl is not None):
         findSUBS2NoSAVECL(args.url, args.cl)
     elif (args.url is not None
           and args.extra is not None
-          and not args.skip_save
-          and args.cw is None
           and args.cl is not None):
         findSUBSextra2CL(args.url, args.extra, args.cl)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
-          and args.cw is None
           and args.cl is not None):
         findSUBSextra2NoSAVECL(args.url, args.extra, args.cl)
 # with cw and not cl
     elif (args.url is not None
           and args.extra is None
           and not args.skip_save
-          and args.cw is not None
-          and args.cl is None):
+          and args.cw is not None):
         findSUBS2CW(args.url, args.cw)
     elif (args.url is not None
           and args.extra is None
           and args.skip_save
-          and args.cw is not None
-          and args.cl is None):
+          and args.cw is not None):
         findSUBS2NoSAVECW(args.url, args.cw)
     elif (args.url is not None
           and args.extra is not None
-          and not args.skip_save
-          and args.cw is not None
-          and args.cl is None):
+          and args.cw is not None):
         findSUBSextra2CW(args.url, args.extra, args.cw)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
-          and args.cw is not None
-          and args.cl is None):
+          and args.cw is not None):
         findSUBSextra2NoSAVECW(args.url, args.extra, args.cw)
 # with cl and cw
     elif (args.url is not None
           and args.extra is None
-          and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
@@ -904,7 +875,6 @@ def handleSUBS2():
         exit()
     elif (args.url is not None
           and args.extra is not None
-          and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
@@ -923,89 +893,61 @@ def handleDIRS2():
         os.system("gobuster --help")
 # no cl or cw
     elif (args.url is not None
-          and args.extra is None
-          and not args.skip_save
-          and args.cw is None
-          and args.cl is None):
+          and args.extra is None):
         dirs2(args.url)
     elif (args.url is not None
-          and args.extra is None
-          and args.skip_save
-          and args.cw is None
-          and args.cl is None):
+          and args.skip_save):
         dirs2NoSave(args.url)
     elif (args.url is not None
-          and args.extra is not None
-          and not args.skip_save
-          and args.cw is None
-          and args.cl is None):
+          and args.extra is not None):
         dirs2Extra(args.url, args.extra)
     elif (args.url is not None
           and args.extra is not None
-          and args.skip_save
-          and args.cw is None
-          and args.cl is None):
+          and args.skip_save):
         dirs2ExtraNoSave(args.url, args.extra)
 # with cl and not cw
     elif (args.url is not None
           and args.extra is None
           and not args.skip_save
-          and args.cw is None
           and args.cl is not None):
         dirs2CL(args.url, args.cl)
     elif (args.url is not None
-          and args.extra is None
           and args.skip_save
-          and args.cw is None
           and args.cl is not None):
         dirs2CLnoSave(args.url, args.cl)
     elif (args.url is not None
           and args.extra is not None
-          and not args.skip_save
-          and args.cw is None
           and args.cl is not None):
         dirs2ExtraCL(args.url, args.extra, args.cl)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
-          and args.cw is None
           and args.cl is not None):
         dirs2ExtraCLnoSave(args.url, args.extra, args.cl)
 # with cw and not cl
     elif (args.url is not None
-          and args.extra is None
-          and not args.skip_save
-          and args.cw is not None
-          and args.cl is None):
+          and args.cw is not None):
         dirs2CW(args.url, args.cw)
     elif (args.url is not None
-          and args.extra is None
           and args.skip_save
-          and args.cw is not None
-          and args.cl is None):
+          and args.cw is not None):
         dirs2CWnoSave(args.url, args.cw)
     elif (args.url is not None
           and args.extra is not None
-          and not args.skip_save
-          and args.cw is not None
-          and args.cl is None):
+          and args.cw is not None):
         dirs2ExtraCW(args.url, args.extra, args.cw)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
-          and args.cw is not None
-          and args.cl is None):
+          and args.cw is not None):
         dirs2ExtraCWnoSave(args.url, args.extra, args.cw)
 # with cl and cw
     elif (args.url is not None
-          and args.extra is None
-          and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit()
     elif (args.url is not None
-          and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
@@ -1013,7 +955,6 @@ def handleDIRS2():
         exit()
     elif (args.url is not None
           and args.extra is not None
-          and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
@@ -1031,90 +972,59 @@ def handleDIRS():
     if args.commands is True:
         os.system("feroxbuster --help")
 # no cl or cw
-    elif (args.url is not None
-          and args.extra is None
-          and not args.skip_save
-          and args.cw is None
-          and args.cl is None):
+    elif args.url is not None:
         dirs(args.url)
     elif (args.url is not None
-          and args.extra is None
-          and args.skip_save
-          and args.cw is None
-          and args.cl is None):
+          and args.skip_save):
         dirsNoSave(args.url)
     elif (args.url is not None
-          and args.extra is not None
-          and not args.skip_save
-          and args.cw is None
-          and args.cl is None):
+          and args.extra is not None):
         dirsExtra(args.url, args.extra)
     elif (args.url is not None
           and args.extra is not None
-          and args.skip_save
-          and args.cw is None
-          and args.cl is None):
+          and args.skip_save):
         dirsExtraNoSave(args.url, args.extra)
 # with cl and not cw
     elif (args.url is not None
-          and args.extra is None
-          and not args.skip_save
-          and args.cw is None
           and args.cl is not None):
         dirsCL(args.url, args.cl)
     elif (args.url is not None
-          and args.extra is None
           and args.skip_save
-          and args.cw is None
           and args.cl is not None):
         dirsCLnoSave(args.url, args.cl)
     elif (args.url is not None
           and args.extra is not None
-          and not args.skip_save
-          and args.cw is None
           and args.cl is not None):
         dirsExtraCL(args.url, args.extra, args.cl)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
-          and args.cw is None
           and args.cl is not None):
         dirsExtraCLnoSave(args.url, args.extra, args.cl)
 # with cw and not cl
     elif (args.url is not None
-          and args.extra is None
-          and not args.skip_save
-          and args.cw is not None
-          and args.cl is None):
+          and args.cw is not None):
         dirsCW(args.url, args.cw)
     elif (args.url is not None
-          and args.extra is None
           and args.skip_save
-          and args.cw is not None
-          and args.cl is None):
+          and args.cw is not None):
         dirsCWnoSave(args.url, args.cw)
     elif (args.url is not None
           and args.extra is not None
-          and not args.skip_save
-          and args.cw is not None
-          and args.cl is None):
+          and args.cw is not None):
         dirsExtraCW(args.url, args.extra, args.cw)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
-          and args.cw is not None
-          and args.cl is None):
+          and args.cw is not None):
         dirsExtraCWnoSave(args.url, args.extra, args.cw)
 # with cl and cw
     elif (args.url is not None
-          and args.extra is None
-          and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit()
     elif (args.url is not None
-          and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
@@ -1145,14 +1055,12 @@ def handleSQL():
           and args.file is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit()
-    elif (args.file is not None
-          and args.extra is None):
+    elif args.file is not None:
         sqlWithFile(args.file)
     elif (args.file is not None
           and args.extra is not None):
         sqlWithFileExtra(args.file, args.extra)
-    elif (args.url is not None
-          and args.extra is None):
+    elif args.url is not None:
         sqlWithURL(args.url)
     elif (args.url is not None
           and args.extra is not None):
@@ -1164,60 +1072,45 @@ def handleFUZZ():
         os.system("wfuzz --help")
 # with cl and not cw
     elif (args.url is not None
-          and not args.skip_save
-          and args.cw is None
           and args.cl is not None):
         fuzzCL(args.url, args.cl)
     elif (args.url is not None
           and args.skip_save
-          and args.cw is None
           and args.cl is not None):
         fuzzCLnoSave(args.url, args.cl)
     elif (args.url is not None
           and args.extra is not None
-          and not args.skip_save
-          and args.cw is None
           and args.cl is not None):
         fuzzExtraCL(args.url, args.extra, args.cl)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
-          and args.cw is None
           and args.cl is not None):
         fuzzExtraCLnoSave(args.url, args.extra, args.cl)
 # with cw and not cl
     elif (args.url is not None
-          and not args.skip_save
-          and args.cw is not None
-          and args.cl is None):
+          and args.cw is not None):
         fuzzCW(args.url, args.cw)
     elif (args.url is not None
           and args.skip_save
-          and args.cw is not None
-          and args.cl is None):
+          and args.cw is not None):
         fuzzCWnoSave(args.url, args.cw)
     elif (args.url is not None
           and args.extra is not None
-          and not args.skip_save
-          and args.cw is not None
-          and args.cl is None):
+          and args.cw is not None):
         fuzzExtraCW(args.url, args.extra, args.cw)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
-          and args.cw is not None
-          and args.cl is None):
+          and args.cw is not None):
         fuzzExtraCWnoSave(args.url, args.extra, args.cw)
 # with cl and cw
     elif (args.url is not None
-          and args.extra is None
-          and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
         exit()
     elif (args.url is not None
-          and args.extra is None
           and args.skip_save
           and args.cw is not None
           and args.cl is not None):
@@ -1225,7 +1118,6 @@ def handleFUZZ():
         exit()
     elif (args.url is not None
           and args.extra is not None
-          and not args.skip_save
           and args.cw is not None
           and args.cl is not None):
         print(f"{bcolors.FAIL}Choose either a custom list or a custom wordlist.{bcolors.ENDC}")
@@ -1240,49 +1132,22 @@ def handleFUZZ():
 
 
 def handleCONFIG():
-    if (args.remove_list is not None
-            and args.add_wordlist is None
-            and args.remove_wordlist is None
-            and not args.list_info
-            and args.create_list is None
-            and args.to is None
-            and args.type is None):
+    if args.remove_list is not None:
         deleteList(args.remove_list)
-    elif (args.list_info is True
-          and args.add_wordlist is None
-          and args.to is None
-          and args.create_list is None
-          and args.remove_list is None
-          and args.remove_wordlist is None
-          and args.type is None):
+    elif args.list_info is True:
         print("")
-        print(f"{bcolors.OKGREEN}{bcolors.BOLD}File located at:  {bcolors.ENDC}{bcolors.WARNING}~/.reconrunner/wordlists-config.json{bcolors.ENDC}")
+        print(f"{bcolors.OKGREEN}{bcolors.BOLD}File located at: {bcolors.ENDC}{bcolors.WARNING}~/.reconrunner/wordlists-config.json{bcolors.ENDC}")
         print("")
         print(f"{bcolors.OKGREEN}{bcolors.BOLD}Configuration file:{bcolors.ENDC}")
         print("")
         os.system(f"cat ~/.reconrunner/wordlists-config.json")
-    elif (args.create_list is not None
-          and args.remove_list is None
-          and args.add_wordlist is None
-          and args.remove_wordlist is None
-          and not args.list_info
-          and args.to is None
-          and args.type is None):
+    elif args.create_list is not None:
         addList(args.create_list)
     elif (args.add_wordlist is not None
-          and args.to is not None
-          and args.create_list is None
-          and args.remove_list is None
-          and args.remove_wordlist is None
-          and not args.list_info
-          and args.type is None):
+          and args.to is not None):
         addWordlist(args.add_wordlist, args.to)
     elif (args.type is not None
-          and args.remove_wordlist is not None
-          and args.add_wordlist is None
-          and args.to is None and args.create_list is None
-          and args.remove_list is None
-          and not args.list_info):
+          and args.remove_wordlist is not None):
         deleteWordlist(args.remove_wordlist, args.type)
 
 
@@ -1293,34 +1158,26 @@ def handlePORT():
           and args.nmap_extra is not None
           and args.extra is not None):
         portScanRustscanBoth(args.domain, args.extra, args.nmap_extra)
-    elif (args.domain is not None
-          and args.nmap_extra is None
-          and args.extra is None):
+    elif args.domain is not None:
         portScanRustscanSingle(args.domain)
     elif (args.domain is not None
-          and args.nmap_extra is None
           and args.extra is not None):
         portScanRustscanExtra(args.domain, args.extra)
     elif (args.domain is not None
-          and args.nmap_extra is not None
-          and args.extra is None):
+          and args.nmap_extra is not None):
         portScanRustscanExtraNmap(args.domain, args.extra_nmap)
 
 
 def handlePORT2():
     if args.commands is True:
         os.system("nmap --help")
-    elif (args.domain is not None
-          and args.extra is None
-          and not args.skip_save):
+    elif args.domain is not None:
         portscanNmapSingle(args.domain)
     elif (args.domain is not None
-          and args.extra is None
           and args.skip_save):
         portscanNmapSingleNoSAVE(args.domain)
     elif (args.domain is not None
-          and args.extra is not None
-          and not args.skip_save):
+          and args.extra is not None):
         portscanNmapExtra(args.domain, args.extra)
     elif (args.domain is not None
           and args.extra is not None
