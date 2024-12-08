@@ -1072,36 +1072,50 @@ def handleFUZZ():
         os.system("wfuzz --help")
 # with cl and not cw
     elif (args.url is not None
-          and args.cl is not None):
+          and args.cl is not None
+          and args.cw is None
+          and not args.skip_save):
         fuzzCL(args.url, args.cl)
     elif (args.url is not None
           and args.skip_save
+          and args.cw is None
           and args.cl is not None):
         fuzzCLnoSave(args.url, args.cl)
     elif (args.url is not None
           and args.extra is not None
-          and args.cl is not None):
+          and args.cl is not None
+          and args.cw is None
+          and not args.skip_save):
         fuzzExtraCL(args.url, args.extra, args.cl)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
+          and args.cw is None
           and args.cl is not None):
         fuzzExtraCLnoSave(args.url, args.extra, args.cl)
 # with cw and not cl
     elif (args.url is not None
-          and args.cw is not None):
+          and args.cw is not None
+          and args.cl is None
+          and args.extra is None
+          and not args.skip_save):
         fuzzCW(args.url, args.cw)
     elif (args.url is not None
           and args.skip_save
+          and args.cl is None
+          and args.extra is None
           and args.cw is not None):
         fuzzCWnoSave(args.url, args.cw)
     elif (args.url is not None
           and args.extra is not None
-          and args.cw is not None):
+          and args.cw is not None
+          and args.cl is None
+          and not args.skip_save):
         fuzzExtraCW(args.url, args.extra, args.cw)
     elif (args.url is not None
           and args.extra is not None
           and args.skip_save
+          and args.cl is None
           and args.cw is not None):
         fuzzExtraCWnoSave(args.url, args.extra, args.cw)
 # with cl and cw
