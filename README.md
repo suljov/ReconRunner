@@ -28,7 +28,7 @@ ReconRunner is a webapp tool designed to streamline and simplify directory and f
 
 ## **TODO/idéas**
 
-- fix the small bugg on "Fuzzing"
+- Fix the small bugg on "Fuzzing"
 
 ## **Requirement**
 
