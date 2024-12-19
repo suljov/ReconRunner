@@ -244,7 +244,11 @@ reconrunner config --list-info
   ],
   "osinjection": [],
   "ssti": [],
-  "xss": ["/usr/share/wordlists/wfuzz/Injections/XSS.txt"],
+  "xss": [
+    "/usr/share/wordlists/wfuzz/Injections/XSS.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/XSS/human-friendly/XSS-BruteLogic.txt",
+    "/usr/share/wordlists/seclists/Fuzzing/XSS/human-friendly/XSS-Cheat-Sheet-PortSwigger.txt"
+  ],
   "xml": [
     "/usr/share/wordlists/wfuzz/Injections/XML.txt",
     "/usr/share/wordlists/seclists/Fuzzing/XML-FUZZ.txt"
@@ -256,9 +260,13 @@ reconrunner config --list-info
     "/usr/share/wordlists/seclists/Fuzzing/LDAP-openldap-classes.txt",
     "/usr/share/wordlists/seclists/Fuzzing/LDAP.Fuzzing.txt"
   ],
-  "api": []
+  "api": [
+    "/usr/share/wordlists/seclists/Discovery/Web-Content/api/api-endpoints.txt",
+    "/usr/share/wordlists/seclists/Discovery/Web-Content/api/api-endpoints-res.txt",
+    "/usr/share/wordlists/seclists/Discovery/Web-Content/api/api-seen-in-wild.txt",
+    "/usr/share/wordlists/seclists/Discovery/Web-Content/api/salesforce-aura-objects.txt"
+  ]
 }
-
 ```
 
 ## **Acknowledgments**
