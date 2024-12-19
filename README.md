@@ -28,9 +28,7 @@ ReconRunner is a webapp tool designed to streamline and simplify directory and f
 
 ## **TODO/idéas**
 
-- come up with more idéas for features
-  - add feature for simple fuzzing (web)
-    - add flag to urlencode the payload
+- fix the small bugg on "Fuzzing"
 
 ## **Requirement**
 
