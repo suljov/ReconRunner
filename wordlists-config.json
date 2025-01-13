@@ -9,6 +9,7 @@
     "/usr/share/wordlists/seclists/Fuzzing/LFI/LFI-gracefulsecurity-windows.txt"
   ],
   "dirs": [
+    "/usr/share/wordlists/seclists/Discovery/Web-Content/common_directories.txt",
     "/usr/share/wordlists/seclists/Discovery/Web-Content/quickhits.txt",
     "/usr/share/wordlists/seclists/Discovery/Web-Content/common.txt",
     "/usr/share/wordlists/seclists/Discovery/Web-Content/directory-list-2.3-medium.txt"
