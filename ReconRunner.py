@@ -1392,8 +1392,6 @@ CFG.add_argument("--remove-list", type=str, help="Removes a list of wordlists.")
 
 args = parser.parse_args()
 
-# Checking what flags are used etc
-
 
 
 
