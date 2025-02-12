@@ -1590,6 +1590,6 @@ elif args.command == "portscan2":
     handlePORT2()
 
 
-# TODO what is left to be done: FUZZ and folder create statement
+# TODO what is left to be done: date/time on each saved file to make sure no data/results are lost or overwriten
 
 # TODO! after the tools is done. refactor stuff
