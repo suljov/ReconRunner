@@ -9,7 +9,7 @@ import subprocess
 
 
 configList = os.path.expanduser("~/.reconrunner/wordlists-config.json")
-outpitDir = os.path.expanduser("reconrunner-saved-data")
+outputDir = os.path.expanduser("reconrunner-saved-data")
 time = datetime.datetime.now()
 time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
 
@@ -43,6 +43,16 @@ print("")
 print("")
 
 
+# create folder
+def createFolder():
+    command = (f"mkdir {outputDir} && mkdir {outputDir}/subs && mkdir {outputDir}/subs2 && mkdir {outputDir}/dirs && mkdir {outputDir}/dirs2 && mkdir {outputDir}/portscan && mkdir {outputDir}/portscan2 && mkdir {outputDir}/fuzz")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
+
+
+
 # the handle Functions
 
 # subs
@@ -51,9 +61,9 @@ def findSUBS(url):
         print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
     else:
         print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
-    createFolder()
+        createFolder()
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    command = (f"subfinder -d {cleaned_url} -o {outpitDir}/subs/subs-{cleaned_url}-{time_clean}.txt --silent")
+    command = (f"subfinder -d {cleaned_url} -o {outputDir}/subs/subs-{cleaned_url}-{time_clean}.txt --silent")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -75,7 +85,7 @@ def findSUBSextra(url, extra):
         print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
         createFolder()
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    command = (f"subfinder -d {cleaned_url} {extra} -o {outpitDir}/subs/subs-{cleaned_url}-extra-{time_clean}.txt --silent")
+    command = (f"subfinder -d {cleaned_url} {extra} -o {outputDir}/subs/subs-{cleaned_url}-extra-{time_clean}.txt --silent")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -102,7 +112,7 @@ def findSUBS2(url):
         data = json.load(configFile)
     for i in range(len(data["dns"])):
         wordlist = data["dns"][i]
-        command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}-{time_clean}.csv,csv {cleaned_url}")
+        command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' -f {outputDir}/subs2/subs2-{cleaned_url}-{time_clean}.csv,csv {cleaned_url}")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
@@ -133,7 +143,7 @@ def findSUBSextra2(url, extra):
         data = json.load(configFile)
     for i in range(len(data["dns"])):
         wordlist = data["dns"][i]
-        command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra-{time_clean}.csv,csv {cleaned_url}")
+        command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outputDir}/subs2/subs2-{cleaned_url}-extra-{time_clean}.csv,csv {cleaned_url}")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
@@ -165,7 +175,7 @@ def findSUBS2CL(url, obj):
         data = json.load(configFile)
     for i in range(len(data[obj])):
         wordlist = data[obj][i]
-        command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}-CL-{time_clean}.csv,csv {cleaned_url}")
+        command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' -f {outputDir}/subs2/subs2-{cleaned_url}-CL-{time_clean}.csv,csv {cleaned_url}")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
@@ -196,7 +206,7 @@ def findSUBSextra2CL(url, extra, obj):
         data = json.load(configFile)
     for i in range(len(data[obj])):
         wordlist = data[obj][i]
-        command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra-CL-{time_clean}.csv,csv {cleaned_url}")
+        command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outputDir}/subs2/subs2-{cleaned_url}-extra-CL-{time_clean}.csv,csv {cleaned_url}")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
@@ -224,7 +234,7 @@ def findSUBS2CW(url, obj):
         print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
         createFolder()
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    command = (f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}-CW-{time_clean}.csv,csv {cleaned_url}")
+    command = (f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' -f {outputDir}/subs2/subs2-{cleaned_url}-CW-{time_clean}.csv,csv {cleaned_url}")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -247,7 +257,7 @@ def findSUBSextra2CW(url, extra, obj):
         print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
         createFolder()
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    command = (f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra-CW-{time_clean}.csv,csv {urcleaned_urll}")
+    command = (f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outputDir}/subs2/subs2-{cleaned_url}-extra-CW-{time_clean}.csv,csv {urcleaned_urll}")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -274,7 +284,7 @@ def dirs(url):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for wordlist in data["dirs"]:
-        command = (f"feroxbuster -u {url} -w {wordlist} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-{time_clean}.txt -q")
+        command = (f"feroxbuster -u {url} -w {wordlist} -o {outputDir}/dirs/dirs-{cleaned_url}-{time_clean}.txt -q")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
@@ -304,7 +314,7 @@ def dirsExtra(url, extra):
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
         wordlist = data["dirs"][i]
-        command = (f"feroxbuster -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra-{time_clean}.txt -q")
+        command = (f"feroxbuster -u {url} -w {wordlist} {extra} -o {outputDir}/dirs/dirs-{cleaned_url}-extra-{time_clean}.txt -q")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
@@ -335,7 +345,7 @@ def dirsCL(url, obj):
         data = json.load(configFile)
     for i in range(len(data[obj])):
         wordlist = data[obj][i]
-        command = (f"feroxbuster -u {url} -w {wordlist} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-CL-{time_clean}.txt -q")
+        command = (f"feroxbuster -u {url} -w {wordlist} -o {outputDir}/dirs/dirs-{cleaned_url}-CL-{time_clean}.txt -q")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
@@ -365,7 +375,7 @@ def dirsExtraCL(url, extra, obj):
         data = json.load(configFile)
     for i in range(len(data[obj])):
         wordlist = data[obj][i]
-        command = (f"feroxbuster -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra-CL-{time_clean}.txt -q")
+        command = (f"feroxbuster -u {url} -w {wordlist} {extra} -o {outputDir}/dirs/dirs-{cleaned_url}-extra-CL-{time_clean}.txt -q")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
@@ -392,7 +402,7 @@ def dirsCW(url, obj):
         print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
         createFolder()
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    command = (f"feroxbuster -u {url} -w {obj} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-CW-{time_clean}.txt -q")
+    command = (f"feroxbuster -u {url} -w {obj} -o {outputDir}/dirs/dirs-{cleaned_url}-CW-{time_clean}.txt -q")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -414,7 +424,7 @@ def dirsExtraCW(url, extra, obj):
         print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
         createFolder()
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    command = (f"feroxbuster -u {url} -w {obj} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra-CW-{time_clean}.txt -q")
+    command = (f"feroxbuster -u {url} -w {obj} {extra} -o {outputDir}/dirs/dirs-{cleaned_url}-extra-CW-{time_clean}.txt -q")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -441,7 +451,7 @@ def dirs2(url):
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
         wordlist = data["dirs"][i]
-        command = (f"gobuster dir -u {url} -w {wordlist} -o {outpitDir}/dirs/dirs-{cleaned_url}-{time_clean}.txt -q")
+        command = (f"gobuster dir -u {url} -w {wordlist} -o {outputDir}/dirs2/dirs2-{cleaned_url}-{time_clean}.txt -q")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -471,7 +481,7 @@ def dirs2Extra(url, extra):
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
         wordlist = data["dirs"][i]
-        command = (f"gobuster dir -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra-{time_clean}.txt -q")
+        command = (f"gobuster dir -u {url} -w {wordlist} {extra} -o {outputDir}/dirs2/dirs2-{cleaned_url}-extra-{time_clean}.txt -q")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -502,7 +512,7 @@ def dirs2CL(url, obj):
         data = json.load(configFile)
     for i in range(len(data[obj])):
         wordlist = data[obj][i]
-        command = (f"gobuster dir -u {url} -w {wordlist} -o {outpitDir}/dirs/dirs-{cleaned_url}-CL-{time_clean}.txt -q")
+        command = (f"gobuster dir -u {url} -w {wordlist} -o {outputDir}/dirs2/dirs2-{cleaned_url}-CL-{time_clean}.txt -q")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -532,7 +542,7 @@ def dirs2ExtraCL(url, extra, obj):
         data = json.load(configFile)
     for i in range(len(data[obj])):
         wordlist = data[obj][i]
-        command = (f"gobuster dir -u {url} -w {wordlist} {extra} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra-CL-{time_clean}.txt -q")
+        command = (f"gobuster dir -u {url} -w {wordlist} {extra} -o {outputDir}/dirs2/dirs2-{cleaned_url}-extra-CL-{time_clean}.txt -q")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -559,7 +569,7 @@ def dirs2CW(url, obj):
         print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
         createFolder()
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    command = (f"gobuster dir -u {url} -w {obj} -o {outpitDir}/dirs/dirs-{cleaned_url}-CW-{time_clean}.txt -q")
+    command = (f"gobuster dir -u {url} -w {obj} -o {outputDir}/dirs2/dirs2-{cleaned_url}-CW-{time_clean}.txt -q")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -581,7 +591,7 @@ def dirs2ExtraCW(url, extra, obj):
         print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
         createFolder()
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    command = (f"gobuster dir -u {url} -w {obj} {obj} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra-CW-{time_clean}.txt -q")
+    command = (f"gobuster dir -u {url} -w {obj} {obj} -o {outputDir}/dirs2/dirs2-{cleaned_url}-extra-CW-{time_clean}.txt -q")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -608,7 +618,7 @@ def fuzzCL(url, obj):
         data = json.load(configFile)
     for i in range(len(data[obj])):
         wordlist = data[obj][i]
-        command = (f"wfuzz -c -w {wordlist} -u {url} -f {outpitDir}/fuzz/fuzz-{cleaned_url}-CL-{time_clean}.txt")
+        command = (f"wfuzz -c -w {wordlist} -u {url} -f {outputDir}/fuzz/fuzz-{cleaned_url}-CL-{time_clean}.txt")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
@@ -638,7 +648,7 @@ def fuzzExtraCL(url, extra, obj):
         data = json.load(configFile)
     for i in range(len(data[obj])):
         wordlist = data[obj][i]
-        command = (f"wfuzz -c -w {wordlist} -u {url} {extra} -f {outpitDir}/fuzz/fuzz-{cleaned_url}-extra-CL-{time_clean}.txt")
+        command = (f"wfuzz -c -w {wordlist} -u {url} {extra} -f {outputDir}/fuzz/fuzz-{cleaned_url}-extra-CL-{time_clean}.txt")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
@@ -665,7 +675,7 @@ def fuzzCW(url, obj):
         print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
         createFolder()
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    command = (f"wfuzz -c -w {obj} -u {url} -f {outpitDir}/fuzz/fuzz-{cleaned_url}-CW-{time_clean}.txt")
+    command = (f"wfuzz -c -w {obj} -u {url} -f {outputDir}/fuzz/fuzz-{cleaned_url}-CW-{time_clean}.txt")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -687,7 +697,7 @@ def fuzzExtraCW(url, extra, obj):
         print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
         createFolder()
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
-    command = (f"wfuzz -c -w {obj} -u {url} {extra} -f {outpitDir}/fuzz/fuzz-{cleaned_url}-extra-CW-{time_clean}.txt")
+    command = (f"wfuzz -c -w {obj} -u {url} {extra} -f {outputDir}/fuzz/fuzz-{cleaned_url}-extra-CW-{time_clean}.txt")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -866,7 +876,7 @@ def portscanNmapSingle(domain):
     else:
         print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
         createFolder()
-    command = (f"sudo nmap {domain} -sS -A -O -sV -p- -oN {outpitDir}/portscan2/portscan2-{domain}-{time_clean}.txt")
+    command = (f"sudo nmap {domain} -sS -A -O -sV -p- -oN {outputDir}/portscan2/portscan2-{domain}-{time_clean}.txt")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -887,7 +897,7 @@ def portscanNmapExtra(domain, extra):
     else:
         print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
         createFolder()
-    command = (f"sudo nmap {domain} {extra} -oN {outpitDir}/portscan2/portscan2-{domain}-extra-{time_clean}.txt")
+    command = (f"sudo nmap {domain} {extra} -oN {outputDir}/portscan2/portscan2-{domain}-extra-{time_clean}.txt")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -902,19 +912,10 @@ def portscanNmapExtraNoSave(domain, extra):
         print(f"Error {e}")
 
 
-# create folder
-def createFolder():
-    command = (f"mkdir {outpitDir} && mkdir {outpitDir}/subs && mkdir {outpitDir}/subs2 && mkdir {outpitDir}/dirs && mkdir {outpitDir}/dirs2 && mkdir {outpitDir}/portscan && mkdir {outpitDir}/portscan2")
-    try:
-        subprocess.run(command, shell=True, check=True)
-    except subprocess.CalledProcessError as e:
-        print(f"Error {e}")
-
 
 # check if folder exist
 def checkFolderExist():
-    check = os.path.exists(outpitDir)
-    return check
+    return os.path.exists(outputDir)
 
 
 # Handle functions
