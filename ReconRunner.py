@@ -11,7 +11,6 @@ import subprocess
 configList = os.path.expanduser("~/.reconrunner/wordlists-config.json")
 outputDir = os.path.expanduser("reconrunner-saved-data")
 time = datetime.datetime.now()
-time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
 
 
 class bcolors:
@@ -87,6 +86,7 @@ def findSUBS(url):
         print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
         createFolder("subs")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
     command = (f"subfinder -d {cleaned_url} -o {outputDir}/subs/subs-{cleaned_url}-{time_clean}.txt --silent")
     try:
         subprocess.run(command, shell=True, check=True)
@@ -114,6 +114,7 @@ def findSUBSextra(url, extra):
         print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
         createFolder("subs")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
     command = (f"subfinder -d {cleaned_url} {extra} -o {outputDir}/subs/subs-{cleaned_url}-extra-{time_clean}.txt --silent")
     try:
         subprocess.run(command, shell=True, check=True)
@@ -145,6 +146,7 @@ def findSUBS2(url):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dns"])):
+        time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
         wordlist = data["dns"][i]
         command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' -f {outputDir}/subs2/subs2-{cleaned_url}-{time_clean}.csv,csv {cleaned_url}")
         try:
@@ -181,6 +183,7 @@ def findSUBSextra2(url, extra):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dns"])):
+        time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
         wordlist = data["dns"][i]
         command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outputDir}/subs2/subs2-{cleaned_url}-extra-{time_clean}.csv,csv {cleaned_url}")
         try:
@@ -218,6 +221,7 @@ def findSUBS2CL(url, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
+        time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
         wordlist = data[obj][i]
         command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' -f {outputDir}/subs2/subs2-{cleaned_url}-CL-{time_clean}.csv,csv {cleaned_url}")
         try:
@@ -254,6 +258,7 @@ def findSUBSextra2CL(url, extra, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
+        time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
         wordlist = data[obj][i]
         command = (f"wfuzz -c -w {wordlist} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outputDir}/subs2/subs2-{cleaned_url}-extra-CL-{time_clean}.csv,csv {cleaned_url}")
         try:
@@ -288,6 +293,7 @@ def findSUBS2CW(url, obj):
         print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
         createFolder("subs2")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
     command = (f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' -f {outputDir}/subs2/subs2-{cleaned_url}-CW-{time_clean}.csv,csv {cleaned_url}")
     try:
         subprocess.run(command, shell=True, check=True)
@@ -316,6 +322,7 @@ def findSUBSextra2CW(url, extra, obj):
         print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
         createFolder("subs2")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
     command = (f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outputDir}/subs2/subs2-{cleaned_url}-extra-CW-{time_clean}.csv,csv {urcleaned_urll}")
     try:
         subprocess.run(command, shell=True, check=True)
@@ -348,6 +355,7 @@ def dirs(url):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for wordlist in data["dirs"]:
+        time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
         command = (f"feroxbuster -u {url} -w {wordlist} -o {outputDir}/dirs/dirs-{cleaned_url}-{time_clean}.txt -q")
         try:
             subprocess.run(command, shell=True, check=True)
@@ -382,6 +390,7 @@ def dirsExtra(url, extra):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
+        time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
         wordlist = data["dirs"][i]
         command = (f"feroxbuster -u {url} -w {wordlist} {extra} -o {outputDir}/dirs/dirs-{cleaned_url}-extra-{time_clean}.txt -q")
         try:
@@ -418,6 +427,7 @@ def dirsCL(url, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
+        time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
         wordlist = data[obj][i]
         command = (f"feroxbuster -u {url} -w {wordlist} -o {outputDir}/dirs/dirs-{cleaned_url}-CL-{time_clean}.txt -q")
         try:
@@ -453,6 +463,7 @@ def dirsExtraCL(url, extra, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
+        time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
         wordlist = data[obj][i]
         command = (f"feroxbuster -u {url} -w {wordlist} {extra} -o {outputDir}/dirs/dirs-{cleaned_url}-extra-CL-{time_clean}.txt -q")
         try:
@@ -486,6 +497,7 @@ def dirsCW(url, obj):
         print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
         createFolder("dirs")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
     command = (f"feroxbuster -u {url} -w {obj} -o {outputDir}/dirs/dirs-{cleaned_url}-CW-{time_clean}.txt -q")
     try:
         subprocess.run(command, shell=True, check=True)
@@ -513,6 +525,7 @@ def dirsExtraCW(url, extra, obj):
         print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
         createFolder("dirs")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
     command = (f"feroxbuster -u {url} -w {obj} {extra} -o {outputDir}/dirs/dirs-{cleaned_url}-extra-CW-{time_clean}.txt -q")
     try:
         subprocess.run(command, shell=True, check=True)
@@ -544,6 +557,7 @@ def dirs2(url):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
+        time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
         wordlist = data["dirs"][i]
         command = (f"gobuster dir -u {url} -w {wordlist} -o {outputDir}/dirs2/dirs2-{cleaned_url}-{time_clean}.txt -q")
     try:
@@ -579,6 +593,7 @@ def dirs2Extra(url, extra):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
+        time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
         wordlist = data["dirs"][i]
         command = (f"gobuster dir -u {url} -w {wordlist} {extra} -o {outputDir}/dirs2/dirs2-{cleaned_url}-extra-{time_clean}.txt -q")
     try:
@@ -615,6 +630,7 @@ def dirs2CL(url, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
+        time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
         wordlist = data[obj][i]
         command = (f"gobuster dir -u {url} -w {wordlist} -o {outputDir}/dirs2/dirs2-{cleaned_url}-CL-{time_clean}.txt -q")
     try:
@@ -650,6 +666,7 @@ def dirs2ExtraCL(url, extra, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
+        time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
         wordlist = data[obj][i]
         command = (f"gobuster dir -u {url} -w {wordlist} {extra} -o {outputDir}/dirs2/dirs2-{cleaned_url}-extra-CL-{time_clean}.txt -q")
     try:
@@ -683,6 +700,7 @@ def dirs2CW(url, obj):
         print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
         createFolder("dirs2")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
     command = (f"gobuster dir -u {url} -w {obj} -o {outputDir}/dirs2/dirs2-{cleaned_url}-CW-{time_clean}.txt -q")
     try:
         subprocess.run(command, shell=True, check=True)
@@ -710,6 +728,7 @@ def dirs2ExtraCW(url, extra, obj):
         print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
         createFolder("dirs2")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
     command = (f"gobuster dir -u {url} -w {obj} {obj} -o {outputDir}/dirs2/dirs2-{cleaned_url}-extra-CW-{time_clean}.txt -q")
     try:
         subprocess.run(command, shell=True, check=True)
@@ -741,6 +760,7 @@ def fuzzCL(url, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
+        time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
         wordlist = data[obj][i]
         command = (f"wfuzz -c -w {wordlist} -u {url} -f {outputDir}/fuzz/fuzz-{cleaned_url}-CL-{time_clean}.txt")
         try:
@@ -776,6 +796,7 @@ def fuzzExtraCL(url, extra, obj):
     with open(configList, "r") as configFile:
         data = json.load(configFile)
     for i in range(len(data[obj])):
+        time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
         wordlist = data[obj][i]
         command = (f"wfuzz -c -w {wordlist} -u {url} {extra} -f {outputDir}/fuzz/fuzz-{cleaned_url}-extra-CL-{time_clean}.txt")
         try:
@@ -809,6 +830,7 @@ def fuzzCW(url, obj):
         print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
         createFolder("fuzz")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
     command = (f"wfuzz -c -w {obj} -u {url} -f {outputDir}/fuzz/fuzz-{cleaned_url}-CW-{time_clean}.txt")
     try:
         subprocess.run(command, shell=True, check=True)
@@ -836,6 +858,7 @@ def fuzzExtraCW(url, extra, obj):
         print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
         createFolder("fuzz")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
+    time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
     command = (f"wfuzz -c -w {obj} -u {url} {extra} -f {outputDir}/fuzz/fuzz-{cleaned_url}-extra-CW-{time_clean}.txt")
     try:
         subprocess.run(command, shell=True, check=True)
@@ -1020,6 +1043,7 @@ def portscanNmapSingle(domain):
     else:
         print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
         createFolder("portscan")
+    time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
     command = (f"sudo nmap {domain} -sS -A -O -sV -p- -oN {outputDir}/portscan2/portscan2-{domain}-{time_clean}.txt")
     try:
         subprocess.run(command, shell=True, check=True)
@@ -1046,6 +1070,7 @@ def portscanNmapExtra(domain, extra):
     else:
         print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
         createFolder("portscan")
+    time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
     command = (f"sudo nmap {domain} {extra} -oN {outputDir}/portscan2/portscan2-{domain}-extra-{time_clean}.txt")
     try:
         subprocess.run(command, shell=True, check=True)
