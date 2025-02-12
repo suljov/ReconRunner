@@ -43,9 +43,18 @@ print("")
 print("")
 
 
-# create folder
-def createFolder():
-    command = (f"mkdir {outputDir} && mkdir {outputDir}/subs && mkdir {outputDir}/subs2 && mkdir {outputDir}/dirs && mkdir {outputDir}/dirs2 && mkdir {outputDir}/portscan && mkdir {outputDir}/portscan2 && mkdir {outputDir}/fuzz")
+# create root folder
+def createRootFolder():
+    command = (f"mkdir {outputDir}")
+    try:
+        subprocess.run(command, shell=True, check=True)
+    except subprocess.CalledProcessError as e:
+        print(f"Error {e}")
+
+
+# create folders
+def createFolder(str):
+    command = (f"mkdir {outputDir}/{str}")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
@@ -53,15 +62,30 @@ def createFolder():
 
 
 
+# check if folder exist
+def checkRootFolderExist():
+    return os.path.exists(outputDir)
+
+# check if folder exist
+def checkFolderExist(tool):
+    return os.path.exists(f"{outputDir}/{tool}")
+
+
+
 # the handle Functions
 
 # subs
 def findSUBS(url):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("subs") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("subs")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"subfinder -d {cleaned_url} -o {outputDir}/subs/subs-{cleaned_url}-{time_clean}.txt --silent")
     try:
@@ -79,11 +103,16 @@ def findSUBSnoSAVE(url):
 
 
 def findSUBSextra(url, extra):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("subs") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("subs")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"subfinder -d {cleaned_url} {extra} -o {outputDir}/subs/subs-{cleaned_url}-extra-{time_clean}.txt --silent")
     try:
@@ -102,11 +131,16 @@ def findSUBSextraNosave(url, extra):
 
 # subs2 normal
 def findSUBS2(url):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("subs2") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("subs2")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -133,11 +167,16 @@ def findSUBS2NoSAVE(url):
 
 
 def findSUBSextra2(url, extra):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("subs2") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("subs2")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -165,11 +204,16 @@ def findSUBSextra2NoSAVE(url, extra):
 
 # subs2 with cl
 def findSUBS2CL(url, obj):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("subs2") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("subs2")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -196,11 +240,16 @@ def findSUBS2NoSAVECL(url, obj):
 
 
 def findSUBSextra2CL(url, extra, obj):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("subs2") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("subs2")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -228,11 +277,16 @@ def findSUBSextra2NoSAVECL(url, extra, obj):
 
 # subs2 with cw
 def findSUBS2CW(url, obj):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("subs2") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("subs2")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' -f {outputDir}/subs2/subs2-{cleaned_url}-CW-{time_clean}.csv,csv {cleaned_url}")
     try:
@@ -251,11 +305,16 @@ def findSUBS2NoSAVECW(url, obj):
 
 
 def findSUBSextra2CW(url, extra, obj):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("subs2") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("subs2")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outputDir}/subs2/subs2-{cleaned_url}-extra-CW-{time_clean}.csv,csv {urcleaned_urll}")
     try:
@@ -275,11 +334,16 @@ def findSUBSextra2NoSAVECW(url, extra, obj):
 
 # dirs normal
 def dirs(url):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("dirs") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("dirs")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -304,11 +368,16 @@ def dirsNoSave(url):
 
 
 def dirsExtra(url, extra):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("dirs") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("dirs")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -335,11 +404,16 @@ def dirsExtraNoSave(url, extra):
 
 # dirs with cl
 def dirsCL(url, obj):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("dirs") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("dirs")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -365,11 +439,16 @@ def dirsCLnoSave(url, obj):
 
 
 def dirsExtraCL(url, extra, obj):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("dirs") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("dirs")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -396,11 +475,16 @@ def dirsExtraCLnoSave(url, extra, obj):
 
 # dirs with cw
 def dirsCW(url, obj):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("dirs") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("dirs")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"feroxbuster -u {url} -w {obj} -o {outputDir}/dirs/dirs-{cleaned_url}-CW-{time_clean}.txt -q")
     try:
@@ -418,11 +502,16 @@ def dirsCWnoSave(url, obj):
 
 
 def dirsExtraCW(url, extra, obj):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("dirs") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("dirs")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"feroxbuster -u {url} -w {obj} {extra} -o {outputDir}/dirs/dirs-{cleaned_url}-extra-CW-{time_clean}.txt -q")
     try:
@@ -441,11 +530,16 @@ def dirsExtraCWnoSave(url, extra, obj):
 
 # dirs2 normal
 def dirs2(url):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("dirs2") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("dirs2")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -471,11 +565,16 @@ def dirs2NoSave(url):
 
 
 def dirs2Extra(url, extra):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("dirs2") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("dirs2")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -502,11 +601,16 @@ def dirs2ExtraNoSave(url, extra):
 
 # dirs2 with cl
 def dirs2CL(url, obj):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("dirs2") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("dirs2")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -532,11 +636,16 @@ def dirs2CLnoSave(url, obj):
 
 
 def dirs2ExtraCL(url, extra, obj):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("dirs2") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("dirs2")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -563,11 +672,16 @@ def dirs2ExtraCLnoSave(url, extra, obj):
 
 # dirs2 with cw
 def dirs2CW(url, obj):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("dirs2") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("dirs2")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"gobuster dir -u {url} -w {obj} -o {outputDir}/dirs2/dirs2-{cleaned_url}-CW-{time_clean}.txt -q")
     try:
@@ -585,11 +699,16 @@ def dirs2CWnoSave(url, obj):
 
 
 def dirs2ExtraCW(url, extra, obj):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("dirs2") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("dirs2")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"gobuster dir -u {url} -w {obj} {obj} -o {outputDir}/dirs2/dirs2-{cleaned_url}-extra-CW-{time_clean}.txt -q")
     try:
@@ -608,11 +727,16 @@ def dirs2ExtraCWnoSave(url, extra, obj):
 
 # fuzz with cl
 def fuzzCL(url, obj):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("fuzz") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("fuzz")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -638,11 +762,16 @@ def fuzzCLnoSave(url, obj):
 
 
 def fuzzExtraCL(url, extra, obj):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("fuzz") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("fuzz")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -669,11 +798,16 @@ def fuzzExtraCLnoSave(url, extra, obj):
 
 # fuzz with cw
 def fuzzCW(url, obj):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("fuzz") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("fuzz")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"wfuzz -c -w {obj} -u {url} -f {outputDir}/fuzz/fuzz-{cleaned_url}-CW-{time_clean}.txt")
     try:
@@ -691,11 +825,16 @@ def fuzzCWnoSave(url, obj):
 
 
 def fuzzExtraCW(url, extra, obj):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("fuzz") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("fuzz")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"wfuzz -c -w {obj} -u {url} {extra} -f {outputDir}/fuzz/fuzz-{cleaned_url}-extra-CW-{time_clean}.txt")
     try:
@@ -871,11 +1010,16 @@ def portScanRustscanSingle(domain):
 
 
 def portscanNmapSingle(domain):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("portscan") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("portscan")
     command = (f"sudo nmap {domain} -sS -A -O -sV -p- -oN {outputDir}/portscan2/portscan2-{domain}-{time_clean}.txt")
     try:
         subprocess.run(command, shell=True, check=True)
@@ -892,11 +1036,16 @@ def portscanNmapSingleNoSAVE(domain):
 
 
 def portscanNmapExtra(domain, extra):
-    if checkFolderExist() is True:
-        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!", bcolors.ENDC)
+    if checkRootFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary folder for saved data exist, no action needed!", bcolors.ENDC)
     else:
-        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders", bcolors.ENDC)
-        createFolder()
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary folder for saved data dont exist, creating the necessary folder now!!!", bcolors.ENDC)
+        createRootFolder()
+    if checkFolderExist("portscan") is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
+        createFolder("portscan")
     command = (f"sudo nmap {domain} {extra} -oN {outputDir}/portscan2/portscan2-{domain}-extra-{time_clean}.txt")
     try:
         subprocess.run(command, shell=True, check=True)
@@ -913,9 +1062,7 @@ def portscanNmapExtraNoSave(domain, extra):
 
 
 
-# check if folder exist
-def checkFolderExist():
-    return os.path.exists(outputDir)
+
 
 
 # Handle functions
