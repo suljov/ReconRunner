@@ -21,6 +21,7 @@ class bcolors:
     OKGREEN = '\033[92m'
     WARNING = '\033[93m'
     FAIL = '\033[91m'
+    RED = '\033[31m'
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
@@ -46,6 +47,11 @@ print("")
 
 # subs
 def findSUBS(url):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
+    createFolder()
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"subfinder -d {cleaned_url} -o {outpitDir}/subs/subs-{cleaned_url}-{time_clean}.txt --silent")
     try:
@@ -63,6 +69,10 @@ def findSUBSnoSAVE(url):
 
 
 def findSUBSextra(url, extra):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"subfinder -d {cleaned_url} {extra} -o {outpitDir}/subs/subs-{cleaned_url}-extra-{time_clean}.txt --silent")
     try:
@@ -81,6 +91,10 @@ def findSUBSextraNosave(url, extra):
 
 # subs2 normal
 def findSUBS2(url):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -107,6 +121,10 @@ def findSUBS2NoSAVE(url):
 
 
 def findSUBSextra2(url, extra):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -134,6 +152,10 @@ def findSUBSextra2NoSAVE(url, extra):
 
 # subs2 with cl
 def findSUBS2CL(url, obj):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -160,6 +182,10 @@ def findSUBS2NoSAVECL(url, obj):
 
 
 def findSUBSextra2CL(url, extra, obj):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -187,6 +213,10 @@ def findSUBSextra2NoSAVECL(url, extra, obj):
 
 # subs2 with cw
 def findSUBS2CW(url, obj):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' -f {outpitDir}/subs2/subs2-{cleaned_url}-CW-{time_clean}.csv,csv {cleaned_url}")
     try:
@@ -205,6 +235,10 @@ def findSUBS2NoSAVECW(url, obj):
 
 
 def findSUBSextra2CW(url, extra, obj):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"wfuzz -c -w {obj} -H 'HOST: FUZZ.{cleaned_url}' {extra} -f {outpitDir}/subs2/subs2-{cleaned_url}-extra-CW-{time_clean}.csv,csv {urcleaned_urll}")
     try:
@@ -224,6 +258,10 @@ def findSUBSextra2NoSAVECW(url, extra, obj):
 
 # dirs normal
 def dirs(url):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -248,6 +286,10 @@ def dirsNoSave(url):
 
 
 def dirsExtra(url, extra):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -274,6 +316,10 @@ def dirsExtraNoSave(url, extra):
 
 # dirs with cl
 def dirsCL(url, obj):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -299,6 +345,10 @@ def dirsCLnoSave(url, obj):
 
 
 def dirsExtraCL(url, extra, obj):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -325,6 +375,10 @@ def dirsExtraCLnoSave(url, extra, obj):
 
 # dirs with cw
 def dirsCW(url, obj):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"feroxbuster -u {url} -w {obj} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-CW-{time_clean}.txt -q")
     try:
@@ -342,6 +396,10 @@ def dirsCWnoSave(url, obj):
 
 
 def dirsExtraCW(url, extra, obj):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"feroxbuster -u {url} -w {obj} {extra} -o {outpitDir}/dirs2/dirs2-{cleaned_url}-extra-CW-{time_clean}.txt -q")
     try:
@@ -360,6 +418,10 @@ def dirsExtraCWnoSave(url, extra, obj):
 
 # dirs2 normal
 def dirs2(url):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -385,6 +447,10 @@ def dirs2NoSave(url):
 
 
 def dirs2Extra(url, extra):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -411,6 +477,10 @@ def dirs2ExtraNoSave(url, extra):
 
 # dirs2 with cl
 def dirs2CL(url, obj):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -436,6 +506,10 @@ def dirs2CLnoSave(url, obj):
 
 
 def dirs2ExtraCL(url, extra, obj):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -462,6 +536,10 @@ def dirs2ExtraCLnoSave(url, extra, obj):
 
 # dirs2 with cw
 def dirs2CW(url, obj):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"gobuster dir -u {url} -w {obj} -o {outpitDir}/dirs/dirs-{cleaned_url}-CW-{time_clean}.txt -q")
     try:
@@ -479,6 +557,10 @@ def dirs2CWnoSave(url, obj):
 
 
 def dirs2ExtraCW(url, extra, obj):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"gobuster dir -u {url} -w {obj} {obj} -o {outpitDir}/dirs/dirs-{cleaned_url}-extra-CW-{time_clean}.txt -q")
     try:
@@ -497,6 +579,10 @@ def dirs2ExtraCWnoSave(url, extra, obj):
 
 # fuzz with cl
 def fuzzCL(url, obj):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -522,6 +608,10 @@ def fuzzCLnoSave(url, obj):
 
 
 def fuzzExtraCL(url, extra, obj):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     with open(configList, "r") as configFile:
         data = json.load(configFile)
@@ -548,6 +638,10 @@ def fuzzExtraCLnoSave(url, extra, obj):
 
 # fuzz with cw
 def fuzzCW(url, obj):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"wfuzz -c -w {obj} -u {url} -f {outpitDir}/fuzz/fuzz-{cleaned_url}-CW-{time_clean}.txt")
     try:
@@ -565,6 +659,10 @@ def fuzzCWnoSave(url, obj):
 
 
 def fuzzExtraCW(url, extra, obj):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     command = (f"wfuzz -c -w {obj} -u {url} {extra} -f {outpitDir}/fuzz/fuzz-{cleaned_url}-extra-CW-{time_clean}.txt")
     try:
@@ -740,6 +838,10 @@ def portScanRustscanSingle(domain):
 
 
 def portscanNmapSingle(domain):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     command = (f"sudo nmap {domain} -sS -A -O -sV -p- -oN {outpitDir}/portscan2/portscan2-{domain}-{time_clean}.txt")
     try:
         subprocess.run(command, shell=True, check=True)
@@ -756,6 +858,10 @@ def portscanNmapSingleNoSAVE(domain):
 
 
 def portscanNmapExtra(domain, extra):
+    if checkFolderExist() is True:
+        print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "Folder for saved data exist, no folders will be created!")
+    else:
+        print(bcolors.RED, "[-]", bcolors.WARNING, "No folder for saved data exist, creating folders")
     command = (f"sudo nmap {domain} {extra} -oN {outpitDir}/portscan2/portscan2-{domain}-extra-{time_clean}.txt")
     try:
         subprocess.run(command, shell=True, check=True)
@@ -1288,10 +1394,7 @@ args = parser.parse_args()
 
 # Checking what flags are used etc
 
-if checkFolderExist() is True:
-    None
-else:
-    createFolder()
+
 
 
 if args.command == "subs":
@@ -1316,5 +1419,6 @@ elif args.command == "portscan2":
     handlePORT2()
 
 
-# TODO what is left to be done:
+# TODO what is left to be done: FUZZ and folder create statement
+
 # TODO! after the tools is done. refactor stuff
