@@ -1646,6 +1646,6 @@ elif args.command == "portscan2":
     handlePORT2()
 
 
-# TODO what is left to be done: date/time on each saved file to make sure no data/results are lost or overwriten
+# TODO what is left to be done: 
 
 # TODO! after the tools is done. refactor stuff
