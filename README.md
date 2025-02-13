@@ -28,7 +28,6 @@ ReconRunner is a webapp tool designed to streamline and simplify directory and f
 
 ## **TODO/idéas**
 
-- Fix the date/time on each saved file to make sure no data/results are lost or overwriten
 
 ## **Requirement**
 
