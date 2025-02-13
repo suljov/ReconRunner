@@ -78,9 +78,13 @@ def createOrSkipToolFolder(tool):
         createRootFolder()
     if os.path.exists(f"{outputDir}/{tool}") is True:
         print(bcolors.OKGREEN, "[+]", bcolors.OKBLUE, "The necessary subfolder for saved data exist, no action needed!", bcolors.ENDC)
+        print("")
+        print("")
     else:
         print(bcolors.RED, "[-]", bcolors.WARNING, "The necessary subfolder for saved data dont exist, creating the necessary folders now!!!", bcolors.ENDC)
         createFolder(tool)
+        print("")
+        print("")
 
 # the handle Functions
 
@@ -137,6 +141,11 @@ def findSUBS2(url):
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+        print("")
+        print("")
+        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print("")
+        print("")
 
 
 def findSUBS2NoSAVE(url):
@@ -150,6 +159,11 @@ def findSUBS2NoSAVE(url):
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+        print("")
+        print("")
+        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print("")
+        print("")
 
 
 def findSUBSextra2(url, extra):
@@ -165,6 +179,11 @@ def findSUBSextra2(url, extra):
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+        print("")
+        print("")
+        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print("")
+        print("")
 
 
 def findSUBSextra2NoSAVE(url, extra):
@@ -178,6 +197,11 @@ def findSUBSextra2NoSAVE(url, extra):
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+        print("")
+        print("")
+        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print("")
+        print("")
 
 
 # subs2 with cl
@@ -194,6 +218,11 @@ def findSUBS2CL(url, obj):
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+        print("")
+        print("")
+        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print("")
+        print("")
 
 
 def findSUBS2NoSAVECL(url, obj):
@@ -207,6 +236,11 @@ def findSUBS2NoSAVECL(url, obj):
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+        print("")
+        print("")
+        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print("")
+        print("")
 
 
 def findSUBSextra2CL(url, extra, obj):
@@ -222,6 +256,11 @@ def findSUBSextra2CL(url, extra, obj):
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+        print("")
+        print("")
+        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print("")
+        print("")
 
 
 def findSUBSextra2NoSAVECL(url, extra, obj):
@@ -235,6 +274,11 @@ def findSUBSextra2NoSAVECL(url, extra, obj):
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+        print("")
+        print("")
+        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print("")
+        print("")
 
 
 # subs2 with cw
@@ -247,6 +291,11 @@ def findSUBS2CW(url, obj):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def findSUBS2NoSAVECW(url, obj):
@@ -256,6 +305,11 @@ def findSUBS2NoSAVECW(url, obj):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def findSUBSextra2CW(url, extra, obj):
@@ -267,6 +321,11 @@ def findSUBSextra2CW(url, extra, obj):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def findSUBSextra2NoSAVECW(url, extra, obj):
@@ -276,6 +335,11 @@ def findSUBSextra2NoSAVECW(url, extra, obj):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 # dirs normal
@@ -287,11 +351,16 @@ def dirs(url):
     for i in range(len(data["dirs"])):
         wordlist = data["dirs"][i]
         time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
-        command = (f"feroxbuster -u {url} -w {wordlist} -o {outputDir}/dirs/dirs-{cleaned_url}-{time_clean}-{i}.txt -q")
+        command = (f"feroxbuster -u {url} -w {wordlist} -o {outputDir}/dirs/dirs-{cleaned_url}-{time_clean}-{i}.txt")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+        print("")
+        print("")
+        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print("")
+        print("")
 
 
 def dirsNoSave(url):
@@ -299,11 +368,16 @@ def dirsNoSave(url):
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
         wordlist = data["dirs"][i]
-        command = (f"feroxbuster -u {url} -w {wordlist} -q")
+        command = (f"feroxbuster -u {url} -w {wordlist}")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+        print("")
+        print("")
+        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print("")
+        print("")
 
 
 def dirsExtra(url, extra):
@@ -314,11 +388,16 @@ def dirsExtra(url, extra):
     for i in range(len(data["dirs"])):
         time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
         wordlist = data["dirs"][i]
-        command = (f"feroxbuster -u {url} -w {wordlist} {extra} -o {outputDir}/dirs/dirs-{cleaned_url}-extra-{time_clean}-{i}.txt -q")
+        command = (f"feroxbuster -u {url} -w {wordlist} {extra} -o {outputDir}/dirs/dirs-{cleaned_url}-extra-{time_clean}-{i}.txt")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+        print("")
+        print("")
+        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print("")
+        print("")
 
 
 def dirsExtraNoSave(url, extra):
@@ -326,11 +405,16 @@ def dirsExtraNoSave(url, extra):
         data = json.load(configFile)
     for i in range(len(data["dirs"])):
         wordlist = data["dirs"][i]
-        command = (f"feroxbuster -u {url} -w {wordlist} {extra} -q")
+        command = (f"feroxbuster -u {url} -w {wordlist} {extra}")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+        print("")
+        print("")
+        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print("")
+        print("")
 
 
 # dirs with cl
@@ -342,11 +426,16 @@ def dirsCL(url, obj):
     for i in range(len(data[obj])):
         time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
         wordlist = data[obj][i]
-        command = (f"feroxbuster -u {url} -w {wordlist} -o {outputDir}/dirs/dirs-{cleaned_url}-CL-{time_clean}-{i}.txt -q")
+        command = (f"feroxbuster -u {url} -w {wordlist} -o {outputDir}/dirs/dirs-{cleaned_url}-CL-{time_clean}-{i}.txt")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+        print("")
+        print("")
+        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print("")
+        print("")
 
 
 def dirsCLnoSave(url, obj):
@@ -354,11 +443,16 @@ def dirsCLnoSave(url, obj):
         data = json.load(configFile)
     for i in range(len(data[obj])):
         wordlist = data[obj][i]
-        command = (f"feroxbuster -u {url} -w {wordlist} -q")
+        command = (f"feroxbuster -u {url} -w {wordlist}")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+        print("")
+        print("")
+        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print("")
+        print("")
 
 
 def dirsExtraCL(url, extra, obj):
@@ -369,11 +463,16 @@ def dirsExtraCL(url, extra, obj):
     for i in range(len(data[obj])):
         time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
         wordlist = data[obj][i]
-        command = (f"feroxbuster -u {url} -w {wordlist} {extra} -o {outputDir}/dirs/dirs-{cleaned_url}-extra-CL-{time_clean}-{i}.txt -q")
+        command = (f"feroxbuster -u {url} -w {wordlist} {extra} -o {outputDir}/dirs/dirs-{cleaned_url}-extra-CL-{time_clean}-{i}.txt")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+        print("")
+        print("")
+        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print("")
+        print("")
 
 
 def dirsExtraCLnoSave(url, extra, obj):
@@ -381,11 +480,16 @@ def dirsExtraCLnoSave(url, extra, obj):
         data = json.load(configFile)
     for i in range(len(data[obj])):
         wordlist = data[obj][i]
-        command = (f"feroxbuster -u {url} -w {wordlist} {extra} -q")
+        command = (f"feroxbuster -u {url} -w {wordlist} {extra}")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+        print("")
+        print("")
+        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print("")
+        print("")
 
 
 # dirs with cw
@@ -393,38 +497,58 @@ def dirsCW(url, obj):
     createOrSkipToolFolder("dirs")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
-    command = (f"feroxbuster -u {url} -w {obj} -o {outputDir}/dirs/dirs-{cleaned_url}-CW-{time_clean}-{i}.txt -q")
+    command = (f"feroxbuster -u {url} -w {obj} -o {outputDir}/dirs/dirs-{cleaned_url}-CW-{time_clean}-{i}.txt")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def dirsCWnoSave(url, obj):
-    command = (f"feroxbuster -u {url} -w {obj} -q")
+    command = (f"feroxbuster -u {url} -w {obj}")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def dirsExtraCW(url, extra, obj):
     createOrSkipToolFolder("dirs")
     cleaned_url = re.sub(r'^https?://([^/]+).*$', r'\1', url)
     time_clean = time.strftime("%Y-%m-%d-%H_%M_%S")
-    command = (f"feroxbuster -u {url} -w {obj} {extra} -o {outputDir}/dirs/dirs-{cleaned_url}-extra-CW-{time_clean}.txt -q")
+    command = (f"feroxbuster -u {url} -w {obj} {extra} -o {outputDir}/dirs/dirs-{cleaned_url}-extra-CW-{time_clean}.txt")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def dirsExtraCWnoSave(url, extra, obj):
-    command = (f"feroxbuster -u {url} -w {obj} {extra} -q")
+    command = (f"feroxbuster -u {url} -w {obj} {extra}")
     try:
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 # dirs2 normal
@@ -441,6 +565,11 @@ def dirs2(url):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def dirs2NoSave(url):
@@ -453,6 +582,11 @@ def dirs2NoSave(url):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def dirs2Extra(url, extra):
@@ -468,6 +602,11 @@ def dirs2Extra(url, extra):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def dirs2ExtraNoSave(url, extra):
@@ -480,6 +619,11 @@ def dirs2ExtraNoSave(url, extra):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 # dirs2 with cl
@@ -496,6 +640,11 @@ def dirs2CL(url, obj):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def dirs2CLnoSave(url, obj):
@@ -508,6 +657,11 @@ def dirs2CLnoSave(url, obj):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def dirs2ExtraCL(url, extra, obj):
@@ -523,6 +677,11 @@ def dirs2ExtraCL(url, extra, obj):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def dirs2ExtraCLnoSave(url, extra, obj):
@@ -535,6 +694,11 @@ def dirs2ExtraCLnoSave(url, extra, obj):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 # dirs2 with cw
@@ -547,6 +711,11 @@ def dirs2CW(url, obj):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def dirs2CWnoSave(url, obj):
@@ -555,6 +724,11 @@ def dirs2CWnoSave(url, obj):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def dirs2ExtraCW(url, extra, obj):
@@ -566,6 +740,11 @@ def dirs2ExtraCW(url, extra, obj):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def dirs2ExtraCWnoSave(url, extra, obj):
@@ -574,6 +753,11 @@ def dirs2ExtraCWnoSave(url, extra, obj):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 # fuzz with cl
@@ -590,6 +774,11 @@ def fuzzCL(url, obj):
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def fuzzCLnoSave(url, obj):
@@ -602,6 +791,11 @@ def fuzzCLnoSave(url, obj):
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def fuzzExtraCL(url, extra, obj):
@@ -617,6 +811,11 @@ def fuzzExtraCL(url, extra, obj):
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def fuzzExtraCLnoSave(url, extra, obj):
@@ -629,6 +828,11 @@ def fuzzExtraCLnoSave(url, extra, obj):
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
             print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 # fuzz with cw
@@ -641,6 +845,11 @@ def fuzzCW(url, obj):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def fuzzCWnoSave(url, obj):
@@ -649,6 +858,12 @@ def fuzzCWnoSave(url, obj):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
+
 
 
 def fuzzExtraCW(url, extra, obj):
@@ -660,6 +875,11 @@ def fuzzExtraCW(url, extra, obj):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 def fuzzExtraCWnoSave(url, extra, obj):
@@ -668,6 +888,11 @@ def fuzzExtraCWnoSave(url, extra, obj):
         subprocess.run(command, shell=True, check=True)
     except subprocess.CalledProcessError as e:
         print(f"Error {e}")
+    print("")
+    print("")
+    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print("")
 
 
 # sql
@@ -1393,6 +1618,6 @@ elif args.command == "portscan2":
     handlePORT2()
 
 
-# TODO what is left to be done: date/time on each saved file to make sure no data/results are lost or overwriten
+# TODO what is left to be done: 
 
 # TODO! after the tools is done. refactor stuff
