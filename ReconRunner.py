@@ -143,7 +143,7 @@ def findSUBS2(url):
             print(f"Error {e}")
         print("")
         print("")
-        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
         print("")
         print("")
 
@@ -161,7 +161,7 @@ def findSUBS2NoSAVE(url):
             print(f"Error {e}")
         print("")
         print("")
-        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
         print("")
         print("")
 
@@ -181,7 +181,7 @@ def findSUBSextra2(url, extra):
             print(f"Error {e}")
         print("")
         print("")
-        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
         print("")
         print("")
 
@@ -199,7 +199,7 @@ def findSUBSextra2NoSAVE(url, extra):
             print(f"Error {e}")
         print("")
         print("")
-        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
         print("")
         print("")
 
@@ -220,7 +220,7 @@ def findSUBS2CL(url, obj):
             print(f"Error {e}")
         print("")
         print("")
-        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
         print("")
         print("")
 
@@ -238,7 +238,7 @@ def findSUBS2NoSAVECL(url, obj):
             print(f"Error {e}")
         print("")
         print("")
-        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
         print("")
         print("")
 
@@ -258,7 +258,7 @@ def findSUBSextra2CL(url, extra, obj):
             print(f"Error {e}")
         print("")
         print("")
-        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
         print("")
         print("")
 
@@ -276,7 +276,7 @@ def findSUBSextra2NoSAVECL(url, extra, obj):
             print(f"Error {e}")
         print("")
         print("")
-        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
         print("")
         print("")
 
@@ -293,7 +293,8 @@ def findSUBS2CW(url, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! The tool will exit.")
     print("")
     print("")
 
@@ -307,7 +308,8 @@ def findSUBS2NoSAVECW(url, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! The tool will exit.")
     print("")
     print("")
 
@@ -323,7 +325,8 @@ def findSUBSextra2CW(url, extra, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! The tool will exit.")
     print("")
     print("")
 
@@ -337,7 +340,8 @@ def findSUBSextra2NoSAVECW(url, extra, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! The tool will exit.")
     print("")
     print("")
 
@@ -358,7 +362,7 @@ def dirs(url):
             print(f"Error {e}")
         print("")
         print("")
-        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
         print("")
         print("")
 
@@ -375,7 +379,7 @@ def dirsNoSave(url):
             print(f"Error {e}")
         print("")
         print("")
-        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
         print("")
         print("")
 
@@ -395,7 +399,7 @@ def dirsExtra(url, extra):
             print(f"Error {e}")
         print("")
         print("")
-        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
         print("")
         print("")
 
@@ -412,7 +416,7 @@ def dirsExtraNoSave(url, extra):
             print(f"Error {e}")
         print("")
         print("")
-        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
         print("")
         print("")
 
@@ -433,7 +437,7 @@ def dirsCL(url, obj):
             print(f"Error {e}")
         print("")
         print("")
-        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
         print("")
         print("")
 
@@ -450,7 +454,7 @@ def dirsCLnoSave(url, obj):
             print(f"Error {e}")
         print("")
         print("")
-        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
         print("")
         print("")
 
@@ -470,7 +474,7 @@ def dirsExtraCL(url, extra, obj):
             print(f"Error {e}")
         print("")
         print("")
-        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
         print("")
         print("")
 
@@ -487,7 +491,7 @@ def dirsExtraCLnoSave(url, extra, obj):
             print(f"Error {e}")
         print("")
         print("")
-        print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+        print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
         print("")
         print("")
 
@@ -504,7 +508,8 @@ def dirsCW(url, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! The tool will exit.")
     print("")
     print("")
 
@@ -517,7 +522,8 @@ def dirsCWnoSave(url, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! The tool will exit.")
     print("")
     print("")
 
@@ -533,7 +539,8 @@ def dirsExtraCW(url, extra, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! The tool will exit.")
     print("")
     print("")
 
@@ -546,7 +553,8 @@ def dirsExtraCWnoSave(url, extra, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! The tool will exit.")
     print("")
     print("")
 
@@ -567,7 +575,8 @@ def dirs2(url):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
     print("")
     print("")
 
@@ -584,7 +593,8 @@ def dirs2NoSave(url):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
     print("")
     print("")
 
@@ -604,7 +614,8 @@ def dirs2Extra(url, extra):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
     print("")
     print("")
 
@@ -621,7 +632,8 @@ def dirs2ExtraNoSave(url, extra):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
     print("")
     print("")
 
@@ -642,7 +654,8 @@ def dirs2CL(url, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
     print("")
     print("")
 
@@ -659,7 +672,8 @@ def dirs2CLnoSave(url, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
     print("")
     print("")
 
@@ -679,7 +693,8 @@ def dirs2ExtraCL(url, extra, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
     print("")
     print("")
 
@@ -696,7 +711,8 @@ def dirs2ExtraCLnoSave(url, extra, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
     print("")
     print("")
 
@@ -713,7 +729,8 @@ def dirs2CW(url, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! The tool will exit.")
     print("")
     print("")
 
@@ -726,7 +743,8 @@ def dirs2CWnoSave(url, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! The tool will exit.")
     print("")
     print("")
 
@@ -742,7 +760,8 @@ def dirs2ExtraCW(url, extra, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! The tool will exit.")
     print("")
     print("")
 
@@ -755,7 +774,8 @@ def dirs2ExtraCWnoSave(url, extra, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! The tool will exit.")
     print("")
     print("")
 
@@ -776,7 +796,8 @@ def fuzzCL(url, obj):
             print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
     print("")
     print("")
 
@@ -793,7 +814,8 @@ def fuzzCLnoSave(url, obj):
             print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
     print("")
     print("")
 
@@ -813,7 +835,8 @@ def fuzzExtraCL(url, extra, obj):
             print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
     print("")
     print("")
 
@@ -830,7 +853,8 @@ def fuzzExtraCLnoSave(url, extra, obj):
             print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! Checking if another wordlist is in que or the tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! Checking if another wordlist is in que or the tool will exit.")
     print("")
     print("")
 
@@ -847,7 +871,8 @@ def fuzzCW(url, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! The tool will exit.")
     print("")
     print("")
 
@@ -860,7 +885,8 @@ def fuzzCWnoSave(url, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! The tool will exit.")
     print("")
     print("")
 
@@ -877,7 +903,8 @@ def fuzzExtraCW(url, extra, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! The tool will exit.")
     print("")
     print("")
 
@@ -890,7 +917,8 @@ def fuzzExtraCWnoSave(url, extra, obj):
         print(f"Error {e}")
     print("")
     print("")
-    print(bcolors.OKGREEN, "[+] Done! The tool will exit.", bcolors.ENDC)
+    print("")
+    print(bcolors.OKGREEN, "[+]", bcolors.ENDC, "Done! The tool will exit.")
     print("")
     print("")
 
@@ -1618,6 +1646,6 @@ elif args.command == "portscan2":
     handlePORT2()
 
 
-# TODO what is left to be done: 
+# TODO what is left to be done: date/time on each saved file to make sure no data/results are lost or overwriten
 
 # TODO! after the tools is done. refactor stuff
