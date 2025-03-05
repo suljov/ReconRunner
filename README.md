@@ -31,6 +31,7 @@ ReconRunner is a webapp tool designed to streamline and simplify directory and f
 
 ## **Requirement**
 
+- Python3
 - sqlmap
 - subfinder
 - rustscan
