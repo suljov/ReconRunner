@@ -807,7 +807,7 @@ def fuzzCLnoSave(url, obj):
         data = json.load(configFile)
     for i in range(len(data[obj])):
         wordlist = data[obj][i]
-        command = (f"wfuzz -c -w {wordlist} -u {url} {extra}")
+        command = (f"wfuzz -c -w {wordlist} -u {url}")
         try:
             subprocess.run(command, shell=True, check=True)
         except subprocess.CalledProcessError as e:
