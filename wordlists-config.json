@@ -17,7 +17,8 @@
   "dns": [
     "/usr/share/wordlists/seclists/Discovery/DNS/n0kovo_subdomains.txt",
     "/usr/share/wordlists/seclists/Discovery/DNS/combined_subdomains.txt",
-    "/usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-110000.txt"
+    "/usr/share/wordlists/seclists/Discovery/DNS/subdomains-top1million-110000.txt",
+    "/usr/share/wordlists/seclists/Discovery/DNS/bitquark-subdomains-top100000.txt"
   ],
   "sql": [
     "/usr/share/seclists/Fuzzing/SQLi/quick-SQLi.txt",
